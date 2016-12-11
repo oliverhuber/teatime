@@ -10,6 +10,7 @@ namespace Teatime
         {
 			// Only test for commit
 			// Only test for local branch change in Xamarin
+			// Only test direct push from Xamarin
 		}
 		public GameSubViewSpriteController()
 		{
