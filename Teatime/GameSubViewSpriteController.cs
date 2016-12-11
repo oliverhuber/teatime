@@ -8,7 +8,7 @@ namespace Teatime
     {
         public GameSubViewSpriteController (IntPtr handle) : base (handle)
         {
-
+			// Only test for commit
 		}
 		public GameSubViewSpriteController()
 		{
