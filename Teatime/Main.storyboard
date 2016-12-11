@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="NO" initialViewController="93">
+    <dependencies>
+        <development version="7000" identifier="xcode"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+    </dependencies>
+    <scenes>
+        <!--Game View Controller-->
+        <scene sceneID="tXr-a1-R10">
+            <objects>
+                <viewController id="BV1-FR-VrT" customClass="GameViewController" sceneMemberID="viewController" storyboardIdentifier="GameViewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="maK-i9-Uhn"/>
+                        <viewControllerLayoutGuide type="bottom" id="khH-OB-KpY"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="3se-qz-xqx">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" colorSpace="calibratedRGB" red="0.21568627450980393" green="0.74901960784313726" blue="0.84705882352941175" alpha="1"/>
+                        <subviews>
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="32" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" alpha="0.75" opaque="NO">
+                                <rect key="frame" x="29" y="128" width="308" height="42"/>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-UltraLight" family="Apple SD Gothic Neo" pointSize="19"/>
+                                <color key="backgroundColor" colorSpace="calibratedRGB" red="0.87058823529411766" green="0.9137254901960784" blue="0.996078431372549" alpha="1"/>
+                                <state key="normal" title="Prototype 1">
+                                    <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <color key="titleColor" colorSpace="calibratedRGB" red="0.18823529411764706" green="0.69803921568627447" blue="0.81176470588235294" alpha="1"/>
+                                </state>
+                                <connections>
+                                    <segue id="67" destination="7" kind="show" identifier="viewSegue"/>
+                                    <action selector="GotoNext_TouchUpInside:" destination="BV1-FR-VrT" id="72" eventType="touchUpInside"/>
+                                </connections>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wähle den Teatime Prototyp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="187" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" alpha="0.9">
+                                <rect key="frame" x="20" y="20" width="362" height="43"/>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-UltraLight" family="Apple SD Gothic Neo" pointSize="23"/>
+                                <nil key="highlightedColor"/>
+                                <color key="textColor" colorSpace="calibratedWhite" white="1" alpha="1"/>
+                            </label>
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="224" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" alpha="0.75" opaque="NO">
+                                <rect key="frame" x="28" y="190" width="309" height="42"/>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-UltraLight" family="Apple SD Gothic Neo" pointSize="19"/>
+                                <color key="backgroundColor" colorSpace="calibratedRGB" red="0.87058823529411766" green="0.9137254901960784" blue="0.996078431372549" alpha="1"/>
+                                <state key="normal" title="Prototype 2">
+                                    <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <color key="titleColor" colorSpace="calibratedRGB" red="0.18823529411764706" green="0.69803921568627447" blue="0.81176470588235294" alpha="1"/>
+                                </state>
+                                <connections>
+                                    <action selector="GotoNext_TouchUpInside:" destination="228" id="227" eventType="touchUpInside"/>
+                                    <segue id="262" destination="240" kind="show"/>
+                                    <action selector="GotoNext2_TouchUpInside:" destination="BV1-FR-VrT" id="277" eventType="touchUpInside"/>
+                                </connections>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="232" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" image="logoteatime_white.png" alpha="0.8">
+                                <rect key="frame" x="280" y="12" width="95" height="58"/>
+                            </imageView>
+                        </subviews>
+                    </view>
+                    <connections>
+                        <outlet property="gotoNext" destination="32" id="name-outlet-32"/>
+                        <outlet property="gotoNext2" destination="224" id="name-outlet-224"/>
+                    </connections>
+                    <navigationItem title="Teatime" id="114" key="navigationItem"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-327" y="89"/>
+        </scene>
+        <!--Game Sub View Controller-->
+        <scene sceneID="6">
+            <objects>
+                <viewController id="7" sceneMemberID="viewController" customClass="GameSubViewController" storyboardIdentifier="GameSubViewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4"/>
+                        <viewControllerLayoutGuide type="bottom" id="5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8" customClass="SKView">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="159" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" alpha="0.8">
+                                <rect key="frame" x="14" y="20" width="71" height="30"/>
+                                <connections>
+                                    <segue id="180" destination="10" kind="unwind" unwindAction="UnwindToPrototypes:"/>
+                                    <action selector="UnwindProto_TouchUpInside:" destination="7" id="182" eventType="touchUpInside"/>
+                                </connections>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-UltraLight" family="Apple SD Gothic Neo" pointSize="17"/>
+                                <size key="titleShadowOffset" width="0" height="0"/>
+                                <state key="normal" title="&lt; back">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
+                            </button>
+                        </subviews>
+                    </view>
+                    <connections>
+                        <outlet property="UnwindProto" destination="159" id="name-outlet-159"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="10" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="416" y="113"/>
+        </scene>
+        <scene sceneID="92">
+            <objects>
+                <navigationController id="93" sceneMemberID="viewController" title="Teatime" modalTransitionStyle="crossDissolve" modalPresentationStyle="overFullScreen" navigationBarHidden="YES">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="95">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue id="115" destination="BV1-FR-VrT" kind="relationship" relationship="rootViewController"/>
+                    </connections>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="125">
+                        <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                    </toolbar>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="96" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1081" y="9"/>
+        </scene>
+        <scene sceneID="239">
+            <objects>
+                <viewController id="240" sceneMemberID="viewController" customClass="GameSubViewSpriteController" storyboardIdentifier="GameSubViewSpriteController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="237"/>
+                        <viewControllerLayoutGuide type="bottom" id="238"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="241" customClass="SKView">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="264" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" alpha="0.8">
+                                <rect key="frame" x="17" y="20" width="71" height="30"/>
+                                <connections>
+                                    <action selector="UnwindProto_TouchUpInside:" destination="268" id="267" eventType="touchUpInside"/>
+                                    <segue id="270" destination="243" kind="unwind" unwindAction="UnwindToPrototypes:"/>
+                                    <action selector="UnwindProtoSprite_TouchUpInside:" destination="240" id="272" eventType="touchUpInside"/>
+                                </connections>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-UltraLight" family="Apple SD Gothic Neo" pointSize="17"/>
+                                <size key="titleShadowOffset" width="0" height="0"/>
+                                <state key="normal" title="&lt; back">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
+                            </button>
+                        </subviews>
+                    </view>
+                    <connections>
+                        <outlet property="UnwindProtoSprite" destination="264" id="name-outlet-264"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="242" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="243" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="301" y="-625"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="background" width="640" height="1136"/>
+        <image name="spark2" width="64" height="64"/>
+        <image name="spark3" width="64" height="64"/>
+        <image name="spark4" width="64" height="64"/>
+        <image name="spark" width="64" height="64"/>
+        <image name="logoteatime.png" width="1280" height="800"/>
+        <image name="logoteatime_white.png" width="1280" height="800"/>
+    </resources>
+</document>
