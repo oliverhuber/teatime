@@ -18,6 +18,9 @@ namespace Teatime
 		SKLabelNode myLabel2;
 		SKLabelNode myLabel3;
 		SKLabelNode myLabel4;
+		CoordinateSystem[] cSystem = new CoordinateSystem[28]; 
+		nfloat LastX;
+		nfloat LastY;
 
 		protected GameScene(IntPtr handle) : base(handle)
 		{
@@ -106,7 +109,7 @@ namespace Teatime
 
 			// Generate Sparks
 			generateSparks();
-
+			//generateCoordinateSystem();
 		}
 		public override void Update(double currentTime )
 		{
@@ -122,6 +125,24 @@ namespace Teatime
 				spark.changeTexture();
 			}
 		}
+		public void updateCenter(CGPoint center)
+		{
+			// Change Texture for all SkarkNodes
+			foreach (var spark in Children.OfType<SparkNode>())
+			{
+				spark.centerOfNode = center;
+				spark.parentNode.centerOfNode = center;
+			}
+		}
+		public void revertCenter()
+		{
+			// Change Texture for all SkarkNodes
+			foreach (var spark in Children.OfType<SparkNode>())
+			{
+				spark.centerOfNode = spark.centerOfNodeFixed;
+				spark.parentNode.centerOfNode = spark.parentNode.centerOfNodeFixed;
+			}
+		}
 		public void updateSparks(double speed, bool random, bool disturb, int disturbFactor, bool vibrate)
 		{
 			// Update all SparkNodes with speed, random factor, disturbfactor and vibration
@@ -131,7 +152,6 @@ namespace Teatime
 
 			}
 		}
-
 
 		//*****************************************************************************
 		/// <summary>
@@ -145,34 +165,35 @@ namespace Teatime
 			var speed = 0;
 
 			// Generate 5 nodes per 10 rows
-			for (int i = 1; i <= 5; i++)
+			for (int i = 1; i <= 3; i++)
 			{
-				for (int y = 1; y <= 10; y++) 
+				for (int y = 1; y <= 6; y++) 
 				{
 					// Calculate location of each Spark (5 Sparks per row, for 10 rows)
 					var location = new CGPoint();
-					location.X = (((this.View.Frame.Width/10) * (2 * i))-(this.View.Frame.Width / 10));
-					location.Y = (((this.View.Frame.Height/20) * (2 * y)) - (this.View.Frame.Height / 20));
+					location.X = (((this.View.Frame.Width/6) * (2 * i))-(this.View.Frame.Width / 6));
+					location.Y = (((this.View.Frame.Height/12) * (2 * y)) - (this.View.Frame.Height / 12));
 
 					// Define Spark with location and alpha
 					var sprite = new SparkNode("spark")
 					{
 						Position = location,
-						XScale = 0.5f ,
-						YScale = 0.5f ,
+						XScale = 1.6f ,
+						YScale = 1.6f ,
 						Alpha = 0.3f
 						          
 					};
 
 					// Set the Center for the node
 					sprite.centerOfNode = location;
+					sprite.centerOfNodeFixed = location;
 
 					// Define Rotation, is zero because of the inital speed
 					var action = SKAction.RotateByAngle(NMath.PI * speed * i, 10.0);
 					sprite.RunAction(SKAction.RepeatActionForever(action));
 
 					// Define inital load actions, scale
-					sprite.RunAction(SKAction.ScaleTo(1.6f, 2));
+					//sprite.RunAction(SKAction.ScaleTo(1.6f, 2));
 
 					// Position in comparsion to other SpriteNodes
 					sprite.ZPosition = 1;
@@ -181,21 +202,21 @@ namespace Teatime
 					var parent = new ParentNode("spark")
 					{
 						Position = location,
-						XScale = 0.5f,
-						YScale = 0.5f,
+						XScale = 0.9f,
+						YScale = 0.9f,
 						Alpha = 0.3f
 
 					};
 
 					// Set the Center for the node
 					parent.centerOfNode = location;
-
+					parent.centerOfNodeFixed = location;
 					// Define Rotation, is zero because of the inital speed
 					var paction = SKAction.RotateByAngle(NMath.PI * speed * i, 10.0);
 					parent.RunAction(SKAction.RepeatActionForever(paction));
 
 					// Define inital load actions, scale
-					parent.RunAction(SKAction.ScaleTo(1.6f, 2));
+				//	parent.RunAction(SKAction.ScaleTo(1.6f, 2));
 
 					// Position in comparsion to other SpriteNodes
 					parent.ZPosition = 1;
@@ -214,9 +235,7 @@ namespace Teatime
 			// Do first update of the all sparks, that the will have a base movement
 			updateSparks(1, true,false,0,false);
 		}
-
-
-
+	
 		// If finger moved on screen
 		public override void TouchesMoved(NSSet touches, UIEvent evt)
 		{
@@ -227,41 +246,76 @@ namespace Teatime
 			{
 
 				// Get the latest X and Y coordinates
+				 // 0 of X i on top
 				float offsetX = (float)(touch.LocationInView(View).X);
 				float offsetY = (float)(touch.LocationInView(View).Y);
 
 				// other coordinate system
-				//var checkX = ((UITouch)touchc).LocationInNode(this).X;
-				//var checkY = ((UITouch)touchc).LocationInNode(this).Y;
+				// 0 of Y is bottom
+				var checkX_Location = ((UITouch)touch).LocationInNode(this).X;
+				var checkY_Location = ((UITouch)touch).LocationInNode(this).Y;
 
 				float checkX = offsetX;
 				float checkY = offsetY;
+
+
+				
 
 				// Background Calculating
 				this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height),0.5f,(nfloat)  (((checkX / Frame.Width)  / 3)*2+((0.3333333f))));
 
 				// Check to which part the finger is moved to and update the sparks
 				var speed = 0;
-				if (checkY > 3 * (Frame.Height / 4))
-				{
-					speed = 0;
-					updateSparks(speed,true,true,6,true);
-				}
-				else if (checkY < 3 * (Frame.Height / 4) && checkY > Frame.Height / 2)
-				{
-					speed = 1;
-					updateSparks(speed, true,true,4,true);
-				}
-				else if (checkY < Frame.Height / 2 && checkY > Frame.Height / 4)
-				{
-					speed = 3;
-					updateSparks(speed, true,true,2,false);
-				}
-				else {
-					speed = 5;
-					updateSparks(speed, false,false,0,false);
-				}
+				this.updateCenter(new CGPoint(checkX_Location,checkY_Location));
 
+
+
+				if (Math.Abs((int)checkY_Location) % 10 == 0)
+				{
+					if (checkY > 3 * (Frame.Height / 4))
+					{
+						speed = 0;
+						updateSparks(speed, false, true, 16, true);
+					}
+					else if (checkY < 3 * (Frame.Height / 4) && checkY > Frame.Height / 2)
+					{
+						speed = 0;
+						updateSparks(speed, false, true, 9, true);
+					}
+					else if (checkY < Frame.Height / 2 && checkY > Frame.Height / 4)
+					{
+						speed = 0;
+						updateSparks(speed, false, true, 6, false);
+					}
+					else {
+						speed = 0;
+						updateSparks(speed, false, false, 0, false);
+					}
+				}
+				if (Math.Abs((int)checkX_Location) % 10 == 0)
+				{
+					if (checkY > 3 * (Frame.Height / 4))
+					{
+						speed = 0;
+						updateSparks(speed, false, true, 16, true);
+					}
+					else if (checkY < 3 * (Frame.Height / 4) && checkY > Frame.Height / 2)
+					{
+						speed = 0;
+						updateSparks(speed, false, true, 9, true);
+					}
+					else if (checkY < Frame.Height / 2 && checkY > Frame.Height / 4)
+					{
+						speed = 0;
+						updateSparks(speed, false, true, 6, false);
+					}
+					else {
+						speed = 0;
+						updateSparks(speed, false, false, 0, false);
+					}
+				}
+			
+			
 				// Use to show calculations
 				//nfloat calc = (nfloat) (((checkX / Frame.Width) / 3) * 2 + (0.3333333f)) ;
 				//myLabel.Text = calc.ToString();
@@ -293,6 +347,40 @@ namespace Teatime
 				*/
 			}
 		}
+		public override void TouchesEnded(NSSet touches, UIEvent evt)
+		{
+			base.TouchesEnded(touches, evt);
+			UITouch touch = touches.AnyObject as UITouch;
+			if (touch != null)
+			{
+				//Release the Changed center
+				this.revertCenter();
+				// Check click
+				var checkX = ((UITouch)touch).LocationInView(View).X;
+				var checkY = ((UITouch)touch).LocationInView(View).Y;
+				double speed = 0;
+				if (checkY > 3 * (Frame.Height / 4))
+				{
+					speed = 0.5;
+					updateSparks(speed, true, true, 8, true);
+				}
+				else if (checkY < 3 * (Frame.Height / 4) && checkY > Frame.Height / 2)
+				{
+					speed = 1;
+					updateSparks(speed, true, true, 4, true);
+				}
+				else if (checkY < Frame.Height / 2 && checkY > Frame.Height / 4)
+				{
+					speed = 2;
+					updateSparks(speed, true, true, 2, false);
+				}
+				else {
+					speed = 3;
+					updateSparks(speed, false, false, 0, false);
+				}
+			}
+
+		}
 		public override void TouchesBegan(NSSet touches, UIEvent evt)
 		{
 			// Called when a touch begins
@@ -314,11 +402,11 @@ namespace Teatime
 				this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
 
 				// Check to which part the finger is moved to and update the sparks
-				var speed = 0;
+				double speed = 0;
 				if (checkY > 3 * (Frame.Height / 4))
 				{
-					speed = 0;
-					updateSparks(speed, true, true, 6, true);
+					speed = 0.5;
+					updateSparks(speed, true, true, 8, true);
 				}
 				else if (checkY < 3 * (Frame.Height / 4) && checkY > Frame.Height / 2)
 				{
@@ -327,15 +415,16 @@ namespace Teatime
 				}
 				else if (checkY < Frame.Height / 2 && checkY > Frame.Height / 4)
 				{
-					speed = 3;
+					speed = 2;
 					updateSparks(speed, true, true, 2, false);
 				}
 				else {
-					speed = 5;
+					speed = 3;
 					updateSparks(speed, false, false, 0, false);
 				}
 
-
+				LastX = checkX;
+				LastY = checkY;
 				// Double tapped
 				if (touchc.TapCount == 2)
 				{

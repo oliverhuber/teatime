@@ -118,6 +118,7 @@
     <ImageAsset Include="Assets.xcassets\spark3.imageset\spark3.png" />
     <ImageAsset Include="Assets.xcassets\spark4.imageset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\spark4.imageset\spark4.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\120 - iPhone Teatime.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -163,6 +164,7 @@
     <Compile Include="GameSubViewSpriteController.designer.cs">
       <DependentUpon>GameSubViewSpriteController.cs</DependentUpon>
     </Compile>
+    <Compile Include="CoordinateSystem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

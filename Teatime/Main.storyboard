@@ -18,8 +18,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" colorSpace="calibratedRGB" red="0.21568627450980393" green="0.74901960784313726" blue="0.84705882352941175" alpha="1"/>
                         <subviews>
-                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="32" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" alpha="0.75" opaque="NO">
-                                <rect key="frame" x="29" y="128" width="308" height="42"/>
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="32" translatesAutoresizingMaskIntoConstraints="NO" alpha="0.75" opaque="NO">
+                                <rect key="frame" x="177" y="128" width="245" height="42"/>
                                 <fontDescription key="fontDescription" name="AppleSDGothicNeo-UltraLight" family="Apple SD Gothic Neo" pointSize="19"/>
                                 <color key="backgroundColor" colorSpace="calibratedRGB" red="0.87058823529411766" green="0.9137254901960784" blue="0.996078431372549" alpha="1"/>
                                 <state key="normal" title="Prototype 1">
@@ -35,15 +35,31 @@
                                         <real key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="29" y="128" width="245" height="35"/>
+                                </variation>
+                                <constraints>
+                                    <constraint id="304" firstItem="32" firstAttribute="width" constant="245">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="280"/>
+                                    </constraint>
+                                    <constraint id="321" firstItem="32" firstAttribute="height" constant="42"/>
+                                </constraints>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wähle den Teatime Prototyp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="187" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" alpha="0.9">
-                                <rect key="frame" x="20" y="20" width="362" height="43"/>
-                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-UltraLight" family="Apple SD Gothic Neo" pointSize="23"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wähle den Teatime Prototyp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="187" translatesAutoresizingMaskIntoConstraints="NO" alpha="0.9" misplaced="YES">
+                                <rect key="frame" x="182" y="20" width="236" height="43"/>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-UltraLight" family="Apple SD Gothic Neo" pointSize="20"/>
                                 <nil key="highlightedColor"/>
                                 <color key="textColor" colorSpace="calibratedWhite" white="1" alpha="1"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="12" y="12" width="273" height="43"/>
+                                </variation>
+                                <constraints>
+                                    <constraint id="374" firstItem="187" firstAttribute="width" constant="236"/>
+                                    <constraint id="375" firstItem="187" firstAttribute="height" constant="43"/>
+                                </constraints>
                             </label>
-                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="224" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" alpha="0.75" opaque="NO">
-                                <rect key="frame" x="28" y="190" width="309" height="42"/>
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="224" translatesAutoresizingMaskIntoConstraints="NO" alpha="0.75" opaque="NO">
+                                <rect key="frame" x="177" y="190" width="246" height="42"/>
                                 <fontDescription key="fontDescription" name="AppleSDGothicNeo-UltraLight" family="Apple SD Gothic Neo" pointSize="19"/>
                                 <color key="backgroundColor" colorSpace="calibratedRGB" red="0.87058823529411766" green="0.9137254901960784" blue="0.996078431372549" alpha="1"/>
                                 <state key="normal" title="Prototype 2">
@@ -60,11 +76,39 @@
                                         <real key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="28" y="133.5" width="246" height="35"/>
+                                </variation>
+                                <constraints>
+                                    <constraint id="305" firstItem="224" firstAttribute="width" constant="246">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="280"/>
+                                    </constraint>
+                                    <constraint id="326" firstItem="224" firstAttribute="height" constant="42"/>
+                                </constraints>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="232" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" image="logoteatime_white.png" alpha="0.8">
-                                <rect key="frame" x="280" y="12" width="95" height="58"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="232" translatesAutoresizingMaskIntoConstraints="NO" image="logoteatime_white.png" alpha="0.8" misplaced="YES">
+                                <rect key="frame" x="237" y="13" width="95" height="58"/>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="299" y="13" width="95" height="58"/>
+                                </variation>
+                                <constraints>
+                                    <constraint id="342" firstItem="232" firstAttribute="height" constant="58"/>
+                                    <constraint id="345" firstItem="232" firstAttribute="width" constant="95"/>
+                                </constraints>
                             </imageView>
                         </subviews>
+                        <constraints>
+                            <constraint id="310" firstItem="224" firstAttribute="top" secondItem="32" secondAttribute="bottom" constant="20"/>
+                            <constraint id="318" firstItem="32" firstAttribute="top" secondItem="maK-i9-Uhn" secondAttribute="bottom" constant="128">
+                                <variation key="heightClass=regular-widthClass=compact" constant="110"/>
+                            </constraint>
+                            <constraint id="332" firstItem="32" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX"/>
+                            <constraint id="333" firstItem="224" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX"/>
+                            <constraint id="347" firstItem="232" firstAttribute="top" secondItem="maK-i9-Uhn" secondAttribute="bottom" constant="13"/>
+                            <constraint id="361" firstItem="187" firstAttribute="top" secondItem="3se-qz-xqx" secondAttribute="top" constant="20"/>
+                            <constraint id="376" firstItem="3se-qz-xqx" firstAttribute="centerX" secondItem="187" secondAttribute="centerX" constant="26"/>
+                            <constraint id="381" firstItem="3se-qz-xqx" firstAttribute="trailing" secondItem="232" secondAttribute="trailing" constant="-10"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="gotoNext" destination="32" id="name-outlet-32"/>

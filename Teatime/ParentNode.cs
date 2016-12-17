@@ -18,6 +18,11 @@ namespace Teatime
 			get;
 			set;
 		}
+		public CGPoint centerOfNodeFixed
+		{
+			get;
+			set;
+		}
 		public ParentNode(String name)
 		{
 			UIImage image = UIImage.FromBundle("spark");
@@ -29,7 +34,7 @@ namespace Teatime
 		}
 		public void moveAnimation(int disturbFactor,int newX,int newX1,int newX2, int newX3, int newX4, int newY, int newY1 ,int newY2, int newY3, int newY4, double pointSpeed1, double pointSpeed2, double pointSpeed3, double pointSpeed4, double pointSpeed5, bool vibrate )
 		{
-
+			this.RemoveAllActions();
 			SKAction action1 = SKAction.MoveTo(new CGPoint(newX + disturbFactor, newY + disturbFactor), pointSpeed1);
 			SKAction action2 = SKAction.MoveTo(new CGPoint(newX1 - disturbFactor, newY1 + disturbFactor), pointSpeed2);
 			SKAction action3 = SKAction.MoveTo(new CGPoint(newX2 + disturbFactor, newY2 - disturbFactor), pointSpeed3);
@@ -38,20 +43,21 @@ namespace Teatime
 			var sequence = SKAction.Sequence(action1, action2, action3, action4, action5);
 			this.RunAction(SKAction.RepeatActionForever(sequence));
 
-			changeTexture(vibrate);
+			changeTexture(vibrate,pointSpeed1);
 		}
 
 		public void moveAnimation(double speed, bool randomMove, SKAction action1, SKAction action2, SKAction action3, SKAction action4, SKAction action5)
 		{
+			this.RemoveAllActions();
 			var sequence = SKAction.Sequence(action1, action2, action3, action4, action5);
 			this.RunAction(SKAction.RepeatActionForever(sequence));
 
 			changeTexture();
 		}
-		public void changeTexture(bool disturb)
+		public void changeTexture(bool disturb,double PointSpeed1)
 		{
 			//Random rnd = new Random();
-			double rotateBy = rnd.NextDouble() * (2 - 1) + 1;
+			double rotateBy = rnd.NextDouble() * (3 - 2) + 2;
 			//this.RunAction(SKAction.FadeOutWithDuration(3));
 			//this.RunAction(SKAction.WaitForDuration(2000));
 			SKAction action1;
@@ -73,6 +79,16 @@ namespace Teatime
 			{
 				this.Texture = sparkTexture4;
 				this.RunAction(SKAction.RepeatActionForever(SKAction.RotateByAngle(NMath.PI, rotateBy)));
+
+				SKAction changeX1 = SKAction.ScaleXTo(1.1f, PointSpeed1);
+				SKAction changeX2 = SKAction.ScaleXTo(0.9f, PointSpeed1);
+				var changeSequenceX = SKAction.Sequence(changeX1, changeX2);
+				this.RunAction(SKAction.RepeatActionForever(changeSequenceX));
+
+				SKAction changeY1 = SKAction.ScaleYTo(1.1f, PointSpeed1);
+				SKAction changeY2 = SKAction.ScaleYTo(0.9f, PointSpeed1);
+				var changeSequenceY = SKAction.Sequence(changeY1, changeY2);
+				this.RunAction(SKAction.RepeatActionForever(changeSequenceY));
 			}
 			else 
 			{ 

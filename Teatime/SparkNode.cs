@@ -22,6 +22,11 @@ namespace Teatime
 			get;
 			set;
 		}
+		public CGPoint centerOfNodeFixed
+		{
+			get;
+			set;
+		}
 		public SparkNode(String name)
 		{
 			UIImage image = UIImage.FromBundle("spark");
@@ -32,8 +37,10 @@ namespace Teatime
 
 
 		}
+	
 		public void moveAnimation(double speed, bool randomMove, bool disturb, int disturbFactor, bool vibrate) { 
-		
+			this.RemoveAllActions();
+
 			// this.RunAction(SKAction.ScaleTo(1f, 10));
 			// SKAction[] actionArray;
 			/*	for (int i = 0; i <= 4; i++)
@@ -63,11 +70,11 @@ namespace Teatime
 			double minSpeed = speed;
 			double maxSpeed = speed + 1;
 
-			double pointSpeed1 = speed;
-			double pointSpeed2 = speed;
-			double pointSpeed3 = speed;
-			double pointSpeed4 = speed;
-			double pointSpeed5 = speed;
+			double pointSpeed1 = maxSpeed;
+			double pointSpeed2 = maxSpeed;
+			double pointSpeed3 = maxSpeed;
+			double pointSpeed4 = maxSpeed;
+			double pointSpeed5 = maxSpeed;
 
 			SKAction action1;
 			SKAction action2;
@@ -93,11 +100,11 @@ namespace Teatime
 
 			}
 			else {
-				 action1 = SKAction.MoveTo(new CGPoint(newX, newY),  speed);
-				 action2 = SKAction.MoveTo(new CGPoint(newX1, newY1), speed);
-				 action3 = SKAction.MoveTo(new CGPoint(newX2, newY2), speed);
-				 action4 = SKAction.MoveTo(new CGPoint(newX3, newY3), speed);
-				 action5 = SKAction.MoveTo(new CGPoint(newX4, newY4), speed);
+				 action1 = SKAction.MoveTo(new CGPoint(newX, newY),  pointSpeed1);
+				 action2 = SKAction.MoveTo(new CGPoint(newX1, newY1), pointSpeed2);
+				 action3 = SKAction.MoveTo(new CGPoint(newX2, newY2), pointSpeed3);
+				 action4 = SKAction.MoveTo(new CGPoint(newX3, newY3), pointSpeed4);
+				 action5 = SKAction.MoveTo(new CGPoint(newX4, newY4), pointSpeed5);
 			}
 
 
@@ -130,7 +137,7 @@ namespace Teatime
 		{
 			//this.RunAction(SKAction.FadeOutWithDuration(3));
 			//this.RunAction(SKAction.WaitForDuration(2000));
-			SKAction action1;
+		/*	SKAction action1;
 			SKAction action2;
 			SKAction action3;
 			SKTexture sparkTexture = SKTexture.FromImageNamed(("spark"));
@@ -148,6 +155,7 @@ namespace Teatime
 
 			//}
 			//else {
+			*/
 				this.Texture = SKTexture.FromImageNamed(("spark3"));
 		//	}
 			parentNode.changeTexture();
