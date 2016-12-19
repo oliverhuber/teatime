@@ -32,6 +32,22 @@ namespace Teatime
 			this.Size = image.Size;
 
 		}
+		public void followDrag()
+		{
+			this.RemoveAllActions();
+			float pointSpeed1 = 0.3f;
+			float pointSpeed2 = 0.3f;
+			int newX = rnd.Next((int)this.centerOfNode.X - 50, (int)this.centerOfNode.X + 50);
+			int newY = rnd.Next((int)this.centerOfNode.Y - 50, (int)this.centerOfNode.Y + 50);
+
+			int newX1 = rnd.Next((int)this.centerOfNode.X - 50, (int)this.centerOfNode.X + 50);
+			int newY1 = rnd.Next((int)this.centerOfNode.Y - 50, (int)this.centerOfNode.Y + 50);
+			SKAction action1 = SKAction.MoveTo(new CGPoint(newX, newY), pointSpeed1);
+			SKAction action2 = SKAction.MoveTo(new CGPoint(newX1, newY1), pointSpeed2);
+			var sequence = SKAction.Sequence(action1, action2);
+			this.RunAction(SKAction.RepeatActionForever(sequence));
+
+		}
 		public void moveAnimation(int disturbFactor,int newX,int newX1,int newX2, int newX3, int newX4, int newY, int newY1 ,int newY2, int newY3, int newY4, double pointSpeed1, double pointSpeed2, double pointSpeed3, double pointSpeed4, double pointSpeed5, bool vibrate )
 		{
 			this.RemoveAllActions();

@@ -37,7 +37,22 @@ namespace Teatime
 
 
 		}
-	
+		public void followDrag() {
+			this.RemoveAllActions();
+			float pointSpeed1 = 0.5f;
+			float pointSpeed2 = 0.5f;
+			int newX = rnd.Next((int)this.centerOfNode.X - 50, (int)this.centerOfNode.X + 50);
+			int newY = rnd.Next((int)this.centerOfNode.Y - 50, (int)this.centerOfNode.Y + 50);
+
+			int newX1 = rnd.Next((int)this.centerOfNode.X - 50, (int)this.centerOfNode.X + 50);
+			int newY1 = rnd.Next((int)this.centerOfNode.Y - 50, (int)this.centerOfNode.Y + 50);
+			SKAction action1 = SKAction.MoveTo(new CGPoint(newX, newY), pointSpeed1);
+			SKAction action2 = SKAction.MoveTo(new CGPoint(newX1, newY1), pointSpeed2);
+			var sequence = SKAction.Sequence(action1, action2);
+			this.RunAction(SKAction.RepeatActionForever(sequence));
+			this.parentNode.followDrag();
+		}
+
 		public void moveAnimation(double speed, bool randomMove, bool disturb, int disturbFactor, bool vibrate) { 
 			this.RemoveAllActions();
 

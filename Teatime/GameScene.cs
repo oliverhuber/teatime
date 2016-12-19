@@ -152,6 +152,16 @@ namespace Teatime
 
 			}
 		}
+		public void followDrag(double speed, bool random, bool disturb, int disturbFactor, bool vibrate)
+		{
+			// Update all SparkNodes with speed, random factor, disturbfactor and vibration
+			foreach (var spark in Children.OfType<SparkNode>())
+			{
+				spark.followDrag();
+
+			}
+		}
+
 
 		//*****************************************************************************
 		/// <summary>
@@ -268,41 +278,85 @@ namespace Teatime
 				var speed = 0;
 				this.updateCenter(new CGPoint(checkX_Location,checkY_Location));
 
-
-
 				if (Math.Abs((int)checkY_Location) % 10 == 0)
 				{
 					if (checkY > 3 * (Frame.Height / 4))
 					{
 						speed = 0;
-						updateSparks(speed, false, true, 16, true);
+						followDrag(speed, false, false, 16, false);
 					}
 					else if (checkY < 3 * (Frame.Height / 4) && checkY > Frame.Height / 2)
 					{
 						speed = 0;
-						updateSparks(speed, false, true, 9, true);
+						followDrag(speed, false, false, 9, false);
 					}
 					else if (checkY < Frame.Height / 2 && checkY > Frame.Height / 4)
 					{
 						speed = 0;
-						updateSparks(speed, false, true, 6, false);
+						followDrag(speed, false, false, 6, false);
 					}
 					else {
 						speed = 0;
-						updateSparks(speed, false, false, 0, false);
+						followDrag(speed, false, false, 0, false);
 					}
 				}
-				if (Math.Abs((int)checkX_Location) % 10 == 0)
+				else if (Math.Abs((int)checkX_Location) % 10 == 0  )
 				{
 					if (checkY > 3 * (Frame.Height / 4))
 					{
 						speed = 0;
-						updateSparks(speed, false, true, 16, true);
+						followDrag(speed, false, false, 16, false);
 					}
 					else if (checkY < 3 * (Frame.Height / 4) && checkY > Frame.Height / 2)
 					{
 						speed = 0;
-						updateSparks(speed, false, true, 9, true);
+						followDrag(speed, false, false, 9, false);
+					}
+					else if (checkY < Frame.Height / 2 && checkY > Frame.Height / 4)
+					{
+						speed = 0;
+						followDrag(speed, false, false, 6, false);
+					}
+					else {
+						speed = 0;
+						followDrag(speed, false, false, 0, false);
+					}
+				}
+
+				/*
+				if (Math.Abs((int)checkY_Location) % 10 == 0)
+				{
+					if (checkY > 3 * (Frame.Height / 4))
+					{
+						speed = 0;
+						updateSparks(speed, false, true, 16, false);
+					}
+					else if (checkY < 3 * (Frame.Height / 4) && checkY > Frame.Height / 2)
+					{
+						speed = 0;
+						updateSparks(speed, false, true, 9, false);
+					}
+					else if (checkY < Frame.Height / 2 && checkY > Frame.Height / 4)
+					{
+						speed = 0;
+						updateSparks(speed, false, true, 6, false);
+					}
+					else {
+						speed = 0;
+						updateSparks(speed, false, false, 0, false);
+					}
+				}
+				else if (Math.Abs((int)checkX_Location) % 10 == 0)
+				{
+					if (checkY > 3 * (Frame.Height / 4))
+					{
+						speed = 0;
+						updateSparks(speed, false, true, 16, false);
+					}
+					else if (checkY < 3 * (Frame.Height / 4) && checkY > Frame.Height / 2)
+					{
+						speed = 0;
+						updateSparks(speed, false, true, 9, false);
 					}
 					else if (checkY < Frame.Height / 2 && checkY > Frame.Height / 4)
 					{
@@ -315,7 +369,7 @@ namespace Teatime
 					}
 				}
 			
-			
+			*/
 				// Use to show calculations
 				//nfloat calc = (nfloat) (((checkX / Frame.Width) / 3) * 2 + (0.3333333f)) ;
 				//myLabel.Text = calc.ToString();
