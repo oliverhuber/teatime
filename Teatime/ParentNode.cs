@@ -30,6 +30,14 @@ namespace Teatime
 			this.ZPosition = 12;
 			this.Texture = SKTexture.FromImageNamed(("spark"));
 			this.Size = image.Size;
+			this.PhysicsBody = SKPhysicsBody.Create(this.Texture, this.Size);
+			this.PhysicsBody.AffectedByGravity = false;
+			this.PhysicsBody.AllowsRotation = true;
+			this.PhysicsBody.CollisionBitMask = 0;
+			this.PhysicsBody.LinearDamping = 1;
+			this.PhysicsBody.AngularDamping = (System.nfloat)(rnd.NextDouble() * (1 - 0.5) + 0.5);
+			this.PhysicsBody.Mass = 0.06f;
+
 
 		}
 		public void followDrag()
@@ -42,10 +50,31 @@ namespace Teatime
 
 			int newX1 = rnd.Next((int)this.centerOfNode.X - 50, (int)this.centerOfNode.X + 50);
 			int newY1 = rnd.Next((int)this.centerOfNode.Y - 50, (int)this.centerOfNode.Y + 50);
+
+			//this.PhysicsBody.Velocity = new CGVector(newX, newY);
+
 			SKAction action1 = SKAction.MoveTo(new CGPoint(newX, newY), pointSpeed1);
 			SKAction action2 = SKAction.MoveTo(new CGPoint(newX1, newY1), pointSpeed2);
 			var sequence = SKAction.Sequence(action1, action2);
-			this.RunAction(SKAction.RepeatActionForever(sequence));
+			//this.RunAction(SKAction.RepeatActionForever(sequence));
+
+			if (this.Position.X > newX && this.Position.Y > newY)
+			{
+				this.PhysicsBody.Velocity = new CGVector(-newX, -newY);
+			}
+			else if (this.Position.X > newX && this.Position.Y < newY)
+			{
+				this.PhysicsBody.Velocity = new CGVector(-newX, newY);
+			}
+			else if (this.Position.X < newX && this.Position.Y > newY)
+			{
+				this.PhysicsBody.Velocity = new CGVector(newX, -newY);
+			}
+			else {
+				this.PhysicsBody.Velocity = new CGVector(newX, newY);
+
+			}
+
 
 		}
 		public void moveAnimation(int disturbFactor,int newX,int newX1,int newX2, int newX3, int newX4, int newY, int newY1 ,int newY2, int newY3, int newY4, double pointSpeed1, double pointSpeed2, double pointSpeed3, double pointSpeed4, double pointSpeed5, bool vibrate )

@@ -13,6 +13,9 @@ namespace Teatime
 {
 	public class GameScene : SKScene
 	{
+		bool pressAndFollow;
+		CGPoint globalCenter;
+		SKFieldNode fieldNode;
 		SKSpriteNode backgroundSprite;
 		SKLabelNode myLabel;
 		SKLabelNode myLabel2;
@@ -107,6 +110,15 @@ namespace Teatime
 			backgroundSprite.Alpha = 0.3f;
 			AddChild(backgroundSprite);
 
+			// Add Gravity Field
+			fieldNode = SKFieldNode.CreateSpringField();
+			fieldNode.Enabled = false;
+			fieldNode.Position = new CGPoint(Frame.Size.Width / 2, Frame.Size.Height / 2);
+			fieldNode.Strength = 0.5f;
+			fieldNode.Region = new SKRegion(Frame.Size);
+			AddChild(fieldNode);
+
+
 			// Generate Sparks
 			generateSparks();
 			//generateCoordinateSystem();
@@ -114,6 +126,10 @@ namespace Teatime
 		public override void Update(double currentTime )
 		{
 			//UPDATE FAST
+			if (pressAndFollow == true)
+			{
+				updateCenter();
+			}
 		}
 
 
@@ -125,13 +141,43 @@ namespace Teatime
 				spark.changeTexture();
 			}
 		}
-		public void updateCenter(CGPoint center)
+		public void updateCenter()
 		{
+			Random rnd = new Random();
+			CGPoint center = globalCenter;
 			// Change Texture for all SkarkNodes
 			foreach (var spark in Children.OfType<SparkNode>())
 			{
 				spark.centerOfNode = center;
 				spark.parentNode.centerOfNode = center;
+				spark.RemoveAllActions();
+				spark.parentNode.RemoveAllActions();
+				double scaleSpeed= (rnd.NextDouble() * (1 - 0.5) + 0.5);
+				SKAction action1 = SKAction.ScaleTo(3, scaleSpeed);
+				SKAction action2 = SKAction.ScaleTo(1, scaleSpeed);
+				var sequence = SKAction.Sequence(action1, action2);
+				spark.RunAction(SKAction.RepeatActionForever(sequence));
+
+				/*if (spark.Position.X > center.X && spark.Position.Y > center.Y)
+				{
+					spark.PhysicsBody.Velocity = new CGVector(-400, -400);
+					spark.parentNode.PhysicsBody.Velocity = new CGVector(-400, -400);
+				}
+				else if (spark.Position.X > center.X && spark.Position.Y < center.Y)
+				{
+					spark.PhysicsBody.Velocity = new CGVector(-400, 400);
+					spark.parentNode.PhysicsBody.Velocity = new CGVector(-400, 400);
+				}
+				else if (spark.Position.X < center.X && spark.Position.Y > center.Y)
+				{
+					spark.PhysicsBody.Velocity = new CGVector(400, -400);
+					spark.parentNode.PhysicsBody.Velocity = new CGVector(400, -400);
+				}
+				else {
+					spark.PhysicsBody.Velocity = new CGVector(400, 400);
+					spark.parentNode.PhysicsBody.Velocity = new CGVector(400, 400);
+				}*/
+
 			}
 		}
 		public void revertCenter()
@@ -157,7 +203,7 @@ namespace Teatime
 			// Update all SparkNodes with speed, random factor, disturbfactor and vibration
 			foreach (var spark in Children.OfType<SparkNode>())
 			{
-				spark.followDrag();
+				//spark.followDrag();
 
 			}
 		}
@@ -254,6 +300,8 @@ namespace Teatime
 
 			if (touch != null)
 			{
+				pressAndFollow = true;
+				fieldNode.Enabled = true;
 
 				// Get the latest X and Y coordinates
 				 // 0 of X i on top
@@ -269,16 +317,21 @@ namespace Teatime
 				float checkY = offsetY;
 
 
-				
+				fieldNode.Position= new CGPoint(checkX_Location, checkY_Location);
 
 				// Background Calculating
 				this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height),0.5f,(nfloat)  (((checkX / Frame.Width)  / 3)*2+((0.3333333f))));
 
 				// Check to which part the finger is moved to and update the sparks
+
 				var speed = 0;
-				this.updateCenter(new CGPoint(checkX_Location,checkY_Location));
+				//if (Math.Abs((int)checkX_Location) % 1 == 0)
+				//{
+					globalCenter = new CGPoint(checkX_Location, checkY_Location);
+					this.updateCenter();
 
-				if (Math.Abs((int)checkY_Location) % 10 == 0)
+				//}
+			/*	if (Math.Abs((int)checkY_Location) % 1 == 0)
 				{
 					if (checkY > 3 * (Frame.Height / 4))
 					{
@@ -300,7 +353,7 @@ namespace Teatime
 						followDrag(speed, false, false, 0, false);
 					}
 				}
-				else if (Math.Abs((int)checkX_Location) % 10 == 0  )
+				else if (Math.Abs((int)checkX_Location) % 1 == 0  )
 				{
 					if (checkY > 3 * (Frame.Height / 4))
 					{
@@ -322,7 +375,7 @@ namespace Teatime
 						followDrag(speed, false, false, 0, false);
 					}
 				}
-
+*/
 				/*
 				if (Math.Abs((int)checkY_Location) % 10 == 0)
 				{
@@ -409,6 +462,7 @@ namespace Teatime
 			{
 				//Release the Changed center
 				this.revertCenter();
+				fieldNode.Enabled = false;
 				// Check click
 				var checkX = ((UITouch)touch).LocationInView(View).X;
 				var checkY = ((UITouch)touch).LocationInView(View).Y;
@@ -433,6 +487,7 @@ namespace Teatime
 					updateSparks(speed, false, false, 0, false);
 				}
 			}
+			pressAndFollow = false;
 
 		}
 		public override void TouchesBegan(NSSet touches, UIEvent evt)
