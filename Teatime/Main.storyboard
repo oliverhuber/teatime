@@ -96,6 +96,34 @@
                                     <constraint id="345" firstItem="232" firstAttribute="width" constant="95"/>
                                 </constraints>
                             </imageView>
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="886" translatesAutoresizingMaskIntoConstraints="NO" alpha="0.75" opaque="NO" misplaced="YES">
+                                <rect key="frame" x="178" y="255" width="245" height="42"/>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-UltraLight" family="Apple SD Gothic Neo" pointSize="19"/>
+                                <color key="backgroundColor" colorSpace="calibratedRGB" red="0.87058823529411766" green="0.9137254901960784" blue="0.996078431372549" alpha="1"/>
+                                <state key="normal" title="Prototype 3">
+                                    <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <color key="titleColor" colorSpace="calibratedRGB" red="0.18823529411764706" green="0.69803921568627447" blue="0.81176470588235294" alpha="1"/>
+                                </state>
+                                <connections>
+                                    <action selector="GotoNext_TouchUpInside:" destination="890" id="889" eventType="touchUpInside"/>
+                                    <action selector="GotoNext4_TouchUpInside:" destination="BV1-FR-VrT" id="893" eventType="touchUpInside"/>
+                                    <segue id="1036" destination="875" kind="show"/>
+                                </connections>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="29" y="128" width="245" height="35"/>
+                                </variation>
+                                <constraints>
+                                    <constraint id="891" firstItem="886" firstAttribute="width" constant="245">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="280"/>
+                                    </constraint>
+                                    <constraint id="892" firstItem="886" firstAttribute="height" constant="42"/>
+                                </constraints>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint id="310" firstItem="224" firstAttribute="top" secondItem="32" secondAttribute="bottom" constant="20"/>
@@ -108,11 +136,14 @@
                             <constraint id="361" firstItem="187" firstAttribute="top" secondItem="3se-qz-xqx" secondAttribute="top" constant="20"/>
                             <constraint id="376" firstItem="3se-qz-xqx" firstAttribute="centerX" secondItem="187" secondAttribute="centerX" constant="26"/>
                             <constraint id="381" firstItem="3se-qz-xqx" firstAttribute="trailing" secondItem="232" secondAttribute="trailing" constant="-10"/>
+                            <constraint id="1055" firstItem="886" firstAttribute="top" secondItem="224" secondAttribute="bottom" constant="20"/>
+                            <constraint id="1056" firstItem="886" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="gotoNext" destination="32" id="name-outlet-32"/>
                         <outlet property="gotoNext2" destination="224" id="name-outlet-224"/>
+                        <outlet property="gotoNext4" destination="886" id="name-outlet-886"/>
                     </connections>
                     <navigationItem title="Teatime" id="114" key="navigationItem"/>
                 </viewController>
@@ -213,6 +244,43 @@
                 <exit id="243" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="301" y="-625"/>
+        </scene>
+        <scene sceneID="874">
+            <objects>
+                <viewController id="875" sceneMemberID="viewController" customClass="GameSubViewSceneController" storyboardIdentifier="GameSubViewSceneController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="872"/>
+                        <viewControllerLayoutGuide type="bottom" id="873"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="876" customClass="SKView">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1040" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" alpha="0.8">
+                                <rect key="frame" x="20" y="20" width="71" height="30"/>
+                                <connections>
+                                    <action selector="UnwindProto_TouchUpInside:" destination="1042" id="1041" eventType="touchUpInside"/>
+                                    <action selector="UnwindProtoColor_TouchUpInside:" destination="1046" id="1045" eventType="touchUpInside"/>
+                                    <segue id="1048" destination="878" kind="unwind" unwindAction="UnwindToPrototypes:"/>
+                                    <action selector="UnwindProto4_TouchUpInside:" destination="875" id="1050" eventType="touchUpInside"/>
+                                </connections>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-UltraLight" family="Apple SD Gothic Neo" pointSize="17"/>
+                                <size key="titleShadowOffset" width="0" height="0"/>
+                                <state key="normal" title="&lt; back">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
+                            </button>
+                        </subviews>
+                    </view>
+                    <connections>
+                        <outlet property="UnwindProto4" destination="1040" id="name-outlet-1040"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="877" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="878" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="-469" y="838"/>
         </scene>
     </scenes>
     <resources>

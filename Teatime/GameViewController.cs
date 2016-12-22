@@ -13,7 +13,8 @@ namespace Teatime
 		// Specify sub controllers
 		UIViewController gameSubViewController;
 		UIViewController gameSubViewSpriteController;
-	
+		UIViewController gameSubViewSceneController;
+
 		protected GameViewController(IntPtr handle) : base(handle)
 		{
 			// Note: this .ctor should not contain any initialization logic.
@@ -54,6 +55,7 @@ namespace Teatime
 			var myStoryboard = AppDelegate.Storyboard;
 			gameSubViewController = myStoryboard.InstantiateViewController("GameSubViewController") as GameSubViewController;
 			gameSubViewSpriteController = myStoryboard.InstantiateViewController("GameSubViewSpriteController") as GameSubViewSpriteController;
+			gameSubViewSceneController= myStoryboard.InstantiateViewController("GameSubViewSceneController") as GameSubViewSceneController;
 
 			/*gotoProto1.TouchUpInside += (object sender, System.EventArgs e) =>
 			{
@@ -71,10 +73,14 @@ namespace Teatime
 		{
 		}
 
-
 		public override bool ShouldAutorotate()
 		{
 			return true;
+		}
+
+		partial void GotoNext4_TouchUpInside(UIButton sender)
+		{
+		//	throw new NotImplementedException();
 		}
 
 		public override UIInterfaceOrientationMask GetSupportedInterfaceOrientations()

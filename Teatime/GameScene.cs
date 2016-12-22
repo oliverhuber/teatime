@@ -21,10 +21,9 @@ namespace Teatime
 		SKLabelNode myLabel2;
 		SKLabelNode myLabel3;
 		SKLabelNode myLabel4;
-		CoordinateSystem[] cSystem = new CoordinateSystem[28]; 
 		nfloat LastX;
 		nfloat LastY;
-
+		int changeColor;
 		protected GameScene(IntPtr handle) : base(handle)
 		{
 			// Note: this .ctor should not contain any initialization logic.
@@ -37,11 +36,11 @@ namespace Teatime
 			this.BackgroundColor = UIColor.FromRGBA(100, 200, 200, 155);
 
 			// Define and add Label 1
-			myLabel = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+			myLabel = new SKLabelNode("AppleSDGothicNeo-Regular")
 			{
 				Text = "Guten Tag, wie gehts dir heute?",
-				FontSize = 28,
-				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2)
+				FontSize = 20,
+				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2+140)
 			};
 			myLabel.Alpha = 0.9f;
 			myLabel.ZPosition = 1;
@@ -57,8 +56,8 @@ namespace Teatime
 			myLabel2 = new SKLabelNode("AppleSDGothicNeo-Regular")
 			{
 				Text = "Bewege deinen Finger auf dem Screen",
-				FontSize = 22,
-				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 +140)
+				FontSize = 20,
+				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 +110)
 			};
 			myLabel2.Alpha = 0.9f;
 			myLabel2.ZPosition = 1;
@@ -74,7 +73,7 @@ namespace Teatime
 			myLabel3 = new SKLabelNode("AppleSDGothicNeo-Regular")
 			{
 				Text = "Welche Farbe und Bewegung",
-				FontSize = 24,
+				FontSize = 20,
 				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 140),
 			};
 			myLabel3.Alpha = 0.0f;
@@ -85,7 +84,7 @@ namespace Teatime
 			myLabel4 = new SKLabelNode("AppleSDGothicNeo-Regular")
 			{
 				Text = "passt zu deinem Gemütszustand?",
-				FontSize = 24,
+				FontSize = 20,
 				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 110),
 			};
 			myLabel4.Alpha = 0.0f;
@@ -118,7 +117,8 @@ namespace Teatime
 			fieldNode.Region = new SKRegion(Frame.Size);
 			AddChild(fieldNode);
 
-
+			// Set Color Flag
+			changeColor = 0;
 			// Generate Sparks
 			generateSparks();
 			//generateCoordinateSystem();
@@ -318,10 +318,26 @@ namespace Teatime
 
 
 				fieldNode.Position= new CGPoint(checkX_Location, checkY_Location);
+				if (changeColor % 3 == 0)
+				{
+					// Background Calculating
+					this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
 
-				// Background Calculating
-				this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height),0.5f,(nfloat)  (((checkX / Frame.Width)  / 3)*2+((0.3333333f))));
-
+				}
+				else if (changeColor % 3 == 1)
+				{
+					// Background Calculating
+					this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 1f, (nfloat)(((checkX / Frame.Width) / 2) * 1 + ((0.3333333f))));
+				}
+				else if (changeColor % 3 == 2)
+				{
+					// Background Calculating
+					this.BackgroundColor = UIColor.FromHSB((nfloat)0, 0, (nfloat)(((checkX / Frame.Width) / 2) * 1 + ((0.3333333f))));
+				}
+				else {
+					// Background Calculating
+					this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
+				}
 				// Check to which part the finger is moved to and update the sparks
 
 				var speed = 0;
@@ -330,128 +346,7 @@ namespace Teatime
 					globalCenter = new CGPoint(checkX_Location, checkY_Location);
 					this.updateCenter();
 
-				//}
-			/*	if (Math.Abs((int)checkY_Location) % 1 == 0)
-				{
-					if (checkY > 3 * (Frame.Height / 4))
-					{
-						speed = 0;
-						followDrag(speed, false, false, 16, false);
-					}
-					else if (checkY < 3 * (Frame.Height / 4) && checkY > Frame.Height / 2)
-					{
-						speed = 0;
-						followDrag(speed, false, false, 9, false);
-					}
-					else if (checkY < Frame.Height / 2 && checkY > Frame.Height / 4)
-					{
-						speed = 0;
-						followDrag(speed, false, false, 6, false);
-					}
-					else {
-						speed = 0;
-						followDrag(speed, false, false, 0, false);
-					}
-				}
-				else if (Math.Abs((int)checkX_Location) % 1 == 0  )
-				{
-					if (checkY > 3 * (Frame.Height / 4))
-					{
-						speed = 0;
-						followDrag(speed, false, false, 16, false);
-					}
-					else if (checkY < 3 * (Frame.Height / 4) && checkY > Frame.Height / 2)
-					{
-						speed = 0;
-						followDrag(speed, false, false, 9, false);
-					}
-					else if (checkY < Frame.Height / 2 && checkY > Frame.Height / 4)
-					{
-						speed = 0;
-						followDrag(speed, false, false, 6, false);
-					}
-					else {
-						speed = 0;
-						followDrag(speed, false, false, 0, false);
-					}
-				}
-*/
-				/*
-				if (Math.Abs((int)checkY_Location) % 10 == 0)
-				{
-					if (checkY > 3 * (Frame.Height / 4))
-					{
-						speed = 0;
-						updateSparks(speed, false, true, 16, false);
-					}
-					else if (checkY < 3 * (Frame.Height / 4) && checkY > Frame.Height / 2)
-					{
-						speed = 0;
-						updateSparks(speed, false, true, 9, false);
-					}
-					else if (checkY < Frame.Height / 2 && checkY > Frame.Height / 4)
-					{
-						speed = 0;
-						updateSparks(speed, false, true, 6, false);
-					}
-					else {
-						speed = 0;
-						updateSparks(speed, false, false, 0, false);
-					}
-				}
-				else if (Math.Abs((int)checkX_Location) % 10 == 0)
-				{
-					if (checkY > 3 * (Frame.Height / 4))
-					{
-						speed = 0;
-						updateSparks(speed, false, true, 16, false);
-					}
-					else if (checkY < 3 * (Frame.Height / 4) && checkY > Frame.Height / 2)
-					{
-						speed = 0;
-						updateSparks(speed, false, true, 9, false);
-					}
-					else if (checkY < Frame.Height / 2 && checkY > Frame.Height / 4)
-					{
-						speed = 0;
-						updateSparks(speed, false, true, 6, false);
-					}
-					else {
-						speed = 0;
-						updateSparks(speed, false, false, 0, false);
-					}
-				}
 			
-			*/
-				// Use to show calculations
-				//nfloat calc = (nfloat) (((checkX / Frame.Width) / 3) * 2 + (0.3333333f)) ;
-				//myLabel.Text = calc.ToString();
-
-				/*
-				if (oneSprite.Frame.Contains(((UITouch)touch).LocationInNode(this)))
-				{
-					oneSprite.Position = location;
-
-					// Update Path of Line
-					var path = new CGPath();
-					path.AddLines(new CGPoint[]{
-						new CGPoint (secSprite.Position.X, secSprite.Position.Y),
-						new CGPoint (offsetX, this.View.Frame.Height-offsetY),
-					});
-					path.CloseSubpath();
-					yourline.Path = path;
-				}
-
-				// check to see if the touch started in the drag me image
-				if (touchStartedInside)
-				{
-					// move the shape
-					float offsetX = (float)( touch.LocationInView(View).X);
-					float offsetY = (float)( touch.LocationInView(View).Y);
-					oneSprite.Position = new CGPoint((offsetX), (float)(offsetY));
-
-				}
-				*/
 			}
 		}
 		public override void TouchesEnded(NSSet touches, UIEvent evt)
@@ -507,8 +402,21 @@ namespace Teatime
 				//var checkX = ((UITouch)touchc).LocationInNode(this).X;
 				//var checkY = ((UITouch)touchc).LocationInNode(this).Y;
 
-				// Background Calculating
-				this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
+				if (changeColor % 2 == 0)
+				{
+					// Background Calculating
+					this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
+
+				}
+				else if (changeColor % 2 == 1)
+				{
+					// Background Calculating
+					this.BackgroundColor = UIColor.FromHSB((nfloat)0, 0, (nfloat)(((checkX / Frame.Width) / 2) * 1 + ((0.3333333f))));
+				}
+				else {
+					// Background Calculating
+					this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
+				}
 
 				// Check to which part the finger is moved to and update the sparks
 				double speed = 0;
@@ -537,6 +445,28 @@ namespace Teatime
 				// Double tapped
 				if (touchc.TapCount == 2)
 				{
+					// Change Color Theme
+					changeColor++;
+					if (changeColor % 3 == 0)
+					{
+						// Background Calculating
+						this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
+
+					}
+					else if (changeColor % 3 == 1)
+					{
+						// Background Calculating
+						this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 1f, (nfloat)(((checkX / Frame.Width) / 2) * 1 + ((0.3333333f))));
+					}
+					else if (changeColor % 3 == 2)
+					{
+						// Background Calculating
+						this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 1f, (nfloat)(((checkX / Frame.Width) / 2) * 1 + ((0.3333333f))));
+					}
+					else {
+						// Background Calculating
+						this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
+					}
 					//	changeTexture();
 					// do something with the double touch.
 				}

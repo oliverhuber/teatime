@@ -4,7 +4,6 @@ using CoreGraphics;
 using Foundation;
 using SpriteKit;
 using UIKit;
-//using Xamarin.Forms;
 
 namespace Teatime
 {

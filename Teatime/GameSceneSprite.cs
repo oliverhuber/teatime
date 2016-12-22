@@ -15,6 +15,7 @@ namespace Teatime
 		SKSpriteNode secSprite;
 		SKShapeNode yourline;
 		SKLabelNode myLabel;
+		bool firstTouch;
 		protected GameSceneSprite(IntPtr handle) : base(handle)
 		{
 			// Note: this .ctor should not contain any initialization logic.
@@ -29,7 +30,7 @@ namespace Teatime
 			myLabel = new SKLabelNode("AppleSDGothicNeo-UltraLight")
 			{
 				Text = "Guten Tag, wie gehts dir heute?",
-				FontSize = 30,
+				FontSize = 20,
 				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2)
 			};
 			myLabel.Alpha = 0.9f;
@@ -48,10 +49,13 @@ namespace Teatime
 			oneSprite = new SKSpriteNode("spark");
 			oneSprite.Position = new CGPoint(200, 100);
 			oneSprite.ZPosition = 1;
+			oneSprite.XScale = 2f;
+			oneSprite.YScale = 2f;
+			oneSprite.Alpha = 0.7f;
 
-
+			firstTouch = false;
 			// Create Path for the line, between both sprites
-			var path = new CGPath();
+			/*var path = new CGPath();
 			path.AddLines(new CGPoint[]{
 				new CGPoint (oneSprite.Position.X, oneSprite.Position.Y),
 				new CGPoint (secSprite.Position.X, secSprite.Position.Y)
@@ -62,14 +66,15 @@ namespace Teatime
 			// Generate Line according to Path
 			yourline = new SKShapeNode();
 			yourline.Path = path;
-
+			*/
 			// Add Contextposition and add them to the scene
 			myLabel.ZPosition = 1;
 			container.ZPosition = 0;
-			yourline.ZPosition = 2;
-			AddChild(yourline);
-			AddChild(oneSprite);
-			AddChild(secSprite);
+			//yourline.ZPosition = 2;
+
+			//AddChild(yourline);
+			//AddChild(oneSprite);
+			//AddChild(secSprite);
 			AddChild(myLabel);
 			AddChild(container);
 
@@ -90,14 +95,14 @@ namespace Teatime
 				{
 					float offsetX = (float)(touch.LocationInView(View).X);
 					float offsetY = (float)(touch.LocationInView(View).Y);
-					oneSprite.ScaleTo(new CGSize(oneSprite.Size.Width + (offsetX / 1000), oneSprite.Size.Height + (offsetY / 1000)));
+				//	oneSprite.ScaleTo(new CGSize(oneSprite.Size.Width + (offsetX / 1000), oneSprite.Size.Height + (offsetY / 1000)));
 
 
 					oneSprite.Position = location;
-					myLabel.Text = offsetX + " " + offsetY;
+					//myLabel.Text = offsetX + " " + offsetY;
 
 
-					var path = new CGPath();
+				/*	var path = new CGPath();
 					path.AddLines(new CGPoint[]{
 						new CGPoint (secSprite.Position.X, secSprite.Position.Y),
 						new CGPoint (offsetX, this.View.Frame.Height-offsetY),
@@ -105,6 +110,7 @@ namespace Teatime
 					path.CloseSubpath();
 
 					yourline.Path = path;
+					*/
 				}
 
 			}
@@ -114,7 +120,6 @@ namespace Teatime
 			// Called when a touch begins
 			foreach (var touch in touches)
 			{
-
 				//**********
 				UITouch touchc = touches.AnyObject as UITouch;
 				//SKNodeTouches_UITouch touch = touches.AnyObject as SKNodeTouches_UITouch;
@@ -123,9 +128,15 @@ namespace Teatime
 				// Check click
 				var checkX = ((UITouch)touchc).LocationInNode(this).X;
 				var checkY = ((UITouch)touchc).LocationInNode(this).Y;
-
-
+				oneSprite.RemoveAllActions();
+				oneSprite.Position = new CGPoint(checkX, checkY);
 				//*******
+				if (firstTouch == false)
+				{
+					AddChild(oneSprite);
+					firstTouch = true;
+				}
+			
 
 				UIColor coloring;
 				var speed = 0;
@@ -153,15 +164,18 @@ namespace Teatime
 
 				}
 				else {
-					speed = 6;
+					speed = 4;
 					coloring = UIColor.Red;
 					myLabel.Text = "Nervös";
 					myLabel.Position = new CGPoint(Frame.Width / 2, (1 * (Frame.Height / 8)));
-					myLabel.RunAction(SKAction.RotateByAngle(NMath.PI * speed, 10.0));
+					//myLabel.RunAction(SKAction.RotateByAngle(NMath.PI * speed, 10.0));
 				}
 
+				SKAction scaleUp = SKAction.ScaleTo(3f, 5 - speed);
+				SKAction scaleDown = SKAction.ScaleTo(1f, 5 - speed);
+				SKAction scaleSeq = SKAction.Sequence(scaleUp, scaleDown);
+				oneSprite.RunAction(SKAction.RepeatActionForever(scaleSeq));
 
-			
 				for (int i = 1; i <= 100; i++)
 				{
 

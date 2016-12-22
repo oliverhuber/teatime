@@ -22,6 +22,10 @@ namespace Teatime
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton gotoNext2 { get; set; }
 
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton gotoNext4 { get; set; }
+
         [Action ("GotoNext_TouchUpInside:")]
         [GeneratedCode ("iOS Designer", "1.0")]
         partial void GotoNext_TouchUpInside (UIKit.UIButton sender);
@@ -29,6 +33,10 @@ namespace Teatime
         [Action ("GotoNext2_TouchUpInside:")]
         [GeneratedCode ("iOS Designer", "1.0")]
         partial void GotoNext2_TouchUpInside (UIKit.UIButton sender);
+
+        [Action ("GotoNext4_TouchUpInside:")]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        partial void GotoNext4_TouchUpInside (UIKit.UIButton sender);
 
         void ReleaseDesignerOutlets ()
         {
@@ -40,6 +48,11 @@ namespace Teatime
             if (gotoNext2 != null) {
                 gotoNext2.Dispose ();
                 gotoNext2 = null;
+            }
+
+            if (gotoNext4 != null) {
+                gotoNext4.Dispose ();
+                gotoNext4 = null;
             }
         }
     }

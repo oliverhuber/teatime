@@ -134,6 +134,7 @@
     <BundleResource Include="Resources\logoteatime.png" />
     <BundleResource Include="Resources\logoteatime_white.png" />
     <BundleResource Include="GameSceneSprite.sks" />
+    <BundleResource Include="GameSceneScene.sks" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
@@ -164,7 +165,11 @@
     <Compile Include="GameSubViewSpriteController.designer.cs">
       <DependentUpon>GameSubViewSpriteController.cs</DependentUpon>
     </Compile>
-    <Compile Include="CoordinateSystem.cs" />
+    <Compile Include="GameSubViewSceneController.cs" />
+    <Compile Include="GameSubViewSceneController.designer.cs">
+      <DependentUpon>GameSubViewSceneController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GameSceneScene.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
