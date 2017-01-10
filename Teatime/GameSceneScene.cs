@@ -212,7 +212,7 @@ namespace Teatime
 							ZPosition = 10         
 
 						};
-						this.AddChild(sprite);
+						//this.AddChild(sprite);
 						touchedNode.Color = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
 
 					}

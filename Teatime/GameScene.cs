@@ -21,6 +21,7 @@ namespace Teatime
 		SKLabelNode myLabel2;
 		SKLabelNode myLabel3;
 		SKLabelNode myLabel4;
+		SKLabelNode mySave;
 		nfloat LastX;
 		nfloat LastY;
 		int changeColor;
@@ -116,6 +117,17 @@ namespace Teatime
 			fieldNode.Strength = 0.5f;
 			fieldNode.Region = new SKRegion(Frame.Size);
 			AddChild(fieldNode);
+
+			mySave = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+			{
+				Text = "next >",
+				FontSize = 18,
+				Position = new CGPoint(Frame.Width - 50, (Frame.Height - 40))
+			};
+			mySave.FontColor = UIColor.FromHSB((nfloat)0, 0, 3f);
+			mySave.Alpha = 0.9f;
+			mySave.ZPosition = 2;
+			this.AddChild(mySave);
 
 			// Set Color Flag
 			changeColor = 0;
@@ -395,20 +407,79 @@ namespace Teatime
 				UITouch touchc = touches.AnyObject as UITouch;
 
 				// Check click
+				var locationc = ((UITouch)touchc).LocationInNode(this);
 				var checkX = ((UITouch)touchc).LocationInView(View).X;
 				var checkY = ((UITouch)touchc).LocationInView(View).Y;
 
 				// other coordinate system
 				//var checkX = ((UITouch)touchc).LocationInNode(this).X;
 				//var checkY = ((UITouch)touchc).LocationInNode(this).Y;
+				var nodeType = GetNodeAtPoint(locationc);
+				if (nodeType is SKLabelNode)
+				{
+					changeColor++;
 
-				if (changeColor % 2 == 0)
+				/*	if (((SKLabelNode)nodeType).Text.Equals("next >"))
+					{
+						changeColor++;
+					}*/
+				}
+				/*
+					// Change Color Theme
+					changeColor++;
+					if (changeColor % 3 == 0)
+					{
+						// Background Calculating
+						this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
+
+					}
+					else if (changeColor % 3 == 1)
+					{
+						// Background Calculating
+						this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 1f, (nfloat)(((checkX / Frame.Width) / 2) * 1 + ((0.3333333f))));
+					}
+					else if (changeColor % 3 == 2)
+					{
+						// Background Calculating
+						this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 1f, (nfloat)(((checkX / Frame.Width) / 2) * 1 + ((0.3333333f))));
+					}
+					else {
+						// Background Calculating
+						this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
+					}
+					//	changeTexture();
+					// do something with the double touch.
+
+				}
+				else {
+					if (changeColor % 2 == 0)
+					{
+						// Background Calculating
+						this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
+
+					}
+					else if (changeColor % 2 == 1)
+					{
+						// Background Calculating
+						this.BackgroundColor = UIColor.FromHSB((nfloat)0, 0, (nfloat)(((checkX / Frame.Width) / 2) * 1 + ((0.3333333f))));
+					}
+					else {
+						// Background Calculating
+						this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
+					}
+				//}*/
+				if (changeColor % 3 == 0)
 				{
 					// Background Calculating
 					this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
 
 				}
-				else if (changeColor % 2 == 1)
+				else if (changeColor % 3 == 1)
+				{
+					// Background Calculating
+					this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 1f, (nfloat)(((checkX / Frame.Width) / 2) * 1 + ((0.3333333f))));
+				}
+				else if (changeColor % 3 == 2)
 				{
 					// Background Calculating
 					this.BackgroundColor = UIColor.FromHSB((nfloat)0, 0, (nfloat)(((checkX / Frame.Width) / 2) * 1 + ((0.3333333f))));
@@ -417,7 +488,6 @@ namespace Teatime
 					// Background Calculating
 					this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
 				}
-
 				// Check to which part the finger is moved to and update the sparks
 				double speed = 0;
 				if (checkY > 3 * (Frame.Height / 4))
@@ -443,33 +513,7 @@ namespace Teatime
 				LastX = checkX;
 				LastY = checkY;
 				// Double tapped
-				if (touchc.TapCount == 2)
-				{
-					// Change Color Theme
-					changeColor++;
-					if (changeColor % 3 == 0)
-					{
-						// Background Calculating
-						this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
 
-					}
-					else if (changeColor % 3 == 1)
-					{
-						// Background Calculating
-						this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 1f, (nfloat)(((checkX / Frame.Width) / 2) * 1 + ((0.3333333f))));
-					}
-					else if (changeColor % 3 == 2)
-					{
-						// Background Calculating
-						this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 1f, (nfloat)(((checkX / Frame.Width) / 2) * 1 + ((0.3333333f))));
-					}
-					else {
-						// Background Calculating
-						this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
-					}
-					//	changeTexture();
-					// do something with the double touch.
-				}
 
 			}
 		}
