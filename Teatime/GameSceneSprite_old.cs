@@ -93,7 +93,7 @@ namespace Teatime
 			fireEmitter.Position = location;
 			fireEmitter.NumParticlesToEmit = 0;
 			fireEmitter.ZPosition = 2;
-			fireEmitter.ParticleAlpha = 0.3f;
+			fireEmitter.ParticleAlpha = 0.1f;
 			//fireEmitter.EmissionAngle = 300f;
 			fireEmitter.XAcceleration = 0;
 			fireEmitter.YAcceleration = 1;
@@ -116,14 +116,6 @@ namespace Teatime
 
 
 		}
-		public void updateEmitter(nfloat coordX,nfloat coordY) { 
-			fireEmitter.ParticleScale = 0.6f * ((1/Frame.Width)*coordX) +0.2f ;
-			fireEmitter.ParticleSpeedRange = 100f+coordY;
-			fireEmitter.ParticleScaleRange = 0.3f*((1 / Frame.Width) * coordX) +0.2f;
-			fireEmitter.ParticleScaleSpeed = -0.1f;
-			fireEmitter.ParticleBirthRate = 600-coordY;
-		
-		}
 		public override void TouchesMoved(NSSet touches, UIEvent evt)
 		{
 			
@@ -133,22 +125,19 @@ namespace Teatime
 			var location = ((UITouch)touch).LocationInNode(this);
 			if (touch != null)
 			{
-				nfloat offsetX = (nfloat)(touch.LocationInNode(this).X);
-				nfloat offsetY = (nfloat)(touch.LocationInNode(this).Y);
-				updateEmitter(offsetX,offsetY);
-				fireEmitter.Position = location;
+				
 
 				if (oneSprite.Frame.Contains(((UITouch)touch).LocationInNode(this)))
 				{
-					//float offsetX = (float)(touch.LocationInView(View).X);
-					//float offsetY = (float)(touch.LocationInView(View).Y);
+					float offsetX = (float)(touch.LocationInView(View).X);
+					float offsetY = (float)(touch.LocationInView(View).Y);
 				//	oneSprite.ScaleTo(new CGSize(oneSprite.Size.Width + (offsetX / 1000), oneSprite.Size.Height + (offsetY / 1000)));
 
 
-				//	oneSprite.Position = location;
+					oneSprite.Position = location;
 					//myLabel.Text = offsetX + " " + offsetY;
-					//fireEmitter.Position = location;
-				
+					fireEmitter.Position = location;
+
 				/*	var path = new CGPath();
 					path.AddLines(new CGPoint[]{
 						new CGPoint (secSprite.Position.X, secSprite.Position.Y),
@@ -162,7 +151,6 @@ namespace Teatime
 
 			}
 		}
-
 		public override void TouchesBegan(NSSet touches, UIEvent evt)
 		{
 			// Called when a touch begins
@@ -174,17 +162,15 @@ namespace Teatime
 				var locationc = ((UITouch)touchc).LocationInNode(this);
 
 				// Check click
-				nfloat checkX = ((UITouch)touchc).LocationInNode(this).X;
-				nfloat checkY = ((UITouch)touchc).LocationInNode(this).Y;
-			//	oneSprite.RemoveAllActions();
-			//	oneSprite.Position = new CGPoint(checkX, checkY);
-			//	fireEmitter.Position = new CGPoint(checkX, checkY);
-				fireEmitter.Position = locationc;
-				updateEmitter(checkX,checkY);
+				var checkX = ((UITouch)touchc).LocationInNode(this).X;
+				var checkY = ((UITouch)touchc).LocationInNode(this).Y;
+				oneSprite.RemoveAllActions();
+				oneSprite.Position = new CGPoint(checkX, checkY);
+				fireEmitter.Position = new CGPoint(checkX, checkY);
 				//*******
 				if (firstTouch == false)
 				{
-					//AddChild(oneSprite);
+					AddChild(oneSprite);
 					AddChild(fireEmitter);
 					firstTouch = true;
 				}
@@ -226,8 +212,8 @@ namespace Teatime
 				SKAction scaleUp = SKAction.ScaleTo(3f, 5 - speed);
 				SKAction scaleDown = SKAction.ScaleTo(1f, 5 - speed);
 				SKAction scaleSeq = SKAction.Sequence(scaleUp, scaleDown);
-			//	oneSprite.RunAction(SKAction.RepeatActionForever(scaleSeq));
-				/*
+				oneSprite.RunAction(SKAction.RepeatActionForever(scaleSeq));
+
 				for (int i = 1; i <= 100; i++)
 				{
 
@@ -257,7 +243,7 @@ namespace Teatime
 					sprite.RunAction(SKAction.RepeatActionForever(action));
 					sprite.ZPosition = 1;
 					AddChild(sprite);
-				}*/
+				}
 			}
 		}
 

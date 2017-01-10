@@ -170,6 +170,8 @@
       <DependentUpon>GameSubViewSceneController.cs</DependentUpon>
     </Compile>
     <Compile Include="GameSceneScene.cs" />
+    <Compile Include="GameSceneSprite_old.cs" />
+    <Compile Include="FieldNode.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
