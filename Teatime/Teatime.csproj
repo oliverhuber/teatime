@@ -119,6 +119,8 @@
     <ImageAsset Include="Assets.xcassets\spark4.imageset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\spark4.imageset\spark4.png" />
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\120 - iPhone Teatime.png" />
+    <ImageAsset Include="Assets.xcassets\line.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\line.imageset\line.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -127,6 +129,7 @@
     <Folder Include="Assets.xcassets\spark2.imageset\" />
     <Folder Include="Assets.xcassets\spark3.imageset\" />
     <Folder Include="Assets.xcassets\spark4.imageset\" />
+    <Folder Include="Assets.xcassets\line.imageset\" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="GameScene.sks" />
@@ -135,6 +138,7 @@
     <BundleResource Include="Resources\logoteatime_white.png" />
     <BundleResource Include="GameSceneSprite.sks" />
     <BundleResource Include="GameSceneScene.sks" />
+    <BundleResource Include="GameSceneLine.sks" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
@@ -170,8 +174,13 @@
       <DependentUpon>GameSubViewSceneController.cs</DependentUpon>
     </Compile>
     <Compile Include="GameSceneScene.cs" />
-    <Compile Include="GameSceneSprite_old.cs" />
     <Compile Include="FieldNode.cs" />
+    <Compile Include="GameSubViewLineController.cs" />
+    <Compile Include="GameSubViewLineController.designer.cs">
+      <DependentUpon>GameSubViewLineController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GameSceneLine.cs" />
+    <Compile Include="LineNode.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
