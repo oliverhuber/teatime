@@ -139,6 +139,7 @@
     <BundleResource Include="GameSceneSprite.sks" />
     <BundleResource Include="GameSceneScene.sks" />
     <BundleResource Include="GameSceneLine.sks" />
+    <BundleResource Include="GameSceneDraw.sks" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
@@ -181,6 +182,12 @@
     </Compile>
     <Compile Include="GameSceneLine.cs" />
     <Compile Include="LineNode.cs" />
+    <Compile Include="GameSubViewDrawController.cs" />
+    <Compile Include="GameSubViewDrawController.designer.cs">
+      <DependentUpon>GameSubViewDrawController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GameSceneDraw.cs" />
+    <Compile Include="LineNodeDraw.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

@@ -96,8 +96,8 @@
                                     <constraint id="345" firstItem="232" firstAttribute="width" constant="95"/>
                                 </constraints>
                             </imageView>
-                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="886" translatesAutoresizingMaskIntoConstraints="NO" alpha="0.75" opaque="NO" misplaced="YES">
-                                <rect key="frame" x="178" y="255" width="245" height="42"/>
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="886" translatesAutoresizingMaskIntoConstraints="NO" alpha="0.75" opaque="NO">
+                                <rect key="frame" x="178" y="253" width="245" height="42"/>
                                 <fontDescription key="fontDescription" name="AppleSDGothicNeo-UltraLight" family="Apple SD Gothic Neo" pointSize="19"/>
                                 <color key="backgroundColor" colorSpace="calibratedRGB" red="0.87058823529411766" green="0.9137254901960784" blue="0.996078431372549" alpha="1"/>
                                 <state key="normal" title="Prototype 3">
@@ -124,8 +124,8 @@
                                     <constraint id="892" firstItem="886" firstAttribute="height" constant="42"/>
                                 </constraints>
                             </button>
-                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1061" translatesAutoresizingMaskIntoConstraints="NO" alpha="0.75" opaque="NO" misplaced="YES">
-                                <rect key="frame" x="177" y="317" width="245" height="42"/>
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1061" translatesAutoresizingMaskIntoConstraints="NO" alpha="0.75" opaque="NO">
+                                <rect key="frame" x="177" y="315" width="245" height="42"/>
                                 <fontDescription key="fontDescription" name="AppleSDGothicNeo-UltraLight" family="Apple SD Gothic Neo" pointSize="19"/>
                                 <color key="backgroundColor" colorSpace="calibratedRGB" red="0.87058823529411766" green="0.9137254901960784" blue="0.996078431372549" alpha="1"/>
                                 <state key="normal" title="Prototype 4">
@@ -152,6 +152,34 @@
                                     <constraint id="1069" firstItem="1061" firstAttribute="height" constant="42"/>
                                 </constraints>
                             </button>
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1107" translatesAutoresizingMaskIntoConstraints="NO" alpha="0.75" opaque="NO">
+                                <rect key="frame" x="177" y="377" width="245" height="42"/>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-UltraLight" family="Apple SD Gothic Neo" pointSize="19"/>
+                                <color key="backgroundColor" colorSpace="calibratedRGB" red="0.87058823529411766" green="0.9137254901960784" blue="0.996078431372549" alpha="1"/>
+                                <state key="normal" title="Prototype 5">
+                                    <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <color key="titleColor" colorSpace="calibratedRGB" red="0.18823529411764706" green="0.69803921568627447" blue="0.81176470588235294" alpha="1"/>
+                                </state>
+                                <connections>
+                                    <action selector="GotoNext_TouchUpInside:" destination="1109" id="1108" eventType="touchUpInside"/>
+                                    <action selector="GotoNext4_TouchUpInside:" destination="1111" id="1110" eventType="touchUpInside"/>
+                                    <segue id="1167" destination="1121" kind="show"/>
+                                </connections>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="29" y="128" width="245" height="35"/>
+                                </variation>
+                                <constraints>
+                                    <constraint id="1114" firstItem="1107" firstAttribute="width" constant="245">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="280"/>
+                                    </constraint>
+                                    <constraint id="1115" firstItem="1107" firstAttribute="height" constant="42"/>
+                                </constraints>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint id="310" firstItem="224" firstAttribute="top" secondItem="32" secondAttribute="bottom" constant="20"/>
@@ -168,6 +196,8 @@
                             <constraint id="1056" firstItem="886" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX"/>
                             <constraint id="1071" firstItem="1061" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX"/>
                             <constraint id="1072" firstItem="1061" firstAttribute="top" secondItem="886" secondAttribute="bottom" constant="20"/>
+                            <constraint id="1116" firstItem="1107" firstAttribute="top" secondItem="1061" secondAttribute="bottom" constant="20"/>
+                            <constraint id="1117" firstItem="1107" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX"/>
                         </constraints>
                     </view>
                     <connections>
@@ -175,6 +205,7 @@
                         <outlet property="gotoNext2" destination="224" id="name-outlet-224"/>
                         <outlet property="gotoNext4" destination="886" id="name-outlet-886"/>
                         <outlet property="gotoNext5" destination="1061" id="name-outlet-1061"/>
+                        <outlet property="gotoNext6" destination="1107" id="name-outlet-1107"/>
                     </connections>
                     <navigationItem title="Teatime" id="114" key="navigationItem"/>
                 </viewController>
@@ -336,7 +367,7 @@
                                 <fontDescription key="fontDescription" name="AppleSDGothicNeo-UltraLight" family="Apple SD Gothic Neo" pointSize="17"/>
                                 <size key="titleShadowOffset" width="0" height="0"/>
                                 <state key="normal" title="&lt; back">
-                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <color key="titleColor" colorSpace="calibratedWhite" white="0.666666666666667" alpha="1"/>
                                 </state>
                             </button>
                         </subviews>
@@ -350,6 +381,41 @@
             </objects>
             <point key="canvasLocation" x="200" y="841"/>
         </scene>
+        <scene sceneID="1120">
+            <objects>
+                <viewController id="1121" sceneMemberID="viewController" customClass="GameSubViewDrawController" storyboardIdentifier="GameSubViewDrawController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1118"/>
+                        <viewControllerLayoutGuide type="bottom" id="1119"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1122" customClass="SKView">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1169" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" alpha="0.8">
+                                <rect key="frame" x="20" y="26" width="71" height="30"/>
+                                <connections>
+                                    <action selector="UnwindProto_TouchUpInside:" destination="1173" id="1172" eventType="touchUpInside"/>
+                                    <segue id="1175" destination="1124" kind="unwind" unwindAction="UnwindToPrototypes:"/>
+                                </connections>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-UltraLight" family="Apple SD Gothic Neo" pointSize="17"/>
+                                <size key="titleShadowOffset" width="0" height="0"/>
+                                <state key="normal" title="&lt; back">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
+                            </button>
+                        </subviews>
+                    </view>
+                    <connections>
+                        <outlet property="UnwindProto6" destination="1169" id="name-outlet-1169"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1123" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="1124" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="892" y="838"/>
+        </scene>
     </scenes>
     <resources>
         <image name="background" width="640" height="1136"/>
@@ -359,5 +425,6 @@
         <image name="spark" width="64" height="64"/>
         <image name="logoteatime.png" width="1280" height="800"/>
         <image name="logoteatime_white.png" width="1280" height="800"/>
+        <image name="line" width="64" height="64"/>
     </resources>
 </document>
