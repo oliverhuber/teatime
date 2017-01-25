@@ -4,28 +4,51 @@ using SQLite;
 
 namespace Teatime
 {
-	// Table specificaition
-	[Table("Items")]
-	public class Stock
+	/*// Table specificaition
+	[Table("UserInput")]
+	public class UserInput
 	{
 		[PrimaryKey, AutoIncrement, Column("_id")]
 		public int Id { get; set; }
-		[MaxLength(8)]
-		public string Symbol { get; set; }
-	}
+		public int PrototypeNr { get; set; }
+		[MaxLength(10)]
+		public string Username { get; set; }
+		public int Dim1 { get; set; }
+		public int Dim2 { get; set; }
+		public int Dim3 { get; set; }
+		[MaxLength(255)]
+		public string Comment { get; set; }
 
-	public class DatabaseMgmt
+	}
+*/
+
+	public static class DatabaseMgmt
 	{
-		public DatabaseMgmt()
+		static TeatimeDatabase database;
+
+		public static TeatimeDatabase Database
 		{
+			get
+			{
+				if (database == null)
+				{
+					database = new TeatimeDatabase(new FileHelper().GetLocalFilePath("TeatimeSQLite.db3"));
+				}
+				return database;
+			}
+		}
+		//public DatabaseMgmt()
+		//{
+		/*
 
 			// DB Path and Connection
 			string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal),"teatime.db3");
 			var db = new SQLiteConnection(dbPath);
 
 			// DB Setup	and Initialisation
-			db.CreateTable<Stock>();
-			if (db.Table<Stock>().Count() == 3)
+
+			db.CreateTable<UserInput>();/*
+			if (db.Table<UserInput>().Count() == 0)
 			{
 				// only insert the data if it doesn't already exist
 				var newStock = new Stock();
@@ -57,12 +80,12 @@ namespace Teatime
 		//	var stock = db.Get<Stock>(5); // primary key id of 5
 		//	var stockList = db.Table<Stock>();
 			Console.WriteLine("Reading data");
-			var table = db.Table<Stock>();
+			var table = db.Table<UserInput>();
 			foreach (var s in table)
 			{
-				Console.WriteLine(s.Id + " " + s.Symbol);
+				Console.WriteLine(s.Id + " " + s.Username);
 			}
 		}
-		
+		*/
 	}
 }

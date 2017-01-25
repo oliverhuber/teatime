@@ -10,6 +10,11 @@ namespace Teatime
 {
 	public class GameSceneScene : SKScene
 	{
+		public int Proto3Dim1 { get; set; }
+		public int Proto3Dim2 { get; set; }
+		public int Proto3Dim3 { get; set; }
+		nfloat hueTop, satTop, briTop, alpTop, hueBel, satBel, briBel, alpBel;
+
 		int gameMode;
 		SKLabelNode myLabel;
 		SKLabelNode mySave;
@@ -27,6 +32,9 @@ namespace Teatime
 
 		public override void DidMoveToView(SKView view)
 		{
+			Proto3Dim1 = 0;
+			Proto3Dim2 = 0;
+			Proto3Dim3 = 0;
 			gameMode = 0;
 			generateSparks();
 			createEmitterNode();
@@ -37,6 +45,15 @@ namespace Teatime
 				Position = new CGPoint(Frame.Width / 2, (Frame.Height / 2) + 20)
 			};
 			myLabel.FontColor = UIColor.FromHSB((nfloat)0, 0, 3f);
+			hueTop = 0;
+			hueBel = 0;
+			satTop = 0;
+			satBel = 0;
+			alpTop = 0;
+			alpBel = 0;
+			briTop = 0.3f;
+			briBel = 0.6f;
+
 			myLabel.Alpha = 0.9f;
 			myLabel.ZPosition = 2;
 			myLabel2 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
@@ -52,7 +69,32 @@ namespace Teatime
 			this.AddChild(myLabel);
 			this.AddChild(myLabel2);
 		}
+		public void saveProto3Input()
+		{
+			//throw new NotImplementedException();
+			TeatimeItem item;
+			item = new TeatimeItem();
+			item.Username = "Oliver";
+			item.dateInserted = DateTime.Now.ToLocalTime();
+			item.Dim1 = Proto3Dim1;
+			item.Dim2 = Proto3Dim2;
+			item.Dim3 = Proto3Dim3;
+			item.PrototypeNr = 3;
+			item.Comment = "test";
+			DatabaseMgmt.Database.SaveItem(item);
+			// TeatimeItem returnItem =  DatabaseMgmt.Database.GetItem(2);
+			// Console.WriteLine(returnItem.Username);
+			Console.WriteLine("Start Output: --------------------------------");
+			foreach (var s in DatabaseMgmt.Database.GetItemsUserOliver
+					 ())
+			{
 
+				Console.WriteLine("Username:" + s.Username + ", DateInserted:" + s.dateInserted + ", Dimension1:" + s.Dim1 + ", Dimension2:" + s.Dim2 + ", Dimension3:" + s.Dim3 + ", ProtypeNr:" + s.PrototypeNr + ", Comment:" + s.Comment);
+				//DatabaseMgmt.Database.DeleteItem(s);
+			}
+			Console.WriteLine("End Output: --------------------------------");
+
+		}
 		public void followDrag()
 		{
 			// Update all SparkNodes with speed, random factor, disturbfactor and vibration
@@ -214,7 +256,17 @@ namespace Teatime
 						};
 						//this.AddChild(sprite);
 						touchedNode.Color = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
-
+						if (touchedNode == spriteTop)
+						{
+							hueTop = (nfloat)(checkY / Frame.Height);
+							satTop = 0.5f;
+							briTop = (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f)));
+						}
+						else {
+							hueBel= (nfloat)(checkY / Frame.Height);
+							satBel= 0.5f;
+							briBel = (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f)));
+						}
 					}
 					if (gameMode == 0)
 					{
@@ -229,6 +281,14 @@ namespace Teatime
 						mySave.ZPosition = 2;
 						this.AddChild(mySave);
 					}
+					//UIColor topColor = spriteTop.Color;
+
+					//UIColor belColor = spriteBelow.Color;
+
+					Proto3Dim1 = (int)((hueTop - hueBel) * 30) ;
+					Proto3Dim2 = (int)((satTop - satBel) * 30);
+					Proto3Dim3 = (int)((briTop - briBel) * 30);
+
 					if (gameMode == 0)
 					{
 						if (checkYBig > Frame.Height / 2)

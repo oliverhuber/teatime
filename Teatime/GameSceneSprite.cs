@@ -10,6 +10,9 @@ namespace Teatime
 {
 	public class GameSceneSprite : SKScene
 	{
+		public int Proto2Dim1 { get; set; }
+		public int Proto2Dim2 { get; set; }
+		public int Proto2Dim3 { get; set; }
 		// Class declarations of the sprite nodes
 		SKSpriteNode oneSprite;
 		SKSpriteNode secSprite;
@@ -25,6 +28,9 @@ namespace Teatime
 
 		public override void DidMoveToView(SKView view)
 		{
+			Proto2Dim1 = 0;
+			Proto2Dim2 = 0;
+			Proto2Dim3 = 0;
 			// Setup Sprite Scene
 
 			// New Label placed in the middle of the Screen
@@ -81,7 +87,34 @@ namespace Teatime
 			createEmitterNode();
 
 		}
-	public void createEmitterNode()
+
+		public void saveProto2Input()
+		{
+			//throw new NotImplementedException();
+			TeatimeItem item;
+			item = new TeatimeItem();
+			item.Username = "Oliver";
+			item.dateInserted = DateTime.Now.ToLocalTime();
+			item.Dim1 = Proto2Dim1;
+			item.Dim2 = Proto2Dim1;
+			item.Dim3 = Proto2Dim3;
+			item.PrototypeNr = 2;
+			item.Comment = "test";
+			DatabaseMgmt.Database.SaveItem(item);
+			// TeatimeItem returnItem =  DatabaseMgmt.Database.GetItem(2);
+			// Console.WriteLine(returnItem.Username);
+			Console.WriteLine("Start Output: --------------------------------");
+			foreach (var s in DatabaseMgmt.Database.GetItemsUserOliver
+					 ())
+			{
+
+				Console.WriteLine("Username:" + s.Username + ", DateInserted:" + s.dateInserted + ", Dimension1:" + s.Dim1 + ", Dimension2:" + s.Dim2 + ", Dimension3:" + s.Dim3 + ", ProtypeNr:" + s.PrototypeNr + ", Comment:" + s.Comment);
+				//DatabaseMgmt.Database.DeleteItem(s);
+			}
+			Console.WriteLine("End Output: --------------------------------");
+
+		}
+		public void createEmitterNode()
 		{
 			//setup a fire emitter
 			var location = new CGPoint();
@@ -162,7 +195,48 @@ namespace Teatime
 
 			}
 		}
+		public override void TouchesEnded(NSSet touches, UIEvent evt)
+		{
+			base.TouchesEnded(touches, evt);
+			UITouch touch = touches.AnyObject as UITouch;
+			if (touch != null)
+			{
+				//Release the Changed center
 
+				// Check click
+				var checkX = ((UITouch)touch).LocationInView(View).X;
+				var checkY = ((UITouch)touch).LocationInView(View).Y;
+				if (checkY > 3 * (Frame.Height / 4))
+				{
+					Proto2Dim1 = 1;
+					Proto2Dim2 = 2;
+					Proto2Dim3 = 1;
+					myLabel.Text = "Glücklich";
+				}
+				else if (checkY < 3 * (Frame.Height / 4) && checkY > Frame.Height / 2){
+					Proto2Dim1 = 3;
+					Proto2Dim2 = 1;
+					Proto2Dim3 = 2;
+					myLabel.Text = "Zufrieden";
+
+				}
+				else if (checkY < Frame.Height / 2 && checkY > Frame.Height / 4)
+				{
+					Proto2Dim1 = 2;
+					Proto2Dim2 = 3;
+					Proto2Dim3 = 1;
+					myLabel.Text = "Beunruhigt";
+
+				}
+				else {
+					Proto2Dim1 = 3;
+					Proto2Dim2 = 2;
+					Proto2Dim3 = 1;
+					myLabel.Text = "Nervös";
+					//myLabel.RunAction(SKAction.RotateByAngle(NMath.PI * speed, 10.0));
+				}
+			}
+		}
 		public override void TouchesBegan(NSSet touches, UIEvent evt)
 		{
 			// Called when a touch begins

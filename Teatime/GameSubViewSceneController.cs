@@ -14,7 +14,7 @@ namespace Teatime
 
 
 		GameViewController gameViewController;
-
+		GameSceneScene scene;
 		public GameSubViewSceneController()
 		{
 
@@ -41,7 +41,7 @@ namespace Teatime
 			skView.SizeToFit();
 
 			// Create and configure the scene.
-			var scene = SKNode.FromFile<GameSceneScene>("GameSceneScene");
+			scene = SKNode.FromFile<GameSceneScene>("GameSceneScene");
 			scene.ScaleMode = SKSceneScaleMode.ResizeFill;
 			scene.Size = View.Bounds.Size;
 			skView.PresentScene(scene);
@@ -50,7 +50,8 @@ namespace Teatime
 
 		partial void UnwindProto4_TouchUpInside(UIButton sender)
 		{
-		//	throw new NotImplementedException();
+			//	throw new NotImplementedException();
+			scene.saveProto3Input();
 		}
 
 

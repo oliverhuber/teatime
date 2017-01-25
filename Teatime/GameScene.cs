@@ -13,6 +13,9 @@ namespace Teatime
 {
 	public class GameScene : SKScene
 	{
+		public int Proto1Dim1 { get; set; }
+		public int Proto1Dim2 { get; set; }
+		public int Proto1Dim3 { get; set; }
 		bool pressAndFollow;
 		CGPoint globalCenter;
 		SKFieldNode fieldNode;
@@ -32,6 +35,9 @@ namespace Teatime
 	
 		public override void DidMoveToView(SKView view)
 		{
+			Proto1Dim1 = 0;
+			Proto1Dim2 = 0;
+			Proto1Dim3 = 0;
 			// Setup Scene with SKNodes and call the sparks generator
 			// Set inital bgcolor
 			this.BackgroundColor = UIColor.FromRGBA(100, 200, 200, 155);
@@ -332,9 +338,9 @@ namespace Teatime
 				fieldNode.Position= new CGPoint(checkX_Location, checkY_Location);
 				if (changeColor % 3 == 0)
 				{
+					
 					// Background Calculating
 					this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
-
 				}
 				else if (changeColor % 3 == 1)
 				{
@@ -352,7 +358,6 @@ namespace Teatime
 				}
 				// Check to which part the finger is moved to and update the sparks
 
-				var speed = 0;
 				//if (Math.Abs((int)checkX_Location) % 1 == 0)
 				//{
 					globalCenter = new CGPoint(checkX_Location, checkY_Location);
@@ -361,6 +366,31 @@ namespace Teatime
 			
 			}
 		}
+		public void saveProto1Input() { 
+						//throw new NotImplementedException();
+			TeatimeItem item;
+			item = new TeatimeItem();
+			item.Username = "Oliver";
+			item.dateInserted = DateTime.Now.ToLocalTime();
+			item.Dim1 = Proto1Dim1;
+			item.Dim2 = Proto1Dim1;
+			item.Dim3 = Proto1Dim3;
+			item.PrototypeNr = 1;
+			item.Comment = "test";
+			DatabaseMgmt.Database.SaveItem(item);
+			// TeatimeItem returnItem =  DatabaseMgmt.Database.GetItem(2);
+			// Console.WriteLine(returnItem.Username);
+			Console.WriteLine("Start Output: --------------------------------");
+			foreach (var s in DatabaseMgmt.Database.GetItemsUserOliver
+					 ())
+			{
+
+				Console.WriteLine("Username:" + s.Username + ", DateInserted:" + s.dateInserted + ", Dimension1:" + s.Dim1 + ", Dimension2:" + s.Dim2 + ", Dimension3:" + s.Dim3 + ", ProtypeNr:" + s.PrototypeNr + ", Comment:" + s.Comment);
+				//DatabaseMgmt.Database.DeleteItem(s);
+			}
+			Console.WriteLine("End Output: --------------------------------");
+
+		} 
 		public override void TouchesEnded(NSSet touches, UIEvent evt)
 		{
 			base.TouchesEnded(touches, evt);
@@ -376,20 +406,32 @@ namespace Teatime
 				double speed = 0;
 				if (checkY > 3 * (Frame.Height / 4))
 				{
+					Proto1Dim1 = 1;
+					Proto1Dim2 = 1;
+					Proto1Dim3 = 1;
 					speed = 0.5;
 					updateSparks(speed, true, true, 8, true);
 				}
 				else if (checkY < 3 * (Frame.Height / 4) && checkY > Frame.Height / 2)
 				{
+					Proto1Dim1 = 2;
+					Proto1Dim2 = 2;
+					Proto1Dim3 = 2;
 					speed = 1;
 					updateSparks(speed, true, true, 4, true);
 				}
 				else if (checkY < Frame.Height / 2 && checkY > Frame.Height / 4)
 				{
+					Proto1Dim1 = 3;
+					Proto1Dim2 = 3;
+					Proto1Dim3 = 3;
 					speed = 2;
 					updateSparks(speed, true, true, 2, false);
 				}
 				else {
+					Proto1Dim1 = 4;
+					Proto1Dim2 = 4;
+					Proto1Dim3 = 4;
 					speed = 3;
 					updateSparks(speed, false, false, 0, false);
 				}

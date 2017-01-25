@@ -12,13 +12,12 @@ namespace Teatime
 		UIWindow window;
 		public static UIStoryboard Storyboard = UIStoryboard.FromName("Main", null);
 		public static UIViewController initialViewController;
-
 		public override UIWindow Window
 		{
 			get;
 			set;
 		}
-
+	
 		public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
 		{
 			// Override point for customization after application launch.

@@ -188,6 +188,16 @@
     </Compile>
     <Compile Include="GameSceneDraw.cs" />
     <Compile Include="LineNodeDraw.cs" />
+    <Compile Include="FileHelper.cs" />
+    <Compile Include="IFileHelper.cs" />
+    <Compile Include="TeatimeDatabase.cs" />
+    <Compile Include="TeatimeItem.cs" />
+    <Compile Include="showUserData.cs" />
+    <Compile Include="showUserData.designer.cs">
+      <DependentUpon>showUserData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TableSouce.cs" />
+    <Compile Include="CustomCell.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

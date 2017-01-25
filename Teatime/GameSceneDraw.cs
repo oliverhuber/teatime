@@ -4,7 +4,6 @@ using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-
 using CoreGraphics;
 using CoreImage;
 using Foundation;
@@ -22,7 +21,9 @@ namespace Teatime
 		SKSpriteNode currentSprite;
 		SKSpriteNode lastSprite;
 		SKSpriteNode nextSprite;
+		bool longPressEnabled = false;
 		LineNodeDraw baseLine;
+		bool startDragInside = false;
 		double xLast;
 		double xNext;
 		SKLabelNode timeLabel;
@@ -169,9 +170,43 @@ namespace Teatime
 		//	xLast = secSprite.Position.X;
 		//	xNext = oneSprite.Position.X;
 			nextSprite = oneSprite;
+
+
+			var gestureLongRecognizer = new UILongPressGestureRecognizer(PressHandler);
+			gestureLongRecognizer.MinimumPressDuration = 1;
+			this.View.AddGestureRecognizer(gestureLongRecognizer);
+		}
+		void PressHandler(UILongPressGestureRecognizer gestureRecognizer)
+		{
+
+			var image = gestureRecognizer.View;
+			if (gestureRecognizer.State == UIGestureRecognizerState.Began
+				|| gestureRecognizer.State == UIGestureRecognizerState.Changed)
+			{
+				SKLabelNode gesLabel;
+				// New Label placed in the middle of the Screen
+				gesLabel = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+				{
+					Text = "ges",
+					FontSize = 15,
+					Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 100)
+				};
+				gesLabel.Alpha = 0.0f;
+				gesLabel.ZPosition = 1;
+				//AddChild(gesLabel);
+				longPressEnabled = true;
+				gesLabel.Text = "LongPressed: " + gestureRecognizer.LocationOfTouch(0, image).ToString();
+				gesLabel.Alpha = 1.0f;
+				foreach (var spriteNode in Children.OfType<SKSpriteNode>())
+				{
+					SKAction actMove = SKAction.MoveToX(spriteNode.Position.X-2, 0.1);
+					SKAction actMoveBack = SKAction.MoveToX(spriteNode.Position.X+2, 0.1);
+					SKAction seq = SKAction.Sequence(actMove, actMoveBack);
+					spriteNode.RunAction(SKAction.RepeatActionForever(seq));
+				}
+			}
 		}
 
-		
 
 		void checkSprites()
 		{
@@ -361,6 +396,7 @@ namespace Teatime
 				//lastSprite = currentSprite;
 				//lastLine = currentLine;
 			}
+			startDragInside = false;
 
 		}
 		public override void TouchesBegan(NSSet touches, UIEvent evt)

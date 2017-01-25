@@ -6,6 +6,7 @@ namespace Teatime
 {
     public partial class GameSubViewSpriteController : UIViewController
     {
+		GameSceneSprite scene;
         public GameSubViewSpriteController (IntPtr handle) : base (handle)
         {
 			// Only test for commit
@@ -16,7 +17,10 @@ namespace Teatime
 		{
 
 		}
-
+		public override bool PrefersStatusBarHidden()
+		{
+			return true;
+		}
 		public override void ViewDidLoad()
 		{
 			base.ViewDidLoad();
@@ -30,7 +34,7 @@ namespace Teatime
 			skView.IgnoresSiblingOrder = true;
 
 			// Create and configure the scene.
-			var scene = SKNode.FromFile<GameSceneSprite>("GameSceneSprite");
+			scene = SKNode.FromFile<GameSceneSprite>("GameSceneSprite");
 			scene.ScaleMode = SKSceneScaleMode.ResizeFill;
 
 			// Present the scene.
@@ -38,6 +42,7 @@ namespace Teatime
 		}
 		partial void UnwindProtoSprite_TouchUpInside(UIButton sender)
 		{
+			scene.saveProto2Input();
 		}
 	}
 }
