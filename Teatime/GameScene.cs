@@ -38,6 +38,7 @@ namespace Teatime
 			Proto1Dim1 = 0;
 			Proto1Dim2 = 0;
 			Proto1Dim3 = 0;
+
 			// Setup Scene with SKNodes and call the sparks generator
 			// Set inital bgcolor
 			this.BackgroundColor = UIColor.FromRGBA(100, 200, 200, 155);
@@ -370,7 +371,13 @@ namespace Teatime
 						//throw new NotImplementedException();
 			TeatimeItem item;
 			item = new TeatimeItem();
-			item.Username = "Oliver";
+			if (DatabaseMgmt.inputName != null) {
+				item.Username = DatabaseMgmt.inputName;
+
+			}
+			else {
+				item.Username = "Anonym";
+			}
 			item.dateInserted = DateTime.Now.ToLocalTime();
 			item.Dim1 = Proto1Dim1;
 			item.Dim2 = Proto1Dim1;
@@ -381,7 +388,7 @@ namespace Teatime
 			// TeatimeItem returnItem =  DatabaseMgmt.Database.GetItem(2);
 			// Console.WriteLine(returnItem.Username);
 			Console.WriteLine("Start Output: --------------------------------");
-			foreach (var s in DatabaseMgmt.Database.GetItemsUserOliver
+			foreach (var s in DatabaseMgmt.Database.GetAllItems
 					 ())
 			{
 

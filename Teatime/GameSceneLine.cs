@@ -20,6 +20,9 @@ namespace Teatime
 	}
 	public class GameSceneLine : SKScene
 	{
+		public int Proto4Dim1 { get; set; }
+		public int Proto4Dim2 { get; set; }
+		public int Proto4Dim3 { get; set; }
 		// Class declarations of the sprite nodes
 		SKSpriteNode oneSprite;
 		SKSpriteNode secSprite;
@@ -42,7 +45,9 @@ namespace Teatime
 		public override void DidMoveToView(SKView view)
 		{
 			// Setup Sprite Scene
-
+			Proto4Dim1 = 0;
+			Proto4Dim2 = 0;
+			Proto4Dim3 = 0;
 			// New Label placed in the middle of the Screen
 			myLabel = new SKLabelNode("AppleSDGothicNeo-UltraLight")
 			{
@@ -107,6 +112,40 @@ namespace Teatime
 		
 
 		}
+		public void saveProto4Input()
+		{
+			//throw new NotImplementedException();
+			TeatimeItem item;
+			item = new TeatimeItem();
+			if (DatabaseMgmt.inputName != null)
+			{
+				item.Username = DatabaseMgmt.inputName;
+
+			}
+			else {
+				item.Username = "Anonym";
+			}
+			item.dateInserted = DateTime.Now.ToLocalTime();
+			item.Dim1 = Proto4Dim1;
+			item.Dim2 = Proto4Dim2;
+			item.Dim3 = Proto4Dim3;
+			item.PrototypeNr = 4;
+			item.Comment = "test";
+			DatabaseMgmt.Database.SaveItem(item);
+			// TeatimeItem returnItem =  DatabaseMgmt.Database.GetItem(2);
+			// Console.WriteLine(returnItem.Username);
+			Console.WriteLine("Start Output: --------------------------------");
+			foreach (var s in DatabaseMgmt.Database.GetAllItems
+					 ())
+			{
+
+				Console.WriteLine("Username:" + s.Username + ", DateInserted:" + s.dateInserted + ", Dimension1:" + s.Dim1 + ", Dimension2:" + s.Dim2 + ", Dimension3:" + s.Dim3 + ", ProtypeNr:" + s.PrototypeNr + ", Comment:" + s.Comment);
+				//DatabaseMgmt.Database.DeleteItem(s);
+			}
+			Console.WriteLine("End Output: --------------------------------");
+
+		}
+
 		 void CheckStatus(Object state)
 		{
 			TimerState s = (TimerState)state;
@@ -151,13 +190,19 @@ namespace Teatime
 				{
 					//lineNode.setUpdateSize(upperSize);
 					lineNode.setUpdateSpeed(upperSpeed,upperSize);
-
+					if (a == 19)
+					{
+						Proto4Dim1 =  Convert.ToInt32(lineNode.speedLocal * 10) ;
+						Proto4Dim2 =  Convert.ToInt32(lineNode.sizeLocal * 10);
+						Proto4Dim3 = Proto4Dim1 - Proto4Dim2;
+					}
 				}
 			}
 			//(s.tmr).Change(100, 100);
 			//Console.WriteLine("{0} Checking Status {1}.", DateTime.Now.TimeOfDay, s.counter);
 			if (s.counter == 19)
 			{
+				
 				//	Console.WriteLine("disposing of timer...");
 				s.tmr.Dispose();
 				s.tmr = null;

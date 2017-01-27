@@ -24,13 +24,14 @@ namespace Teatime
 			};*/
 			subheadingLabel = new UILabel()
 			{
-				Alpha = 0.5f,
+				Alpha = 1f,
 				Font = UIFont.FromName("AppleSDGothicNeo-Light", 12f),
 				TextColor = UIColor.White,
 				//TextColor = UIColor.FromRGB(38, 127, 0),
 				TextAlignment = UITextAlignment.Left,
-				BackgroundColor = UIColor.Purple
-				                         
+				BackgroundColor = UIColor.FromRGB((int)78, (int)91, (int)216)
+				 //startColor = UIColor.FromRGB((int)78, (int)191, (int)216);
+			//UIColor endColor = UIColor.FromRGB((int)78, (int)91, (int)216);
 
 			};
 			//subheadingLabel.

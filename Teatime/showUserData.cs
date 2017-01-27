@@ -41,7 +41,7 @@ namespace Teatime
 
 			//string[] tableItems = new string[100] ; //= new string[] { "Vegetables", "Fruits", "Flower Buds", "Legumes", "Bulbs", "Tubers" };
 				//Console.WriteLine("Start Output: --------------------------------");
-			foreach (var s in DatabaseMgmt.Database.GetItemsUserOliver
+			foreach (var s in DatabaseMgmt.Database.GetAllItems
 					 ())
 			{
 				//tableItems[s.Id] = s.dateInserted.ToString();

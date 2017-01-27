@@ -10,6 +10,7 @@ namespace Teatime
 {
 	public partial class GameViewController : UIViewController
 	{
+		
 		// Specify sub controllers
 		UIViewController gameSubViewController;
 		UIViewController gameSubViewSpriteController;
@@ -62,7 +63,22 @@ namespace Teatime
 				this.NavigationController.PushViewController(gameSubViewController, true);
 			};	*/
 
+			this.userName.Placeholder = "Dein Name";
+			//this.userName.
+			//this.userName.BackgroundColor = UIColor.FromRGB((int)78, (int)91, (int)216);
+			//this.userName.TextColor = UIColor.White;
+			    this.userName.ShouldReturn += (textField) =>
+			{
+				userName.ResignFirstResponder();
+				DatabaseMgmt.inputName = this.userName.Text;
+				return true;
+			};
+
+
 		}
+
+
+
 
 		// Buttons on Main Storyboard, both are connected with a segue to another Controller
 		partial void GotoNext2_TouchUpInside(UIButton sender)

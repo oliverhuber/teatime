@@ -74,8 +74,14 @@ namespace Teatime
 			//throw new NotImplementedException();
 			TeatimeItem item;
 			item = new TeatimeItem();
-			item.Username = "Oliver";
-			item.dateInserted = DateTime.Now.ToLocalTime();
+		if (DatabaseMgmt.inputName != null)
+			{
+				item.Username = DatabaseMgmt.inputName;
+
+			}
+			else {
+				item.Username = "Anonym";
+			}			item.dateInserted = DateTime.Now.ToLocalTime();
 			item.Dim1 = Proto3Dim1;
 			item.Dim2 = Proto3Dim2;
 			item.Dim3 = Proto3Dim3;
@@ -85,7 +91,7 @@ namespace Teatime
 			// TeatimeItem returnItem =  DatabaseMgmt.Database.GetItem(2);
 			// Console.WriteLine(returnItem.Username);
 			Console.WriteLine("Start Output: --------------------------------");
-			foreach (var s in DatabaseMgmt.Database.GetItemsUserOliver
+			foreach (var s in DatabaseMgmt.Database.GetAllItems
 					 ())
 			{
 

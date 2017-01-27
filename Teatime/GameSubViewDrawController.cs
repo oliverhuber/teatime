@@ -13,7 +13,7 @@ namespace Teatime
         {
         }
 		GameViewController gameViewController;
-
+		GameSceneDraw scene;
 		public GameSubViewDrawController()
 		{
 
@@ -40,13 +40,19 @@ namespace Teatime
 			skView.SizeToFit();
 
 			// Create and configure the scene.
-			var scene = SKNode.FromFile<GameSceneDraw>("GameSceneDraw");
+			scene = SKNode.FromFile<GameSceneDraw>("GameSceneDraw");
 			scene.ScaleMode = SKSceneScaleMode.ResizeFill;
 			scene.Size = View.Bounds.Size;
 			skView.PresentScene(scene);
 
 		}
 
+		partial void UnwindProto6_TouchUpInside(UIButton sender)
+		{
+		//	throw new NotImplementedException();
+			scene.saveProto5Input();
+
+		}
 
 		public override bool ShouldAutorotate()
 		{

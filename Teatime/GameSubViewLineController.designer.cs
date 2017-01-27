@@ -18,6 +18,10 @@ namespace Teatime
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton UnwindProto5 { get; set; }
 
+        [Action ("UnwindProto5_TouchUpInside:")]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        partial void UnwindProto5_TouchUpInside (UIKit.UIButton sender);
+
         void ReleaseDesignerOutlets ()
         {
             if (UnwindProto5 != null) {

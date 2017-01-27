@@ -38,6 +38,10 @@ namespace Teatime
         [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton showUserData { get; set; }
 
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UITextField userName { get; set; }
+
         [Action ("GotoNext_TouchUpInside:")]
         [GeneratedCode ("iOS Designer", "1.0")]
         partial void GotoNext_TouchUpInside (UIKit.UIButton sender);
@@ -80,6 +84,11 @@ namespace Teatime
             if (showUserData != null) {
                 showUserData.Dispose ();
                 showUserData = null;
+            }
+
+            if (userName != null) {
+                userName.Dispose ();
+                userName = null;
             }
         }
     }

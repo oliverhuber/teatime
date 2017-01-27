@@ -9,11 +9,14 @@ namespace Teatime
 {
     public partial class GameSubViewLineController : UIViewController
     {
-        public GameSubViewLineController (IntPtr handle) : base (handle)
+
+
+		public GameSubViewLineController (IntPtr handle) : base (handle)
         {
         }
 
 		GameViewController gameViewController;
+		GameSceneLine scene;
 
 		public GameSubViewLineController()
 		{
@@ -41,13 +44,18 @@ namespace Teatime
 			skView.SizeToFit();
 
 			// Create and configure the scene.
-			var scene = SKNode.FromFile<GameSceneLine>("GameSceneLine");
+			scene = SKNode.FromFile<GameSceneLine>("GameSceneLine");
 			scene.ScaleMode = SKSceneScaleMode.ResizeFill;
 			scene.Size = View.Bounds.Size;
 			skView.PresentScene(scene);
 
 		}
+			partial void UnwindProto5_TouchUpInside(UIButton sender)
+		{
+			scene.saveProto4Input();
 
+			//throw new NotImplementedException();
+		}
 
 
 		public override bool ShouldAutorotate()

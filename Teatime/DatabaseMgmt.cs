@@ -37,6 +37,7 @@ namespace Teatime
 				return database;
 			}
 		}
+		public static String inputName;
 		//public DatabaseMgmt()
 		//{
 		/*

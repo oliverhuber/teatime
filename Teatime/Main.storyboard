@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" colorSpace="calibratedRGB" red="0.21568627450980393" green="0.74901960784313726" blue="0.84705882352941175" alpha="1"/>
                         <subviews>
-                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="32" translatesAutoresizingMaskIntoConstraints="NO" alpha="0.75" opaque="NO">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="32" translatesAutoresizingMaskIntoConstraints="NO" alpha="0.75" opaque="NO" misplaced="YES">
                                 <rect key="frame" x="177" y="128" width="245" height="42"/>
                                 <fontDescription key="fontDescription" name="AppleSDGothicNeo-UltraLight" family="Apple SD Gothic Neo" pointSize="19"/>
                                 <color key="backgroundColor" colorSpace="calibratedRGB" red="0.87058823529411766" green="0.9137254901960784" blue="0.996078431372549" alpha="1"/>
@@ -58,7 +58,7 @@
                                     <constraint id="375" firstItem="187" firstAttribute="height" constant="43"/>
                                 </constraints>
                             </label>
-                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="224" translatesAutoresizingMaskIntoConstraints="NO" alpha="0.75" opaque="NO">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="224" translatesAutoresizingMaskIntoConstraints="NO" alpha="0.75" opaque="NO" misplaced="YES">
                                 <rect key="frame" x="177" y="190" width="246" height="42"/>
                                 <fontDescription key="fontDescription" name="AppleSDGothicNeo-UltraLight" family="Apple SD Gothic Neo" pointSize="19"/>
                                 <color key="backgroundColor" colorSpace="calibratedRGB" red="0.87058823529411766" green="0.9137254901960784" blue="0.996078431372549" alpha="1"/>
@@ -96,7 +96,7 @@
                                     <constraint id="345" firstItem="232" firstAttribute="width" constant="95"/>
                                 </constraints>
                             </imageView>
-                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="886" translatesAutoresizingMaskIntoConstraints="NO" alpha="0.75" opaque="NO">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="886" translatesAutoresizingMaskIntoConstraints="NO" alpha="0.75" opaque="NO" misplaced="YES">
                                 <rect key="frame" x="178" y="253" width="245" height="42"/>
                                 <fontDescription key="fontDescription" name="AppleSDGothicNeo-UltraLight" family="Apple SD Gothic Neo" pointSize="19"/>
                                 <color key="backgroundColor" colorSpace="calibratedRGB" red="0.87058823529411766" green="0.9137254901960784" blue="0.996078431372549" alpha="1"/>
@@ -124,7 +124,7 @@
                                     <constraint id="892" firstItem="886" firstAttribute="height" constant="42"/>
                                 </constraints>
                             </button>
-                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1061" translatesAutoresizingMaskIntoConstraints="NO" alpha="0.75" opaque="NO">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1061" translatesAutoresizingMaskIntoConstraints="NO" alpha="0.75" opaque="NO" misplaced="YES">
                                 <rect key="frame" x="177" y="315" width="245" height="42"/>
                                 <fontDescription key="fontDescription" name="AppleSDGothicNeo-UltraLight" family="Apple SD Gothic Neo" pointSize="19"/>
                                 <color key="backgroundColor" colorSpace="calibratedRGB" red="0.87058823529411766" green="0.9137254901960784" blue="0.996078431372549" alpha="1"/>
@@ -152,7 +152,7 @@
                                     <constraint id="1069" firstItem="1061" firstAttribute="height" constant="42"/>
                                 </constraints>
                             </button>
-                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1107" translatesAutoresizingMaskIntoConstraints="NO" alpha="0.75" opaque="NO">
+                            <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1107" translatesAutoresizingMaskIntoConstraints="NO" alpha="0.75" opaque="NO" misplaced="YES">
                                 <rect key="frame" x="177" y="377" width="245" height="42"/>
                                 <fontDescription key="fontDescription" name="AppleSDGothicNeo-UltraLight" family="Apple SD Gothic Neo" pointSize="19"/>
                                 <color key="backgroundColor" colorSpace="calibratedRGB" red="0.87058823529411766" green="0.9137254901960784" blue="0.996078431372549" alpha="1"/>
@@ -208,12 +208,17 @@
                                     <constraint id="1197" firstItem="1189" firstAttribute="height" constant="42"/>
                                 </constraints>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" id="1272" translatesAutoresizingMaskIntoConstraints="NO" misplaced="YES" borderStyle="roundedRect" clearButtonMode="whileEditing" alpha="0.6">
+                                <rect key="frame" x="178" y="79" width="245" height="30"/>
+                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Light" family="Apple SD Gothic Neo" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done" keyboardAppearance="alert" enablesReturnKeyAutomatically="YES"/>
+                                <constraints>
+                                    <constraint id="1273" firstItem="1272" firstAttribute="width" constant="280"/>
+                                </constraints>
+                            </textField>
                         </subviews>
                         <constraints>
                             <constraint id="310" firstItem="224" firstAttribute="top" secondItem="32" secondAttribute="bottom" constant="20"/>
-                            <constraint id="318" firstItem="32" firstAttribute="top" secondItem="maK-i9-Uhn" secondAttribute="bottom" constant="128">
-                                <variation key="heightClass=regular-widthClass=compact" constant="110"/>
-                            </constraint>
                             <constraint id="332" firstItem="32" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX"/>
                             <constraint id="333" firstItem="224" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX"/>
                             <constraint id="347" firstItem="232" firstAttribute="top" secondItem="maK-i9-Uhn" secondAttribute="bottom" constant="13"/>
@@ -228,6 +233,9 @@
                             <constraint id="1117" firstItem="1107" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX"/>
                             <constraint id="1199" firstItem="1189" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX"/>
                             <constraint id="1200" firstItem="khH-OB-KpY" firstAttribute="top" secondItem="1189" secondAttribute="bottom" constant="20"/>
+                            <constraint id="1274" firstItem="1272" firstAttribute="centerX" secondItem="3se-qz-xqx" secondAttribute="centerX"/>
+                            <constraint id="1296" firstItem="1272" firstAttribute="top" secondItem="maK-i9-Uhn" secondAttribute="bottom" constant="128"/>
+                            <constraint id="1297" firstItem="32" firstAttribute="top" secondItem="1272" secondAttribute="bottom" constant="20"/>
                         </constraints>
                     </view>
                     <connections>
@@ -237,6 +245,7 @@
                         <outlet property="gotoNext5" destination="1061" id="name-outlet-1061"/>
                         <outlet property="gotoNext6" destination="1107" id="name-outlet-1107"/>
                         <outlet property="showUserData" destination="1189" id="name-outlet-1189"/>
+                        <outlet property="userName" destination="1272" id="name-outlet-1272"/>
                     </connections>
                     <navigationItem title="Teatime" id="114" key="navigationItem"/>
                 </viewController>
@@ -394,6 +403,7 @@
                                     <action selector="UnwindProtoColor_TouchUpInside:" destination="1096" id="1095" eventType="touchUpInside"/>
                                     <action selector="UnwindProto4_TouchUpInside:" destination="1100" id="1099" eventType="touchUpInside"/>
                                     <segue id="1102" destination="1079" kind="unwind" unwindAction="UnwindToPrototypes:"/>
+                                    <action selector="UnwindProto5_TouchUpInside:" destination="1076" id="1302" eventType="touchUpInside"/>
                                 </connections>
                                 <fontDescription key="fontDescription" name="AppleSDGothicNeo-UltraLight" family="Apple SD Gothic Neo" pointSize="17"/>
                                 <size key="titleShadowOffset" width="0" height="0"/>
@@ -429,6 +439,7 @@
                                 <connections>
                                     <action selector="UnwindProto_TouchUpInside:" destination="1173" id="1172" eventType="touchUpInside"/>
                                     <segue id="1175" destination="1124" kind="unwind" unwindAction="UnwindToPrototypes:"/>
+                                    <action selector="UnwindProto6_TouchUpInside:" destination="1121" id="1303" eventType="touchUpInside"/>
                                 </connections>
                                 <fontDescription key="fontDescription" name="AppleSDGothicNeo-UltraLight" family="Apple SD Gothic Neo" pointSize="17"/>
                                 <size key="titleShadowOffset" width="0" height="0"/>

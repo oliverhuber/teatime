@@ -15,6 +15,9 @@ namespace Teatime
 	
 	public class GameSceneDraw : SKScene
 	{
+		public int Proto5Dim1 { get; set; }
+		public int Proto5Dim2 { get; set; }
+		public int Proto5Dim3 { get; set; }
 		// Class declarations of the sprite nodes
 		SKSpriteNode oneSprite;
 		SKSpriteNode secSprite;
@@ -55,7 +58,9 @@ namespace Teatime
 		public override void DidMoveToView(SKView view)
 		{
 			// Setup Sprite Scene
-
+			Proto5Dim1 = 0;
+			Proto5Dim2 = 0;
+			Proto5Dim3 = 0;
 			// New Label placed in the middle of the Screen
 			myLabel = new SKLabelNode("AppleSDGothicNeo-UltraLight")
 			{
@@ -175,6 +180,39 @@ namespace Teatime
 			var gestureLongRecognizer = new UILongPressGestureRecognizer(PressHandler);
 			gestureLongRecognizer.MinimumPressDuration = 1;
 			this.View.AddGestureRecognizer(gestureLongRecognizer);
+		}
+		public void saveProto5Input()
+		{
+			//throw new NotImplementedException();
+			TeatimeItem item;
+			item = new TeatimeItem();
+			if (DatabaseMgmt.inputName != null)
+			{
+				item.Username = DatabaseMgmt.inputName;
+
+			}
+			else {
+				item.Username = "Anonym";
+			}
+			item.dateInserted = DateTime.Now.ToLocalTime();
+			item.Dim1 = Proto5Dim1;
+			item.Dim2 = Proto5Dim2;
+			item.Dim3 = Proto5Dim3;
+			item.PrototypeNr = 5;
+			item.Comment = "test";
+			DatabaseMgmt.Database.SaveItem(item);
+			// TeatimeItem returnItem =  DatabaseMgmt.Database.GetItem(2);
+			// Console.WriteLine(returnItem.Username);
+			Console.WriteLine("Start Output: --------------------------------");
+			foreach (var s in DatabaseMgmt.Database.GetAllItems
+					 ())
+			{
+
+				Console.WriteLine("Username:" + s.Username + ", DateInserted:" + s.dateInserted + ", Dimension1:" + s.Dim1 + ", Dimension2:" + s.Dim2 + ", Dimension3:" + s.Dim3 + ", ProtypeNr:" + s.PrototypeNr + ", Comment:" + s.Comment);
+				//DatabaseMgmt.Database.DeleteItem(s);
+			}
+			Console.WriteLine("End Output: --------------------------------");
+
 		}
 		void PressHandler(UILongPressGestureRecognizer gestureRecognizer)
 		{
