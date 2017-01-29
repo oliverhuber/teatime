@@ -121,6 +121,8 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\120 - iPhone Teatime.png" />
     <ImageAsset Include="Assets.xcassets\line.imageset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\line.imageset\line.png" />
+    <ImageAsset Include="Assets.xcassets\sparkx.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\sparkx.imageset\spark3X.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -130,6 +132,7 @@
     <Folder Include="Assets.xcassets\spark3.imageset\" />
     <Folder Include="Assets.xcassets\spark4.imageset\" />
     <Folder Include="Assets.xcassets\line.imageset\" />
+    <Folder Include="Assets.xcassets\sparkx.imageset\" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="GameScene.sks" />

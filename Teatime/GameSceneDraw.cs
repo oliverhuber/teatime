@@ -31,6 +31,7 @@ namespace Teatime
 		double xNext;
 		SKLabelNode timeLabel;
 		bool newNode;
+		bool delNode;
 		//LineNode yourline;
 		SKLabelNode myLabel;
 		SKLabelNode myLabelPos;
@@ -176,7 +177,7 @@ namespace Teatime
 		//	xNext = oneSprite.Position.X;
 			nextSprite = oneSprite;
 
-
+			delNode = false;
 			var gestureLongRecognizer = new UILongPressGestureRecognizer(PressHandler);
 			gestureLongRecognizer.MinimumPressDuration = 1;
 			this.View.AddGestureRecognizer(gestureLongRecognizer);
@@ -221,27 +222,50 @@ namespace Teatime
 			if (gestureRecognizer.State == UIGestureRecognizerState.Began
 				|| gestureRecognizer.State == UIGestureRecognizerState.Changed)
 			{
-				SKLabelNode gesLabel;
-				// New Label placed in the middle of the Screen
-				gesLabel = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+				
+				var location  = gestureRecognizer.LocationInView(this.View);
+				var convertLocation = new CGPoint(location.X, this.View.Frame.Height - location.Y);			//var location = gestureRecognizer.LocationOfTouch(0, image);
+				//	var location = ((UITouch)touch).LocationInNode(this);
+
+
+				// Time label end
+				checkSprites();
+				//if (currentSprite.Frame.Contains(location))
+				if	(currentSprite.Frame.Contains(convertLocation))
+				
 				{
-					Text = "ges",
-					FontSize = 15,
-					Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 100)
-				};
-				gesLabel.Alpha = 0.0f;
-				gesLabel.ZPosition = 1;
-				//AddChild(gesLabel);
-				longPressEnabled = true;
-				gesLabel.Text = "LongPressed: " + gestureRecognizer.LocationOfTouch(0, image).ToString();
-				gesLabel.Alpha = 1.0f;
-				foreach (var spriteNode in Children.OfType<SKSpriteNode>())
-				{
-					SKAction actMove = SKAction.MoveToX(spriteNode.Position.X-2, 0.1);
-					SKAction actMoveBack = SKAction.MoveToX(spriteNode.Position.X+2, 0.1);
+
+					SKLabelNode gesLabel;
+					// New Label placed in the middle of the Screen
+					gesLabel = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+					{
+						Text = "X",
+						FontSize = 15,
+						Position = convertLocation
+					};
+					gesLabel.Alpha = 0.0f;
+					gesLabel.ZPosition = 100;
+					//AddChild(gesLabel);
+					longPressEnabled = true;
+					//gesLabel.Text = "LongPressed: " + gestureRecognizer.LocationOfTouch(0, image).ToString();
+					gesLabel.Text = "X";
+					gesLabel.Alpha = 1.0f;
+
+					timeLabel.Text = "Zeitpunkt löschen?";
+
+					//	SKAction actMove = SKAction.MoveToX(currentSprite.Position.X - 2, 0.1);
+					//	SKAction actMoveBack = SKAction.MoveToX(currentSprite.Position.X + 2, 0.1); 
+					SKAction actMove = SKAction.ScaleTo(1.2f, 1.2f, 0.2);
+					SKAction actMoveBack = SKAction.ScaleTo(0.7f, 0.7f, 0.2);
 					SKAction seq = SKAction.Sequence(actMove, actMoveBack);
-					spriteNode.RunAction(SKAction.RepeatActionForever(seq));
+					SKAction seqTexture = SKAction.SetTexture(SKTexture.FromImageNamed(("sparkx")));
+					SKAction seqTextureNormal = SKAction.SetTexture(SKTexture.FromImageNamed(("spark3")));
+					SKAction seqAll = SKAction.Sequence(seqTexture, seq, seqTextureNormal); 
+					//currentSprite.Texture = SKTexture.FromImageNamed(("sparkx"));
+					currentSprite.RunAction(SKAction.RepeatAction(seqAll,10));
+
 				}
+
 			}
 		}
 
@@ -304,7 +328,7 @@ namespace Teatime
 
 				// Time label end
 
-				if (currentSprite.Frame.Contains(((UITouch)touch).LocationInNode(this)))
+				if (currentSprite.Frame.Contains(((UITouch)touch).LocationInNode(this)) && delNode==false)
 				{
 
 
@@ -435,7 +459,7 @@ namespace Teatime
 				//lastLine = currentLine;
 			}
 			startDragInside = false;
-
+			delNode = false;
 		}
 		public override void TouchesBegan(NSSet touches, UIEvent evt)
 		{
@@ -456,102 +480,154 @@ namespace Teatime
 				{
 					if (spriteNode.Frame.Contains(((UITouch)touch).LocationInNode(this)))
 					{
-
-
-					// Time label Start
-						timeLabel.Position = new CGPoint(spriteNode.Position.X, spriteNode.Position.Y +50);
-						double selectedHour = (24 / Frame.Width * spriteNode.Position.X);
-						//	double fullHourRest = (24 / Frame.Width * location.X)- Math.Round(24 / Frame.Width * location.X, 0);
-						//	double selectedMin = Math.Round(fullHourRest/100*60,0);
-						String restMin = "";
-						String stringHour = selectedHour.ToString();
-						var splitHour = stringHour.Split('.');
-						if (splitHour[0].Length == 1)
+						if (spriteNode.HasActions == true)
 						{
-							splitHour[0] = "0" + splitHour[0];
-							if (splitHour.Length > 1)
-							{
+							delNode = true;
+							//REMOVAL CODE
+							spriteNode.RemoveFromParent();
+							spriteNode.Alpha = 0f;
+							var pathCheckRem = new CGPath();
+							pathCheckRem.AddLines(new CGPoint[]{
+							new CGPoint (lastSprite.Position.X, lastSprite.Position.Y),
+							new CGPoint (currentSprite.Position.X, currentSprite.Position.Y),
 
-								if (splitHour[1].Length >= 2)
+						});
+							var pathCheckRemNext = new CGPath();
+							pathCheckRemNext.AddLines(new CGPoint[]{
+							new CGPoint (currentSprite.Position.X, currentSprite.Position.Y),
+							new CGPoint (nextSprite.Position.X, nextSprite.Position.Y),
+
+						});
+							timeLabel.Text = "Zeitpunkt gelöscht";
+							foreach (var lineNode in Children.OfType<SKShapeNode>())
+							{
+								if (lineNode.Path.PathBoundingBox == pathCheckRem.PathBoundingBox && lineNode.Name != "baseline")
 								{
-									restMin = splitHour[1].Substring(0, 2);
+									lineNode.Alpha = 0f;
 								}
-								else if (splitHour[1].Length == 1)
+								if (lineNode.Path.PathBoundingBox == pathCheckRemNext.PathBoundingBox && lineNode.Name != "baseline")
 								{
-									restMin = splitHour[1].Substring(0, 1) + "0";
+									lineNode.Alpha = 0f;
+								}
+								/*if (lineNode.Path. == pathCheckReverse.CurrentPoint)
+								{
+									lineNode.Alpha = 0f;
+								}*/
+							}
+							var pathReset = new CGPath();
+							pathReset.AddLines(new CGPoint[]{
+							new CGPoint (lastSprite.Position.X, lastSprite.Position.Y),
+							new CGPoint (nextSprite.Position.X, nextSprite.Position.Y),
+							});
+							SKShapeNode newlineNext = new SKShapeNode();
+							newlineNext.Path = pathReset;
+							newlineNext.StrokeColor = UIColor.FromHSB(0, 0, 0);
+							newlineNext.LineWidth = 2f;
+							newlineNext.Alpha = 0.5f;
+							AddChild(newlineNext);
+							nextLine = newlineNext;
+
+							newNode = false;
+
+						}
+
+							// Time label Start
+							timeLabel.Position = new CGPoint(spriteNode.Position.X, spriteNode.Position.Y + 50);
+							double selectedHour = (24 / Frame.Width * spriteNode.Position.X);
+							//	double fullHourRest = (24 / Frame.Width * location.X)- Math.Round(24 / Frame.Width * location.X, 0);
+							//	double selectedMin = Math.Round(fullHourRest/100*60,0);
+							String restMin = "";
+							String stringHour = selectedHour.ToString();
+							var splitHour = stringHour.Split('.');
+							if (splitHour[0].Length == 1)
+							{
+								splitHour[0] = "0" + splitHour[0];
+								if (splitHour.Length > 1)
+								{
+
+									if (splitHour[1].Length >= 2)
+									{
+										restMin = splitHour[1].Substring(0, 2);
+									}
+									else if (splitHour[1].Length == 1)
+									{
+										restMin = splitHour[1].Substring(0, 1) + "0";
+									}
+								}
+								else {
+									restMin = "00";
 								}
 							}
 							else {
-								restMin = "00";
+								splitHour[0] = splitHour[0];
+								if (splitHour.Length > 1)
+								{
+
+									if (splitHour[1].Length >= 2)
+									{
+										restMin = splitHour[1].Substring(0, 2);
+									}
+									else if (splitHour[1].Length == 1)
+									{
+										restMin = splitHour[1].Substring(0, 1) + "0";
+									}
+								}
+								else {
+									restMin = "00";
+								}
+
 							}
-						}
-						else {
-							splitHour[0] = splitHour[0];
-							if (splitHour.Length > 1)
+							double selectedMin = Math.Round(Convert.ToDouble(restMin) / 100 * 60, 0);
+							String selectedMinString = selectedMin.ToString();
+							if (selectedMinString.Length == 1)
 							{
-
-								if (splitHour[1].Length >= 2)
-								{
-									restMin = splitHour[1].Substring(0, 2);
-								}
-								else if (splitHour[1].Length == 1)
-								{
-									restMin = splitHour[1].Substring(0, 1) + "0";
-								}
+								selectedMinString = "0" + selectedMinString;
 							}
-							else {
-								restMin = "00";
-							}
-
-						}
-						double selectedMin = Math.Round(Convert.ToDouble(restMin) / 100 * 60, 0);
-						String selectedMinString = selectedMin.ToString();
-						if (selectedMinString.Length == 1)
-						{
-							selectedMinString = "0" + selectedMinString;
-						}
 						// Time calculated
-						timeLabel.Text = splitHour[0] + ":" + selectedMinString;
-						timeLabel.ZPosition = 3;
-						timeLabel.FontColor = UIColor.Black;
-						timeLabel.Alpha = 0.8f;
-						// Time label end
+						if (delNode == false)
+						{
+							timeLabel.Text = splitHour[0] + ":" + selectedMinString;
+						}
+							timeLabel.ZPosition = 3;
+							timeLabel.FontColor = UIColor.Black;
+							timeLabel.Alpha = 0.8f;
+							// Time label end
 
 
-						newNode = false;
-						activeNode = spriteNode;
-						currentSprite = spriteNode;
-						checkSprites();
+							newNode = false;
+							activeNode = spriteNode;
+							currentSprite = spriteNode;
+							checkSprites();
 
-						var pathCheck = new CGPath();
+							var pathCheck = new CGPath();
 							pathCheck.AddLines(new CGPoint[]{
 							new CGPoint (lastSprite.Position.X, lastSprite.Position.Y),
 							new CGPoint (currentSprite.Position.X, currentSprite.Position.Y),
 
 						});
-						var pathCheckNext = new CGPath();
-						pathCheckNext.AddLines(new CGPoint[]{
+							var pathCheckNext = new CGPath();
+							pathCheckNext.AddLines(new CGPoint[]{
 							new CGPoint (currentSprite.Position.X, currentSprite.Position.Y),
 							new CGPoint (nextSprite.Position.X, nextSprite.Position.Y),
 
 						});
 
-						foreach (var lineNode in Children.OfType<SKShapeNode>())
-						{
-							if (lineNode.Path.PathBoundingBox == pathCheck.PathBoundingBox)
+							foreach (var lineNode in Children.OfType<SKShapeNode>())
 							{
-								currentLine = lineNode;
-							}
-							if (lineNode.Path.PathBoundingBox == pathCheckNext.PathBoundingBox)
-							{
-								nextLine = lineNode;
-							}
+								if (lineNode.Path.PathBoundingBox == pathCheck.PathBoundingBox)
+								{
+									currentLine = lineNode;
+								}
+								if (lineNode.Path.PathBoundingBox == pathCheckNext.PathBoundingBox)
+								{
+									nextLine = lineNode;
+								}
 
-							/*if (lineNode.Path. == pathCheckReverse.CurrentPoint)
-							{
-								lineNode.Alpha = 0f;
-							}*/
-						}
+								/*if (lineNode.Path. == pathCheckReverse.CurrentPoint)
+								{
+									lineNode.Alpha = 0f;
+								}*/
+							}
 
 
 
@@ -569,8 +645,8 @@ namespace Teatime
 					currentSprite = new SKSpriteNode("spark3");
 					currentSprite.Position = new CGPoint(checkX, checkY);
 					currentSprite.ZPosition = 1;
-					currentSprite.XScale = 0.4f;
-					currentSprite.YScale = 0.4f;
+					currentSprite.XScale = 0.7f;
+					currentSprite.YScale = 0.7f;
 					currentSprite.ColorBlendFactor = 1f;
 					currentSprite.Alpha = 0.9f;
 					currentSprite.Color = UIColor.FromHSB(0, 0, 0);
