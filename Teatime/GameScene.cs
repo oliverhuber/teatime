@@ -392,7 +392,7 @@ namespace Teatime
 			}
 			item.dateInserted = DateTime.Now.ToLocalTime();
 			item.Dim1 = Proto1Dim1;
-			item.Dim2 = Proto1Dim1;
+			item.Dim2 = Proto1Dim2;
 			item.Dim3 = Proto1Dim3;
 			item.PrototypeNr = 1;
 			item.Comment = "test";

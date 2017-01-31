@@ -61,27 +61,11 @@ namespace Teatime
 			oneSprite.Alpha = 0.7f;
 
 			firstTouch = false;
-			// Create Path for the line, between both sprites
-			/*var path = new CGPath();
-			path.AddLines(new CGPoint[]{
-				new CGPoint (oneSprite.Position.X, oneSprite.Position.Y),
-				new CGPoint (secSprite.Position.X, secSprite.Position.Y)
-			
-					});
-			path.CloseSubpath();
-
-			// Generate Line according to Path
-			yourline = new SKShapeNode();
-			yourline.Path = path;
-			*/
 			// Add Contextposition and add them to the scene
 			myLabel.ZPosition = 1;
 			container.ZPosition = 0;
 			//yourline.ZPosition = 2;
 
-			//AddChild(yourline);
-			//AddChild(oneSprite);
-			//AddChild(secSprite);
 			AddChild(myLabel);
 			AddChild(container);
 			createEmitterNode();
@@ -102,7 +86,7 @@ namespace Teatime
 				item.Username = "Anonym";
 			}			item.dateInserted = DateTime.Now.ToLocalTime();
 			item.Dim1 = Proto2Dim1;
-			item.Dim2 = Proto2Dim1;
+			item.Dim2 = Proto2Dim2;
 			item.Dim3 = Proto2Dim3;
 			item.PrototypeNr = 2;
 			item.Comment = "test";
@@ -177,27 +161,6 @@ namespace Teatime
 				updateEmitter(offsetX,offsetY);
 				fireEmitter.Position = location;
 
-				if (oneSprite.Frame.Contains(((UITouch)touch).LocationInNode(this)))
-				{
-					//float offsetX = (float)(touch.LocationInView(View).X);
-					//float offsetY = (float)(touch.LocationInView(View).Y);
-				//	oneSprite.ScaleTo(new CGSize(oneSprite.Size.Width + (offsetX / 1000), oneSprite.Size.Height + (offsetY / 1000)));
-
-
-				//	oneSprite.Position = location;
-					//myLabel.Text = offsetX + " " + offsetY;
-					//fireEmitter.Position = location;
-				
-				/*	var path = new CGPath();
-					path.AddLines(new CGPoint[]{
-						new CGPoint (secSprite.Position.X, secSprite.Position.Y),
-						new CGPoint (offsetX, this.View.Frame.Height-offsetY),
-					});
-					path.CloseSubpath();
-
-					yourline.Path = path;
-					*/
-				}
 
 			}
 		}
@@ -212,32 +175,169 @@ namespace Teatime
 				// Check click
 				var checkX = ((UITouch)touch).LocationInView(View).X;
 				var checkY = ((UITouch)touch).LocationInView(View).Y;
-				if (checkY > 3 * (Frame.Height / 4))
+				if (checkY >= 7 * (Frame.Height / 8))
 				{
 					Proto2Dim1 = 1;
-					Proto2Dim2 = 2;
-					Proto2Dim3 = 1;
+					if (checkX >= 2 * (Frame.Width / 3))
+					{
+						Proto2Dim2 = 1;
+						Proto2Dim3 = 1;
+					}
+					else if (checkX < 2 * (Frame.Width / 3) && checkX >= 1 * (Frame.Width / 3))
+					{
+						Proto2Dim2 = 2;
+						Proto2Dim3 = 2;
+					}
+					else 
+					{
+						Proto2Dim2 = 3;
+						Proto2Dim3 = 3;
+					}
+
 					//myLabel.Text = "Glücklich";
 				}
-				else if (checkY < 3 * (Frame.Height / 4) && checkY > Frame.Height / 2){
-					Proto2Dim1 = 3;
-					Proto2Dim2 = 1;
-					Proto2Dim3 = 2;
+				else if (checkY < 7 * (Frame.Height / 8) && checkY >= 6 * (Frame.Height / 8)){
+					Proto2Dim1 = 2;
+					if (checkX >= 2 * (Frame.Width / 3))
+					{
+						Proto2Dim2 = 1;
+						Proto2Dim3 = 1;
+					}
+					else if (checkX < 2 * (Frame.Width / 3) && checkX >= 1 * (Frame.Width / 3))
+					{
+						Proto2Dim2 = 2;
+						Proto2Dim3 = 2;
+					}
+					else
+					{
+						Proto2Dim2 = 3;
+						Proto2Dim3 = 3;
+					}
 					//myLabel.Text = "Zufrieden";
 
 				}
-				else if (checkY < Frame.Height / 2 && checkY > Frame.Height / 4)
+				else if (checkY < 6 * (Frame.Height / 8) && checkY >= 5 * (Frame.Height / 8))
 				{
-					Proto2Dim1 = 2;
-					Proto2Dim2 = 3;
-					Proto2Dim3 = 1;
+					Proto2Dim1 = 3;
+					if (checkX >= 2 * (Frame.Width / 3))
+					{
+						Proto2Dim2 = 1;
+						Proto2Dim3 = 1;
+					}
+					else if (checkX < 2 * (Frame.Width / 3) && checkX >= 1 * (Frame.Width / 3))
+					{
+						Proto2Dim2 = 2;
+						Proto2Dim3 = 2;
+					}
+					else
+					{
+						Proto2Dim2 = 3;
+						Proto2Dim3 = 3;
+					}
+					//myLabel.Text = "Beunruhigt";
+
+				}
+				else if (checkY < 5 * (Frame.Height / 8) && checkY >= 4 * (Frame.Height / 8))
+				{
+					Proto2Dim1 = 4;
+					if (checkX >= 2 * (Frame.Width / 3))
+					{
+						Proto2Dim2 = 1;
+						Proto2Dim3 = 1;
+					}
+					else if (checkX < 2 * (Frame.Width / 3) && checkX >= 1 * (Frame.Width / 3))
+					{
+						Proto2Dim2 = 2;
+						Proto2Dim3 = 2;
+					}
+					else
+					{
+						Proto2Dim2 = 3;
+						Proto2Dim3 = 3;
+					}
+					//myLabel.Text = "Beunruhigt";
+
+				}
+				else if (checkY < 4 * (Frame.Height / 8) && checkY >= 3 * (Frame.Height / 8))
+				{
+					Proto2Dim1 = 5;
+					if (checkX >= 2 * (Frame.Width / 3))
+					{
+						Proto2Dim2 = 1;
+						Proto2Dim3 = 1;
+					}
+					else if (checkX < 2 * (Frame.Width / 3) && checkX >= 1 * (Frame.Width / 3))
+					{
+						Proto2Dim2 = 2;
+						Proto2Dim3 = 2;
+					}
+					else
+					{
+						Proto2Dim2 = 3;
+						Proto2Dim3 = 3;
+					}
+					//myLabel.Text = "Beunruhigt";
+
+				}
+				else if (checkY < 3 * (Frame.Height / 8) && checkY >= 2 * (Frame.Height / 8))
+				{
+					Proto2Dim1 = 6;
+					if (checkX >= 2 * (Frame.Width / 3))
+					{
+						Proto2Dim2 = 1;
+						Proto2Dim3 = 1;
+					}
+					else if (checkX < 2 * (Frame.Width / 3) && checkX >= 1 * (Frame.Width / 3))
+					{
+						Proto2Dim2 = 2;
+						Proto2Dim3 = 2;
+					}
+					else
+					{
+						Proto2Dim2 = 3;
+						Proto2Dim3 = 3;
+					}
+					//myLabel.Text = "Beunruhigt";
+
+				}
+				else if (checkY < 2 * (Frame.Height / 8) && checkY >= 1 * (Frame.Height / 8))
+				{
+					Proto2Dim1 = 7;
+					if (checkX >= 2 * (Frame.Width / 3))
+					{
+						Proto2Dim2 = 1;
+						Proto2Dim3 = 1;
+					}
+					else if (checkX < 2 * (Frame.Width / 3) && checkX >= 1 * (Frame.Width / 3))
+					{
+						Proto2Dim2 = 2;
+						Proto2Dim3 = 2;
+					}
+					else
+					{
+						Proto2Dim2 = 3;
+						Proto2Dim3 = 3;
+					}
 					//myLabel.Text = "Beunruhigt";
 
 				}
 				else {
-					Proto2Dim1 = 3;
-					Proto2Dim2 = 2;
-					Proto2Dim3 = 1;
+					Proto2Dim1 = 8;
+					if (checkX >= 2 * (Frame.Width / 3))
+					{
+						Proto2Dim2 = 1;
+						Proto2Dim3 = 1;
+					}
+					else if (checkX < 2 * (Frame.Width / 3) && checkX >= 1 * (Frame.Width / 3))
+					{
+						Proto2Dim2 = 2;
+						Proto2Dim3 = 2;
+					}
+					else
+					{
+						Proto2Dim2 = 3;
+						Proto2Dim3 = 3;
+					}
 					//myLabel.Text = "Nervös";
 					//myLabel.RunAction(SKAction.RotateByAngle(NMath.PI * speed, 10.0));
 				}
@@ -269,7 +369,7 @@ namespace Teatime
 					firstTouch = true;
 				}
 			
-
+				/*
 				UIColor coloring;
 				double speed = 0;
 				if (checkY > 3 * (Frame.Height / 4))
@@ -306,38 +406,7 @@ namespace Teatime
 				SKAction scaleUp = SKAction.ScaleTo(3f, 5 - speed);
 				SKAction scaleDown = SKAction.ScaleTo(1f, 5 - speed);
 				SKAction scaleSeq = SKAction.Sequence(scaleUp, scaleDown);
-			//	oneSprite.RunAction(SKAction.RepeatActionForever(scaleSeq));
-				/*
-				for (int i = 1; i <= 100; i++)
-				{
-
-					var location = ((UITouch)touch).LocationInNode(this);
-
-					location.X = location.X + (new Random().Next(-10, 10));
-					location.Y = location.Y + (new Random().Next(-10, 10));
-
-					Random rnd = new Random();
-					int newX = rnd.Next(-1000, 1000);
-					int newY = rnd.Next(-1000, 1000);
-					var sprite = new SKSpriteNode("spark")
-					{
-						Position = location,
-						//		XScale = 1.5f * (speed),
-						XScale = 0.5f * (speed),
-						YScale = 0.5f * (speed)
-					};
-
-					var action = SKAction.RotateByAngle(NMath.PI * speed * i, 10.0);
-					sprite.RunAction(SKAction.ColorizeWithColor(coloring, 0.1f, 2));
-					sprite.RunAction(SKAction.ScaleTo(1.8f, 5));
-
-					sprite.RunAction(SKAction.MoveTo(new CGPoint(newX, newY), 10));
-
-					sprite.RunAction(SKAction.FadeOutWithDuration(5));
-					sprite.RunAction(SKAction.RepeatActionForever(action));
-					sprite.ZPosition = 1;
-					AddChild(sprite);
-				}*/
+			*/
 			}
 		}
 
