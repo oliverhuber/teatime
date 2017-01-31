@@ -53,11 +53,8 @@ namespace Teatime
 			int newX1 = rnd.Next((int)this.centerOfNode.X - 50, (int)this.centerOfNode.X + 50);
 			int newY1 = rnd.Next((int)this.centerOfNode.Y - 50, (int)this.centerOfNode.Y + 50);
 
-		//	this.PhysicsBody.Velocity = new CGVector(newX, newY);
 			SKAction action1 = SKAction.MoveTo(new CGPoint(newX, newY), pointSpeed1);
 			SKAction action2 = SKAction.MoveTo(new CGPoint(newX1, newY1), pointSpeed2);
-			var sequence = SKAction.Sequence(action1, action2);
-			//this.RunAction(SKAction.RepeatActionForever(sequence));
 			if (this.Position.X > newX && this.Position.Y > newY )
 			{
 				this.PhysicsBody.Velocity = new CGVector(-newX, -newY);
@@ -108,7 +105,7 @@ namespace Teatime
 
 
 			double minSpeed = speed;
-			double maxSpeed = speed + 1;
+			double maxSpeed = speed + 0.5;
 
 			double pointSpeed1 = maxSpeed;
 			double pointSpeed2 = maxSpeed;
@@ -151,7 +148,6 @@ namespace Teatime
 			var sequence = SKAction.Sequence(action1, action2, action3, action4, action5);
 			this.RunAction(SKAction.RepeatActionForever(sequence));
 
-			//this.RunAction(SKAction.RepeatActionForever(SKAction.RotateByAngle(NMath.PI*rnd.Next(1,6) , 2.0)));
 
 			this.changeTexture();
 
@@ -175,41 +171,10 @@ namespace Teatime
 
 		public void changeTexture()
 		{
-			//this.RunAction(SKAction.FadeOutWithDuration(3));
-			//this.RunAction(SKAction.WaitForDuration(2000));
-		/*	SKAction action1;
-			SKAction action2;
-			SKAction action3;
-			SKTexture sparkTexture = SKTexture.FromImageNamed(("spark"));
-			SKTexture sparkTexture2 = SKTexture.FromImageNamed("spark2");
-			action1 = SKAction.FadeAlphaBy(-0.2f, 1);
-			action2 = SKAction.SetTexture(sparkTexture);
-			action3 = SKAction.FadeAlphaBy(+0.2f, 1);
-
-
-			var sequence = SKAction.Sequence(action1, action2, action3);
-		///	this.RunAction(SKAction.RepeatActionForever(sequence));
-			//if (this.Texture == SKTexture.FromImageNamed(("spark2")))
-			//{
-			//	this.Texture = SKTexture.FromImageNamed(("spark3"));
-
-			//}
-			//else {
-			*/
-				this.Texture = SKTexture.FromImageNamed(("spark3"));
-		//	}
+			
+			this.Texture = SKTexture.FromImageNamed(("spark3"));
 			parentNode.changeTexture();
-			/*
-			var path = new CGPath();
-			path.AddLines(new CGPoint[]{
-						new CGPoint (secSprite.Position.X, secSprite.Position.Y),
-						new CGPoint (offsetX, this.View.Frame.Height-offsetY),
-					});
-			path.CloseSubpath();
 
-			yourline.Path = path;
-			//this.RunAction(SKAction.FadeInWithDuration(3));
-*/
 		}
 	}
 }

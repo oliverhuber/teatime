@@ -41,7 +41,7 @@ namespace Teatime
 				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2)
 			};
 			myLabel.Alpha = 0.9f;
-
+			myLabel.RunAction(SKAction.Sequence(SKAction.WaitForDuration(2), SKAction.FadeOutWithDuration(1)));
 			// Background gradient sprite node
 			var container = new SKSpriteNode("background");
 			container.Position = new CGPoint(Frame.Width / 2, Frame.Height / 2);
@@ -157,10 +157,10 @@ namespace Teatime
 		}
 		public void updateEmitter(nfloat coordX,nfloat coordY) { 
 			fireEmitter.ParticleScale = 0.6f * ((1/Frame.Width)*coordX) +0.2f ;
-			fireEmitter.ParticleSpeedRange = 100f+coordY;
-			fireEmitter.ParticleScaleRange = 0.3f*((1 / Frame.Width) * coordX) +0.2f;
+			fireEmitter.ParticleSpeedRange = 100f+coordX*3;
+			fireEmitter.ParticleScaleRange = 0.3f*((1 / Frame.Width) * coordX*10) +0.2f;
 			fireEmitter.ParticleScaleSpeed = -0.1f;
-			fireEmitter.ParticleBirthRate = 600-coordY;
+			fireEmitter.ParticleBirthRate = 600-coordX+20;
 		
 		}
 		public override void TouchesMoved(NSSet touches, UIEvent evt)
@@ -217,13 +217,13 @@ namespace Teatime
 					Proto2Dim1 = 1;
 					Proto2Dim2 = 2;
 					Proto2Dim3 = 1;
-					myLabel.Text = "Glücklich";
+					//myLabel.Text = "Glücklich";
 				}
 				else if (checkY < 3 * (Frame.Height / 4) && checkY > Frame.Height / 2){
 					Proto2Dim1 = 3;
 					Proto2Dim2 = 1;
 					Proto2Dim3 = 2;
-					myLabel.Text = "Zufrieden";
+					//myLabel.Text = "Zufrieden";
 
 				}
 				else if (checkY < Frame.Height / 2 && checkY > Frame.Height / 4)
@@ -231,14 +231,14 @@ namespace Teatime
 					Proto2Dim1 = 2;
 					Proto2Dim2 = 3;
 					Proto2Dim3 = 1;
-					myLabel.Text = "Beunruhigt";
+					//myLabel.Text = "Beunruhigt";
 
 				}
 				else {
 					Proto2Dim1 = 3;
 					Proto2Dim2 = 2;
 					Proto2Dim3 = 1;
-					myLabel.Text = "Nervös";
+					//myLabel.Text = "Nervös";
 					//myLabel.RunAction(SKAction.RotateByAngle(NMath.PI * speed, 10.0));
 				}
 			}
@@ -271,34 +271,34 @@ namespace Teatime
 			
 
 				UIColor coloring;
-				var speed = 0;
+				double speed = 0;
 				if (checkY > 3 * (Frame.Height / 4))
 				{
-					speed = 1;
+					speed = 0.1;
 					coloring = UIColor.Green;
-					myLabel.Text = "Glücklich";
+					//myLabel.Text = "Glücklich";
 					myLabel.Position = new CGPoint(Frame.Width / 2, (7 * (Frame.Height / 8)));
 				}
 				else if (checkY < 3 * (Frame.Height / 4) && checkY > Frame.Height / 2)
 				{
-					speed = 2;
+					speed = 0.5;
 					coloring = UIColor.Blue;
-					myLabel.Text = "Zufrieden";
+				//	myLabel.Text = "Zufrieden";
 					myLabel.Position = new CGPoint(Frame.Width / 2, (5 * (Frame.Height / 8)));
 
 				}
 				else if (checkY < Frame.Height / 2 && checkY > Frame.Height / 4)
 				{
-					speed = 3;
+					speed = 2;
 					coloring = UIColor.Orange;
-					myLabel.Text = "Beunruhigt";
+					//myLabel.Text = "Beunruhigt";
 					myLabel.Position = new CGPoint(Frame.Width / 2, (3 * (Frame.Height / 8)));
 
 				}
 				else {
 					speed = 4;
 					coloring = UIColor.Red;
-					myLabel.Text = "Nervös";
+					//myLabel.Text = "Nervös";
 					myLabel.Position = new CGPoint(Frame.Width / 2, (1 * (Frame.Height / 8)));
 					//myLabel.RunAction(SKAction.RotateByAngle(NMath.PI * speed, 10.0));
 				}

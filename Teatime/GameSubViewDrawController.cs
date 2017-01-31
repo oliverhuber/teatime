@@ -32,8 +32,8 @@ namespace Teatime
 		{
 			// Configure SKview, cast current view
 			var skView = (SKView)View;
-			skView.ShowsFPS = true;
-			skView.ShowsNodeCount = true;
+			skView.ShowsFPS = false;
+			skView.ShowsNodeCount = false;
 
 			/* Sprite Kit applies additional optimizations to improve rendering performance */
 			skView.IgnoresSiblingOrder = true;
@@ -45,7 +45,11 @@ namespace Teatime
 			scene.Size = View.Bounds.Size;
 			skView.PresentScene(scene);
 
+
 		}
+
+
+
 
 		partial void UnwindProto6_TouchUpInside(UIButton sender)
 		{

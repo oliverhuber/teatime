@@ -19,6 +19,9 @@ namespace Teatime
 		SKLabelNode myLabel;
 		SKLabelNode mySave;
 		SKLabelNode myLabel2;
+		SKSpriteNode navSprite;
+		SKSpriteNode navSpriteTop;
+		SKSpriteNode navSpriteBottom;
 
 		FieldNode spriteTop;
 		FieldNode spriteBelow;
@@ -63,11 +66,50 @@ namespace Teatime
 				Position = new CGPoint(Frame.Width / 2, (Frame.Height / 2) -40)
 			};
 			myLabel2.FontColor = UIColor.FromHSB((nfloat)0, 0, 6f);
-
+			//myLabel2.Frame.Size.Width = new CGSize(myLabel2.Frame.Width + 100, myLabel2.Frame.Height + 40);
 			myLabel2.ZPosition = 2;
 			myLabel2.Alpha = 0.9f;
 			this.AddChild(myLabel);
 			this.AddChild(myLabel2);
+
+			navSprite = new SKSpriteNode();
+			navSprite.Name = "navSprite";
+			navSprite.Alpha = 0.0000001f;
+			navSprite.ZPosition = 10;
+			navSprite.Color = UIColor.FromHSB((nfloat)0, 1, 0.0f);
+			navSprite.Size = new CGSize(140, 70);
+			navSprite.Position = new CGPoint((this.View.Frame.Width - (70)), (this.View.Frame.Height - (35)));
+			AddChild(navSprite);
+
+			navSpriteTop = new SKSpriteNode();
+			navSpriteTop.Name = "navSpriteTop";
+			navSpriteTop.Alpha = 0.0000001f;
+			navSpriteTop.ZPosition = 1.1f;
+			navSpriteTop.Color = UIColor.FromHSB((nfloat)0, 1, 0.0f);
+			navSpriteTop.Size = new CGSize(Frame.Width, 70);
+			navSpriteTop.Position = new CGPoint((this.View.Frame.Width/2 ), (this.View.Frame.Height/2 + (35)));
+			AddChild(navSpriteTop);
+
+			navSpriteBottom = new SKSpriteNode();
+			navSpriteBottom.Name = "navSpriteBottom";
+			navSpriteBottom.Alpha = 0.0000001f;
+			navSpriteBottom.ZPosition = 1.1f;
+			navSpriteBottom.Color = UIColor.FromHSB((nfloat)1, 0, 0.0f);
+			navSpriteBottom.Size = new CGSize(Frame.Width, 70);
+			navSpriteBottom.Position = new CGPoint((this.View.Frame.Width / 2), (this.View.Frame.Height / 2 - (35)));
+			AddChild(navSpriteBottom);
+
+
+			mySave = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+			{
+				Text = "next >",
+				FontSize = 18,
+				Position = new CGPoint(Frame.Width - 60, (Frame.Height - 48))
+			};
+			mySave.FontColor = UIColor.FromHSB((nfloat)0, 0, 3f);
+			mySave.Alpha = 0.0f;
+			mySave.ZPosition = 2;
+			this.AddChild(mySave);
 		}
 		public void saveProto3Input()
 		{
@@ -217,8 +259,9 @@ namespace Teatime
 
 
 				var nodeType = GetNodeAtPoint(locationc);
-				if (nodeType is SKLabelNode && gameMode !=0)
+				if ((nodeType is SKLabelNode && gameMode !=0) || (nodeType.Name=="navSprite" && gameMode != 0)  || (nodeType.Name=="navSpriteTop" && gameMode != 0) || (nodeType.Name=="navSpriteBottom" && gameMode != 0))
 				{
+					mySave.Alpha = 0.0f;
 
 					SKAction action1 = SKAction.MoveToY(this.View.Frame.Height , 0.2);
 					SKAction action2 = SKAction.MoveToY(0, 0.2);
@@ -229,7 +272,8 @@ namespace Teatime
 					spriteBelow.RunAction(action2);
 					myLabel.RunAction(action3);
 					myLabel2.RunAction(action4);
-
+					navSpriteTop.RunAction(action4);
+					navSpriteBottom.RunAction(action3);
 					/*var locationTop = new CGPoint();
 					locationTop.X = (this.View.Frame.Width / 2);
 					locationTop.Y = (this.View.Frame.Height);
@@ -243,49 +287,46 @@ namespace Teatime
 					gameMode = 0;
 
 				}
-				else if (nodeType is FieldNode)
+
+				else if (nodeType is FieldNode || (nodeType.Name == "navSpriteTop" && gameMode == 0) || (nodeType.Name == "navSpriteBottom" && gameMode == 0) || (nodeType is SKLabelNode && gameMode == 0) )
 				{
-					FieldNode touchedNode = (Teatime.FieldNode)GetNodeAtPoint(locationc);
 					//	touchedNode.Color = UIColor.FromHSB((nfloat)0, 0, 1);
 					// Define Spark with location and alpha
 					if (gameMode == 1 || gameMode == 2)
 					{
-
-						var sprite = new SKSpriteNode("spark3")
+						if (nodeType is FieldNode)
 						{
-							Position = locationc,
-							XScale = 1.6f,
-							YScale = 1.6f,
-							Alpha = 0.7f,
-							ZPosition = 10         
+							FieldNode touchedNode = (Teatime.FieldNode)GetNodeAtPoint(locationc);
+							
+							var sprite = new SKSpriteNode("spark3")
+							{
+								Position = locationc,
+								XScale = 1.6f,
+								YScale = 1.6f,
+								Alpha = 0.7f,
+								ZPosition = 10         
 
-						};
-						//this.AddChild(sprite);
-						touchedNode.Color = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
-						if (touchedNode == spriteTop)
-						{
-							hueTop = (nfloat)(checkY / Frame.Height);
-							satTop = 0.5f;
-							briTop = (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f)));
-						}
-						else {
-							hueBel= (nfloat)(checkY / Frame.Height);
-							satBel= 0.5f;
-							briBel = (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f)));
+							};
+							//this.AddChild(sprite);
+							touchedNode.Color = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
+							if (touchedNode == spriteTop)
+							{
+								hueTop = (nfloat)(checkY / Frame.Height);
+								satTop = 0.5f;
+								briTop = (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f)));
+							}
+							else {
+								hueBel= (nfloat)(checkY / Frame.Height);
+								satBel= 0.5f;
+								briBel = (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f)));
+							}
 						}
 					}
 					if (gameMode == 0)
 					{
-						mySave = new SKLabelNode("AppleSDGothicNeo-UltraLight")
-						{
-							Text = "next >",
-							FontSize = 18,
-							Position = new CGPoint(Frame.Width - 50, (Frame.Height -40))
-						};
-						mySave.FontColor = UIColor.FromHSB((nfloat)0, 0, 3f);
+
 						mySave.Alpha = 0.9f;
-						mySave.ZPosition = 2;
-						this.AddChild(mySave);
+					
 					}
 					//UIColor topColor = spriteTop.Color;
 
@@ -308,6 +349,8 @@ namespace Teatime
 							spriteBelow.RunAction(action2);
 							myLabel2.RunAction(action3);
 							myLabel.RunAction(action4);
+							navSpriteTop.RunAction(action4);
+							navSpriteBottom.RunAction(action3);
 							gameMode = 1;
 						}
 						else {
@@ -320,6 +363,8 @@ namespace Teatime
 							spriteBelow.RunAction(action2);
 							myLabel2.RunAction(action3);
 							myLabel.RunAction(action4);
+							navSpriteTop.RunAction(action4);
+							navSpriteBottom.RunAction(action3);
 							gameMode = 2;
 						}
 					}

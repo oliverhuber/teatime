@@ -25,6 +25,7 @@ namespace Teatime
 		SKLabelNode myLabel3;
 		SKLabelNode myLabel4;
 		SKLabelNode mySave;
+		SKSpriteNode navSprite;
 		nfloat LastX;
 		nfloat LastY;
 		int changeColor;
@@ -129,12 +130,23 @@ namespace Teatime
 			{
 				Text = "next >",
 				FontSize = 18,
-				Position = new CGPoint(Frame.Width - 50, (Frame.Height - 40))
+				Position = new CGPoint(Frame.Width - 65, (Frame.Height - 53))
 			};
+			mySave.Name = "next";
 			mySave.FontColor = UIColor.FromHSB((nfloat)0, 0, 3f);
 			mySave.Alpha = 0.9f;
 			mySave.ZPosition = 2;
 			this.AddChild(mySave);
+
+			navSprite = new SKSpriteNode();
+			navSprite.Name = "navSprite";
+			navSprite.Alpha = 0.0000001f;
+			navSprite.ZPosition = 10;
+			navSprite.Color = UIColor.FromHSB((nfloat)0, 1, 0.0f);
+			navSprite.Size = new CGSize(140, 70);
+			navSprite.Position = new CGPoint((this.View.Frame.Width - (70)), (this.View.Frame.Height - (35)));
+			AddChild(navSprite);
+
 
 			// Set Color Flag
 			changeColor = 0;
@@ -416,7 +428,7 @@ namespace Teatime
 					Proto1Dim1 = 1;
 					Proto1Dim2 = 1;
 					Proto1Dim3 = 1;
-					speed = 0.5;
+					speed = 0.1;
 					updateSparks(speed, true, true, 8, true);
 				}
 				else if (checkY < 3 * (Frame.Height / 4) && checkY > Frame.Height / 2)
@@ -424,7 +436,7 @@ namespace Teatime
 					Proto1Dim1 = 2;
 					Proto1Dim2 = 2;
 					Proto1Dim3 = 2;
-					speed = 1;
+					speed = 0.5;
 					updateSparks(speed, true, true, 4, true);
 				}
 				else if (checkY < Frame.Height / 2 && checkY > Frame.Height / 4)
@@ -439,7 +451,7 @@ namespace Teatime
 					Proto1Dim1 = 4;
 					Proto1Dim2 = 4;
 					Proto1Dim3 = 4;
-					speed = 3;
+					speed = 5;
 					updateSparks(speed, false, false, 0, false);
 				}
 			}
@@ -464,18 +476,11 @@ namespace Teatime
 				//var checkX = ((UITouch)touchc).LocationInNode(this).X;
 				//var checkY = ((UITouch)touchc).LocationInNode(this).Y;
 				var nodeType = GetNodeAtPoint(locationc);
-				if (nodeType is SKLabelNode)
+				if ((nodeType is SKLabelNode && nodeType.Name == "next") || nodeType.Name == "navSprite")
 				{
 					changeColor++;
 
-				/*	if (((SKLabelNode)nodeType).Text.Equals("next >"))
-					{
-						changeColor++;
-					}*/
-				}
-				/*
-					// Change Color Theme
-					changeColor++;
+
 					if (changeColor % 3 == 0)
 					{
 						// Background Calculating
@@ -490,80 +495,39 @@ namespace Teatime
 					else if (changeColor % 3 == 2)
 					{
 						// Background Calculating
-						this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 1f, (nfloat)(((checkX / Frame.Width) / 2) * 1 + ((0.3333333f))));
-					}
-					else {
-						// Background Calculating
-						this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
-					}
-					//	changeTexture();
-					// do something with the double touch.
-
-				}
-				else {
-					if (changeColor % 2 == 0)
-					{
-						// Background Calculating
-						this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
-
-					}
-					else if (changeColor % 2 == 1)
-					{
-						// Background Calculating
 						this.BackgroundColor = UIColor.FromHSB((nfloat)0, 0, (nfloat)(((checkX / Frame.Width) / 2) * 1 + ((0.3333333f))));
 					}
 					else {
 						// Background Calculating
 						this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
 					}
-				//}*/
-				if (changeColor % 3 == 0)
-				{
-					// Background Calculating
-					this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
+					// Check to which part the finger is moved to and update the sparks
+					double speed = 0;
+					if (checkY > 3 * (Frame.Height / 4))
+					{
+						speed = 0.1;
+						updateSparks(speed, true, true, 8, true);
+					}
+					else if (checkY < 3 * (Frame.Height / 4) && checkY > Frame.Height / 2)
+					{
+						speed = 0.5;
+						updateSparks(speed, true, true, 4, true);
+					}
+					else if (checkY < Frame.Height / 2 && checkY > Frame.Height / 4)
+					{
+						speed = 2;
+						updateSparks(speed, true, true, 2, false);
+					}
+					else {
+						speed = 5;
+						updateSparks(speed, false, false, 0, false);
+					}
 
-				}
-				else if (changeColor % 3 == 1)
-				{
-					// Background Calculating
-					this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 1f, (nfloat)(((checkX / Frame.Width) / 2) * 1 + ((0.3333333f))));
-				}
-				else if (changeColor % 3 == 2)
-				{
-					// Background Calculating
-					this.BackgroundColor = UIColor.FromHSB((nfloat)0, 0, (nfloat)(((checkX / Frame.Width) / 2) * 1 + ((0.3333333f))));
-				}
-				else {
-					// Background Calculating
-					this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
-				}
-				// Check to which part the finger is moved to and update the sparks
-				double speed = 0;
-				if (checkY > 3 * (Frame.Height / 4))
-				{
-					speed = 0.5;
-					updateSparks(speed, true, true, 8, true);
-				}
-				else if (checkY < 3 * (Frame.Height / 4) && checkY > Frame.Height / 2)
-				{
-					speed = 1;
-					updateSparks(speed, true, true, 4, true);
-				}
-				else if (checkY < Frame.Height / 2 && checkY > Frame.Height / 4)
-				{
-					speed = 2;
-					updateSparks(speed, true, true, 2, false);
-				}
-				else {
-					speed = 3;
-					updateSparks(speed, false, false, 0, false);
-				}
-
-				LastX = checkX;
-				LastY = checkY;
+					LastX = checkX;
+					LastY = checkY;
 				// Double tapped
 
-
+				}
 			}
 		}
 	}

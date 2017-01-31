@@ -122,7 +122,9 @@
     <ImageAsset Include="Assets.xcassets\line.imageset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\line.imageset\line.png" />
     <ImageAsset Include="Assets.xcassets\sparkx.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\sparkx.imageset\spark3X.png" />
+    <ImageAsset Include="Assets.xcassets\sparkfilled.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\sparkfilled.imageset\sparkfilledbigger.png" />
+    <ImageAsset Include="Assets.xcassets\sparkx.imageset\sparkfilledbiggerx.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -133,6 +135,7 @@
     <Folder Include="Assets.xcassets\spark4.imageset\" />
     <Folder Include="Assets.xcassets\line.imageset\" />
     <Folder Include="Assets.xcassets\sparkx.imageset\" />
+    <Folder Include="Assets.xcassets\sparkfilled.imageset\" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="GameScene.sks" />

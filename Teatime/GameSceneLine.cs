@@ -24,8 +24,16 @@ namespace Teatime
 		public int Proto4Dim2 { get; set; }
 		public int Proto4Dim3 { get; set; }
 		// Class declarations of the sprite nodes
-		SKSpriteNode oneSprite;
-		SKSpriteNode secSprite;
+		SKSpriteNode leftUpperSprite;
+		SKSpriteNode rightUpperSprite;
+		SKSpriteNode leftLowerSprite;
+		SKSpriteNode rightLowerSprite;
+		SKLabelNode myLabelSpeedPlus;
+		SKLabelNode myLabelSpeedMinus;
+		SKLabelNode myLabelSizePlus;
+		SKLabelNode myLabelSizeMinus;
+
+
 		//LineNode yourline;
 		SKLabelNode myLabel;
 		SKEmitterNode fireEmitter;
@@ -34,6 +42,8 @@ namespace Teatime
 		int updateCounter = 0;
 		bool upperSpeed;
 		bool upperSize;
+		bool lowerSpeed;
+		bool lowerSize;
 		Timer timer;
 		bool firstTouch;
 		protected GameSceneLine(IntPtr handle) : base(handle)
@@ -75,6 +85,85 @@ namespace Teatime
 				Color = UIColor.FromHSB((nfloat)0, 0, 0.2f)
 
 			};
+
+			leftUpperSprite = new FieldNode();
+			leftUpperSprite.Color = UIColor.FromHSB((nfloat)0, 0, 0.0f);
+			leftUpperSprite.Size = new CGSize(Frame.Width / 2, Frame.Height / 2);
+			var leftUpperPoint = new CGPoint();
+			leftUpperPoint.X =  (Frame.Width / 4);
+			leftUpperPoint.Y =  ((Frame.Height / 4)*3);
+			leftUpperSprite.Position = leftUpperPoint;		         
+			AddChild(leftUpperSprite);
+
+			myLabelSizePlus = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+			{
+				Text = "grösser",
+				FontSize = 20,
+				Position = leftUpperPoint,
+				ZPosition = 5
+			};
+			myLabelSizePlus.Alpha = 0.9f;
+			myLabelSizePlus.FontColor = UIColor.FromHSB((nfloat)0, 0, 0.0f);
+
+			AddChild(myLabelSizePlus);
+
+			rightUpperSprite = new FieldNode();
+			rightUpperSprite.Color = UIColor.FromHSB((nfloat)0, 0, 0.0f);
+			rightUpperSprite.Size = new CGSize(Frame.Width / 2, Frame.Height / 2);
+			rightUpperSprite.Position = new CGPoint(((Frame.Width / 4)*3), ((Frame.Height / 4)*3));
+			AddChild(rightUpperSprite);
+
+			myLabelSpeedPlus = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+			{
+				Text = "schneller",
+				FontSize = 20,
+				Position = rightUpperSprite.Position,
+				ZPosition = 5
+			};
+			myLabelSpeedPlus.Alpha = 0.9f;
+			myLabelSpeedPlus.FontColor=UIColor.FromHSB((nfloat)0, 0, 0.0f);
+			AddChild(myLabelSpeedPlus);
+
+			leftLowerSprite = new FieldNode();
+			leftLowerSprite.Color = UIColor.FromHSB((nfloat)0, 0, 0.0f);
+			leftLowerSprite.Size = new CGSize(Frame.Width / 2, Frame.Height / 2);
+			leftLowerSprite.Position = new CGPoint((Frame.Width / 4), (Frame.Height / 4));
+			AddChild(leftLowerSprite);
+
+			myLabelSizeMinus = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+			{
+				Text = "kleiner",
+				FontSize = 20,
+				Position = leftLowerSprite.Position,
+				ZPosition = 5
+			};
+			myLabelSizeMinus.Alpha = 0.9f;
+			myLabelSizeMinus.FontColor = UIColor.FromHSB((nfloat)0, 0, 0.0f);
+
+			AddChild(myLabelSizeMinus);
+
+			rightLowerSprite = new FieldNode();
+			rightLowerSprite.Color = UIColor.FromHSB((nfloat)0, 0, 0.0f);
+			rightLowerSprite.Size = new CGSize(Frame.Width / 2, Frame.Height / 2);
+			rightLowerSprite.Position = new CGPoint(((Frame.Width /4 )*3), (Frame.Height / 4));
+			AddChild(rightLowerSprite);
+
+			myLabelSpeedMinus = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+			{
+				Text = "langsamer",
+				FontSize = 20,
+				Position = rightLowerSprite.Position,
+				ZPosition = 5
+			};
+			myLabelSpeedMinus.Alpha = 0.9f;
+			myLabelSpeedMinus.FontColor = UIColor.FromHSB((nfloat)0, 0, 0.0f);
+
+			AddChild(myLabelSpeedMinus);
+
+			rightUpperSprite.ZPosition = 3;
+			rightLowerSprite.ZPosition = 3;
+			leftLowerSprite.ZPosition = 3;
+			leftUpperSprite.ZPosition = 3;
 
 			backGroundNode.ZPosition = 1;
 			backGroundNode.Size = new CGSize(Frame.Width / 1, Frame.Height / 1);
@@ -170,7 +259,7 @@ namespace Teatime
 
 			double temp = 0.6 + ((double)1 / 5);
 			yourline.Position = new CGPoint(Frame.Width / 20 * lineCounter, Frame.Height / 2 + 20);
-			yourline.ZPosition = 2;
+			yourline.ZPosition = 5;
 			yourline.XScale = 1.5f;
 			AddChild(yourline);
 			yourline.enableMove(temp, false);
@@ -189,7 +278,7 @@ namespace Teatime
 				if (s.counter == a)
 				{
 					//lineNode.setUpdateSize(upperSize);
-					lineNode.setUpdateSpeed(upperSpeed,upperSize);
+					lineNode.setUpdateSpeed(upperSpeed,upperSize,lowerSpeed,lowerSize);
 					if (a == 19)
 					{
 						Proto4Dim1 =  Convert.ToInt32(lineNode.speedLocal * 10) ;
@@ -208,7 +297,7 @@ namespace Teatime
 				s.tmr = null;
 			}
 		}
-		public void updateLines(bool upperSpeedTemp,bool upperSizeTemp)
+		public void updateLines(bool upperSpeedTemp, bool upperSizeTemp, bool lowerSpeedTemp, bool lowerSizeTemp)
 		{
 
 			TimerState s = new TimerState();
@@ -219,7 +308,9 @@ namespace Teatime
 			// Keep a handle to the timer, so it can be disposed.
 			s.tmr = timerDelecate;
 			upperSize = upperSizeTemp;
-			upperSpeed = upperSpeedTemp;			
+			upperSpeed = upperSpeedTemp;
+			lowerSize = lowerSizeTemp;
+			lowerSpeed = lowerSpeedTemp;
 		}
 	
 	
@@ -293,21 +384,38 @@ namespace Teatime
 				var speed = 0;
 				if (checkY > (Frame.Height / 2))
 				{
-					speed = 1;
-					coloring = UIColor.Green;
-					myLabel.Text = "Glücklich";
-					myLabel.Position = new CGPoint(Frame.Width / 2, (7 * (Frame.Height / 8)));
-					updateLines(true, true);
+					if (checkX > (Frame.Width / 2)) {
+						updateLines(true, false, false, false);
+						SKAction act1 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 1f), 1f, 0);
+						SKAction act2 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 0f), 0f, 0.5);
+						SKAction seq = SKAction.Sequence(act1, act2);
+						rightUpperSprite.RunAction(seq);
+					}
+					else {
+						updateLines(false, true, false, false);
+						SKAction act1 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 1f), 1f, 0);
+						SKAction act2 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 0f), 0f, 0.5);
+						SKAction seq = SKAction.Sequence(act1, act2);
+						leftUpperSprite.RunAction(seq);
+					}
 				}
 
 
 				else {
-					speed = 4;
-					coloring = UIColor.Red;
-					myLabel.Text = "Nervös";
-					myLabel.Position = new CGPoint(Frame.Width / 2, (1 * (Frame.Height / 8)));
-					//myLabel.RunAction(SKAction.RotateByAngle(NMath.PI * speed, 10.0));
-					updateLines(false, false);
+					if (checkX > (Frame.Width / 2)) {
+						updateLines(false, false, true, false);
+						SKAction act1 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 1f), 1f, 0);
+						SKAction act2 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 0f), 0f, 0.5);
+						SKAction seq = SKAction.Sequence(act1, act2);
+						rightLowerSprite.RunAction(seq);
+					}
+					else {
+						updateLines(false, false, false, true);
+						SKAction act1 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 1f), 1f, 0);
+						SKAction act2 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 0f), 0f, 0.5);
+						SKAction seq = SKAction.Sequence(act1, act2);
+						leftLowerSprite.RunAction(seq);
+					}
 				}
 
 			

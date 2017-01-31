@@ -86,9 +86,10 @@ namespace Teatime
 		//	this.RunAction(SKAction.RepeatActionForever(moveSeq));
 
 		}
-		public void setUpdateSpeed(bool speedUp, bool sizeUp)
+		public void setUpdateSpeed(bool speedUp, bool sizeUp, bool speedDown, bool sizeDown)
 		{
-			
+
+
 			this.RemoveAllActions();
 			SKAction scaleUp;
 			SKAction scaleUpWaveUp;
@@ -104,8 +105,8 @@ namespace Teatime
 			if (speedUp == true)
 			{
 				speedLocal = speedLocal - 0.1f;
-				}
-			else
+			}
+			if (speedDown == true)
 			{
 				speedLocal = speedLocal + 0.1f;
 
@@ -118,7 +119,7 @@ namespace Teatime
 			{
 				sizeLocal = sizeLocal + 0.2f;
 			}
-			else
+			if (sizeDown == true)
 			{
 				sizeLocal = sizeLocal - 0.2f;
 
@@ -128,14 +129,15 @@ namespace Teatime
 				sizeLocal = 0.1f;
 			}
 			scaleUp = SKAction.ScaleYTo(sizeLocal, speedLocal);
-			scaleUpWaveUp = SKAction.ScaleYTo(sizeLocal + 0.3f,  0.1);
-			scaleUpWaveDown = SKAction.ScaleYTo(sizeLocal,  0.1);
+			scaleUpWaveUp = SKAction.ScaleYTo(sizeLocal + 0.3f, 0.1);
+			scaleUpWaveDown = SKAction.ScaleYTo(sizeLocal, 0.1);
 
 			scaleDown = SKAction.ScaleYTo(0.5f, speedLocal);
-			scaleDownWaveDown = SKAction.ScaleYTo(0.5f - 0.3f,  0.1);
-			scaleDownWaveUp = SKAction.ScaleYTo(0.5f,  0.1);
-			SKAction scaleSeq = SKAction.Sequence(scaleUp,scaleUpWaveUp,scaleUpWaveDown,scaleDown,scaleDownWaveDown,scaleDownWaveUp);
+			scaleDownWaveDown = SKAction.ScaleYTo(0.5f - 0.3f, 0.1);
+			scaleDownWaveUp = SKAction.ScaleYTo(0.5f, 0.1);
+			SKAction scaleSeq = SKAction.Sequence(scaleUp, scaleUpWaveUp, scaleUpWaveDown, scaleDown, scaleDownWaveDown, scaleDownWaveUp);
 			this.RunAction(SKAction.RepeatActionForever(scaleSeq));
+
 
 		}
 		public void setUpdateSize(bool sizeUp)

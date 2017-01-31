@@ -102,7 +102,7 @@ namespace Teatime
 		public void changeTexture(bool disturb,double PointSpeed1)
 		{
 			//Random rnd = new Random();
-			double rotateBy = rnd.NextDouble() * (3 - 2) + 2;
+			double rotateBy = rnd.NextDouble() * (2 - 1) + 1;
 			//this.RunAction(SKAction.FadeOutWithDuration(3));
 			//this.RunAction(SKAction.WaitForDuration(2000));
 			SKAction action1;

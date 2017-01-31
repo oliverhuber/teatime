@@ -211,7 +211,6 @@
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" id="1272" translatesAutoresizingMaskIntoConstraints="NO" misplaced="YES" borderStyle="roundedRect" clearButtonMode="whileEditing" alpha="0.6">
                                 <rect key="frame" x="178" y="79" width="245" height="30"/>
                                 <fontDescription key="fontDescription" name="AppleSDGothicNeo-Light" family="Apple SD Gothic Neo" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done" keyboardAppearance="alert" enablesReturnKeyAutomatically="YES"/>
                                 <constraints>
                                     <constraint id="1273" firstItem="1272" firstAttribute="width" constant="280"/>
                                 </constraints>
@@ -267,7 +266,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="159" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" alpha="0.8">
-                                <rect key="frame" x="14" y="20" width="71" height="30"/>
+                                <rect key="frame" x="14" y="20" width="104" height="53"/>
                                 <connections>
                                     <segue id="180" destination="10" kind="unwind" unwindAction="UnwindToPrototypes:"/>
                                     <action selector="UnwindProto_TouchUpInside:" destination="7" id="182" eventType="touchUpInside"/>
@@ -324,7 +323,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="264" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" alpha="0.8">
-                                <rect key="frame" x="17" y="20" width="71" height="30"/>
+                                <rect key="frame" x="17" y="20" width="100" height="41"/>
                                 <connections>
                                     <action selector="UnwindProto_TouchUpInside:" destination="268" id="267" eventType="touchUpInside"/>
                                     <segue id="270" destination="243" kind="unwind" unwindAction="UnwindToPrototypes:"/>
@@ -360,7 +359,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1040" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" alpha="0.8">
-                                <rect key="frame" x="20" y="20" width="71" height="30"/>
+                                <rect key="frame" x="20" y="13" width="87" height="57"/>
                                 <connections>
                                     <action selector="UnwindProto_TouchUpInside:" destination="1042" id="1041" eventType="touchUpInside"/>
                                     <action selector="UnwindProtoColor_TouchUpInside:" destination="1046" id="1045" eventType="touchUpInside"/>
@@ -397,7 +396,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1092" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" alpha="0.8">
-                                <rect key="frame" x="20" y="20" width="71" height="30"/>
+                                <rect key="frame" x="20" y="20" width="79" height="51"/>
                                 <connections>
                                     <action selector="UnwindProto_TouchUpInside:" destination="1094" id="1093" eventType="touchUpInside"/>
                                     <action selector="UnwindProtoColor_TouchUpInside:" destination="1096" id="1095" eventType="touchUpInside"/>
@@ -435,7 +434,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1169" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" alpha="0.8">
-                                <rect key="frame" x="20" y="26" width="71" height="30"/>
+                                <rect key="frame" x="3" y="19" width="91" height="48"/>
                                 <connections>
                                     <action selector="UnwindProto_TouchUpInside:" destination="1173" id="1172" eventType="touchUpInside"/>
                                     <segue id="1175" destination="1124" kind="unwind" unwindAction="UnwindToPrototypes:"/>
@@ -461,7 +460,7 @@
         <scene sceneID="1180">
             <objects>
                 <tableViewController id="1181" sceneMemberID="viewController" customClass="showUserData" storyboardIdentifier="showUserData" hidesBottomBarWhenPushed="YES">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="20" sectionHeaderHeight="50" sectionFooterHeight="28" id="1182" indicatorStyle="white">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="20" sectionHeaderHeight="50" sectionFooterHeight="40" id="1182" showsSelectionImmediatelyOnTouchBegin="NO" canCancelContentTouches="NO" bouncesZoom="NO" showsVerticalScrollIndicator="NO">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -492,7 +491,7 @@
                             <connections>
                                 <action selector="UnwindProto_TouchUpInside:" destination="1228" id="1227" eventType="touchUpInside"/>
                                 <action selector="UnwindProtoSprite_TouchUpInside:" destination="1232" id="1231" eventType="touchUpInside"/>
-                                <segue id="1257" destination="1188" kind="unwind" unwindAction="UnwindToPrototypes:"/>
+                                <segue id="1339" destination="1188" kind="unwind" unwindAction="UnwindToPrototypes:"/>
                             </connections>
                             <fontDescription key="fontDescription" name="AppleSDGothicNeo-UltraLight" family="Apple SD Gothic Neo" pointSize="17"/>
                             <size key="titleShadowOffset" width="0" height="0"/>
@@ -500,10 +499,39 @@
                                 <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                             </state>
                         </button>
+                        <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1312" translatesAutoresizingMaskIntoConstraints="NO" alpha="0.75" opaque="NO" key="tableFooterView">
+                            <rect key="frame" x="0.0" y="566" width="600" height="34"/>
+                            <fontDescription key="fontDescription" name="AppleSDGothicNeo-UltraLight" family="Apple SD Gothic Neo" pointSize="19"/>
+                            <color key="backgroundColor" colorSpace="calibratedRGB" red="0.87058823529411766" green="0.9137254901960784" blue="0.996078431372549" alpha="1"/>
+                            <state key="normal" title="Reset Data">
+                                <color key="titleShadowColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="titleColor" colorSpace="calibratedRGB" red="0.18823529411764706" green="0.69803921568627447" blue="0.81176470588235294" alpha="1"/>
+                            </state>
+                            <connections>
+                                <action selector="GotoNext_TouchUpInside:" destination="1314" id="1313" eventType="touchUpInside"/>
+                                <action selector="GotoNext4_TouchUpInside:" destination="1316" id="1315" eventType="touchUpInside"/>
+                                <action selector="ResetButton_TouchUpInside:" destination="1181" id="1322" eventType="touchUpInside"/>
+                            </connections>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
+                                    <real key="value" value="5"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                <rect key="frame" x="29" y="128" width="245" height="35"/>
+                            </variation>
+                            <constraints>
+                                <constraint id="1319" firstItem="1312" firstAttribute="width" constant="245">
+                                    <variation key="heightClass=regular-widthClass=compact" constant="280"/>
+                                </constraint>
+                                <constraint id="1320" firstItem="1312" firstAttribute="height" constant="42"/>
+                            </constraints>
+                        </button>
                     </tableView>
                     <connections>
                         <outlet property="unwindUserData" destination="1226" id="name-outlet-1226"/>
                         <outlet property="userData" destination="1182" id="name-outlet-1182"/>
+                        <outlet property="resetButton" destination="1312" id="name-outlet-1312"/>
                     </connections>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -523,5 +551,7 @@
         <image name="logoteatime.png" width="1280" height="800"/>
         <image name="logoteatime_white.png" width="1280" height="800"/>
         <image name="line" width="64" height="64"/>
+        <image name="sparkx" width="128" height="128"/>
+        <image name="sparkfilled" width="128" height="128"/>
     </resources>
 </document>
