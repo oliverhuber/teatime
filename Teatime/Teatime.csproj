@@ -111,7 +111,6 @@
     <ImageAsset Include="Assets.xcassets\Contents.json" />
     <ImageAsset Include="Assets.xcassets\background.imageset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\spark.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\background.imageset\background.png" />
     <ImageAsset Include="Assets.xcassets\spark2.imageset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\spark2.imageset\spark2.png" />
     <ImageAsset Include="Assets.xcassets\spark3.imageset\Contents.json" />
@@ -125,6 +124,11 @@
     <ImageAsset Include="Assets.xcassets\sparkfilled.imageset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\sparkfilled.imageset\sparkfilledbigger.png" />
     <ImageAsset Include="Assets.xcassets\sparkx.imageset\sparkfilledbiggerx.png" />
+    <ImageAsset Include="Assets.xcassets\background_n.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\background.imageset\background_new_wtext.png" />
+    <ImageAsset Include="Assets.xcassets\info.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\info.imageset\info.png" />
+    <ImageAsset Include="Assets.xcassets\background_n.imageset\background_new_german_intensemirror.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -136,6 +140,8 @@
     <Folder Include="Assets.xcassets\line.imageset\" />
     <Folder Include="Assets.xcassets\sparkx.imageset\" />
     <Folder Include="Assets.xcassets\sparkfilled.imageset\" />
+    <Folder Include="Assets.xcassets\background_n.imageset\" />
+    <Folder Include="Assets.xcassets\info.imageset\" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="GameScene.sks" />

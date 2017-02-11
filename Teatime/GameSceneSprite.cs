@@ -16,10 +16,23 @@ namespace Teatime
 		// Class declarations of the sprite nodes
 		SKSpriteNode oneSprite;
 		SKSpriteNode secSprite;
+		SKSpriteNode infoSprite;
 		SKShapeNode yourline;
+		SKSpriteNode container;
 		SKLabelNode myLabel;
+		SKLabelNode myLabelIntro;
+		SKLabelNode myLabelInfo;
+		SKLabelNode myLabelIntro2;
+		SKLabelNode myLabelInfo2;
+		SKLabelNode myLabelIntro3;
+		SKLabelNode myLabelInfo3;
+		SKLabelNode myLabelInfo4;
+		SKLabelNode mySave;
 		SKEmitterNode fireEmitter;
+		bool switchInfo;
 		bool firstTouch;
+		bool infoTouch;
+		int blurFactor;
 		protected GameSceneSprite(IntPtr handle) : base(handle)
 		{
 			// Note: this .ctor should not contain any initialization logic.
@@ -28,23 +41,106 @@ namespace Teatime
 
 		public override void DidMoveToView(SKView view)
 		{
+			switchInfo = false;
 			Proto2Dim1 = 0;
 			Proto2Dim2 = 0;
-			Proto2Dim3 = 0;
+			Proto2Dim3 = 1;
+			blurFactor = 1;
 			// Setup Sprite Scene
-
+			infoTouch = false;
 			// New Label placed in the middle of the Screen
 			myLabel = new SKLabelNode("AppleSDGothicNeo-UltraLight")
 			{
-				Text = "Guten Tag, wie gehts dir heute?",
+				Text = "Hier kannst du deine Stimmung erfassen",
 				FontSize = 20,
-				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2)
+				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2),
+				ZPosition = 30
 			};
 			myLabel.Alpha = 0.9f;
-			myLabel.RunAction(SKAction.Sequence(SKAction.WaitForDuration(2), SKAction.FadeOutWithDuration(1)));
+			myLabel.RunAction(SKAction.Sequence(SKAction.WaitForDuration(1.5), SKAction.FadeOutWithDuration(1)));
+
+			myLabelIntro = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+			{
+				Text = "Berühre den Bildschirm",
+				FontSize = 20,
+				Position = new CGPoint(Frame.Width / 2, (Frame.Height / 2) +30),
+				ZPosition = 30
+			};
+			myLabelIntro.Alpha = 0.0f;
+			myLabelIntro.RunAction(SKAction.Sequence(SKAction.WaitForDuration(2.5), SKAction.FadeInWithDuration(1),SKAction.WaitForDuration(1.5), SKAction.FadeOutWithDuration(1)));
+
+
+			myLabelInfo = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+			{
+				Text = "und navigiere die Punkte",
+				FontSize = 20,
+				Position = new CGPoint(Frame.Width / 2, (Frame.Height / 2) - 30),
+				ZPosition = 30
+			};
+			myLabelInfo.Alpha = 0.0f;
+			myLabelInfo.RunAction(SKAction.Sequence(SKAction.WaitForDuration(2.5), SKAction.FadeInWithDuration(1), SKAction.WaitForDuration(1.5), SKAction.FadeOutWithDuration(1)));
+
+
+			myLabelIntro2 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+			{
+				Text = "so dass diese schlussendlich",
+				FontSize = 20,
+				Position = new CGPoint(Frame.Width / 2, (Frame.Height / 2) + 30),
+				ZPosition = 30
+			};
+			myLabelIntro2.Alpha = 0.0f;
+			myLabelIntro2.RunAction(SKAction.Sequence(SKAction.WaitForDuration(6), SKAction.FadeInWithDuration(1), SKAction.WaitForDuration(1.5), SKAction.FadeOutWithDuration(1)));
+
+
+			myLabelInfo2 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+			{
+				Text = "deiner aktuellen Gefühlslage entsprechen",
+				FontSize = 20,
+				Position = new CGPoint(Frame.Width / 2, (Frame.Height / 2) - 30),
+				ZPosition = 30
+			};
+			myLabelInfo2.Alpha = 0.0f;
+			myLabelInfo2.RunAction(SKAction.Sequence(SKAction.WaitForDuration(6), SKAction.FadeInWithDuration(1), SKAction.WaitForDuration(1.5), SKAction.FadeOutWithDuration(1)));
+
+
+			myLabelIntro3 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+			{
+				Text = "wenn du die Punkte lange drückst",
+				FontSize = 20,
+				Position = new CGPoint(Frame.Width / 2, (Frame.Height / 2) + 30),
+				ZPosition = 30
+			};
+			myLabelIntro3.Alpha = 0.0f;
+			myLabelIntro3.RunAction(SKAction.Sequence(SKAction.WaitForDuration(9.5), SKAction.FadeInWithDuration(1), SKAction.WaitForDuration(1.5), SKAction.FadeOutWithDuration(1)));
+
+
+			myLabelInfo3 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+			{
+				Text = "kannst du die Punkte verändern",
+				FontSize = 20,
+				Position = new CGPoint(Frame.Width / 2, (Frame.Height / 2) - 30),
+				ZPosition = 30
+			};
+			myLabelInfo3.Alpha = 0.0f;
+			myLabelInfo3.RunAction(SKAction.Sequence(SKAction.WaitForDuration(9.5), SKAction.FadeInWithDuration(1), SKAction.WaitForDuration(1.5), SKAction.FadeOutWithDuration(1)));
+
+			myLabelInfo4 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+			{
+				Text = "Informationen zu Farben >",
+				FontSize = 20,
+				Position = new CGPoint(Frame.Width -180, (Frame.Height) - 50),
+				ZPosition = 30
+			};
+			myLabelInfo4.Alpha = 0.0f;
+			myLabelInfo4.RunAction(SKAction.Sequence(SKAction.WaitForDuration(13), SKAction.FadeInWithDuration(1), SKAction.WaitForDuration(1.5), SKAction.FadeOutWithDuration(1)));
+
+
+
+
 			// Background gradient sprite node
-			var container = new SKSpriteNode("background");
+			container = new SKSpriteNode("background");
 			container.Position = new CGPoint(Frame.Width / 2, Frame.Height / 2);
+			container.Size = new CGSize(Frame.Width, Frame.Height);
 			//this.Size = new CGSize(1200, 200);
 
 			// Sprite Node
@@ -66,10 +162,42 @@ namespace Teatime
 			container.ZPosition = 0;
 			//yourline.ZPosition = 2;
 
+			infoSprite = new SKSpriteNode("info");
+			infoSprite.Position = new CGPoint(Frame.Width -40, Frame.Height -40);
+			infoSprite.ZPosition = 10;
+			infoSprite.XScale = 0.8f;
+			infoSprite.YScale = 0.8f;
+			infoSprite.Alpha = 0.8f;
+			infoSprite.Name = "info";
+		//	infoSprite.ColorBlendFactor = 1f;
+			//infoSprite.Color = UIColor.FromHSB(0, 0, 0);
+			AddChild(infoSprite);
+			mySave = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+			{
+				Text = "next >",
+				FontSize = 18,
+				Position = new CGPoint(Frame.Width - 60, (Frame.Height - 48))
+			};
+			mySave.FontColor = UIColor.FromHSB((nfloat)0, 0, 3f);
+			mySave.Alpha = 0.0f;
+			mySave.ZPosition = 2;
+			this.AddChild(mySave);
+
+
 			AddChild(myLabel);
+			AddChild(myLabelIntro);
+			AddChild(myLabelInfo); 
+			AddChild(myLabelIntro2);
+			AddChild(myLabelInfo2); 
+			AddChild(myLabelIntro3);
+			AddChild(myLabelInfo3);
+			AddChild(myLabelInfo4);
 			AddChild(container);
 			createEmitterNode();
 
+			var gestureLongRecognizer = new UILongPressGestureRecognizer(PressHandler);
+			gestureLongRecognizer.MinimumPressDuration = 0.5;
+			this.View.AddGestureRecognizer(gestureLongRecognizer);
 		}
 
 		public void saveProto2Input()
@@ -102,6 +230,61 @@ namespace Teatime
 				//DatabaseMgmt.Database.DeleteItem(s);
 			}
 			Console.WriteLine("End Output: --------------------------------");
+
+		}
+
+		void PressHandler(UILongPressGestureRecognizer gestureRecognizer)
+		{
+	
+			var image = gestureRecognizer.View;
+			if (gestureRecognizer.State == UIGestureRecognizerState.Began)
+			//	|| gestureRecognizer.State == UIGestureRecognizerState.Changed)
+			//if (gestureRecognizer.State == UIGestureRecognizerState.Ended)
+			{
+			//	var location = gestureRecognizer.LocationInView(this.View);
+				var locationTouched = gestureRecognizer.LocationInView(this.View);
+				nfloat coordX = locationTouched.X;
+				nfloat coordY = locationTouched.Y;
+				setDimensions(coordX, coordY);
+				if (blurFactor == 1)
+				{
+					blurFactor = 5;
+					updateBlurNode(blurFactor);
+				}
+			/*	else if (blurFactor == 2)
+				{
+					updateBlurNode(blurFactor);
+					blurFactor++;
+				}
+				else if (blurFactor == 3)
+				{
+					updateBlurNode(blurFactor);
+					blurFactor++;
+				}
+				else if (blurFactor == 4)
+				{
+					updateBlurNode(blurFactor);
+					blurFactor++;
+				}*/
+				else {
+					blurFactor = 1;
+					updateBlurNode(blurFactor);
+
+				}
+				if (gestureRecognizer.State == UIGestureRecognizerState.Ended)
+				{
+
+				}
+			}
+				//	var convertLocation = new CGPoint(location.X, this.View.Frame.Height - location.Y);         //var location = gestureRecognizer.LocationOfTouch(0, image);
+																												//	var location = ((UITouch)touch).LocationInNode(this);
+		}
+		public void updateBlurNode(int blur)
+		{
+
+			Proto2Dim3 = blur;
+			fireEmitter.ParticleScale = 0.6f * ((1 / Frame.Width) * blur*20) + 0.2f;
+			fireEmitter.ParticleScaleRange = 0.3f * ((1 / Frame.Width) * blur*50 * 10) + 0.2f;
 
 		}
 		public void createEmitterNode()
@@ -140,28 +323,139 @@ namespace Teatime
 
 		}
 		public void updateEmitter(nfloat coordX,nfloat coordY) { 
-			fireEmitter.ParticleScale = 0.6f * ((1/Frame.Width)*coordX) +0.2f ;
-			fireEmitter.ParticleSpeedRange = 100f+coordX*3;
-			fireEmitter.ParticleScaleRange = 0.3f*((1 / Frame.Width) * coordX*10) +0.2f;
-			fireEmitter.ParticleScaleSpeed = -0.1f;
-			fireEmitter.ParticleBirthRate = 600-coordX+20;
+			//fireEmitter.ParticleScale = 0.6f * ((1/Frame.Width)*coordX) +0.2f ;
+			fireEmitter.ParticleSpeedRange = 100f+coordX;
+			//fireEmitter.ParticleScaleRange = 0.3f*((1 / Frame.Width) * coordX*10) +0.2f;
+			fireEmitter.ParticleScaleSpeed = -0.2f;
+			fireEmitter.ParticleBirthRate = 50+(coordX);
 		
 		}
 		public override void TouchesMoved(NSSet touches, UIEvent evt)
 		{
-			
-			base.TouchesMoved(touches, evt);
-			// get the touch
-			UITouch touch = touches.AnyObject as UITouch;
-			var location = ((UITouch)touch).LocationInNode(this);
-			if (touch != null)
+			if (infoTouch == false)
 			{
-				nfloat offsetX = (nfloat)(touch.LocationInNode(this).X);
-				nfloat offsetY = (nfloat)(touch.LocationInNode(this).Y);
-				updateEmitter(offsetX,offsetY);
-				fireEmitter.Position = location;
+				base.TouchesMoved(touches, evt);
+				// get the touch
+				UITouch touch = touches.AnyObject as UITouch;
+				var location = ((UITouch)touch).LocationInNode(this);
+				if (touch != null)
+				{
+					nfloat offsetX = (nfloat)(touch.LocationInNode(this).X);
+					nfloat offsetY = (nfloat)(touch.LocationInNode(this).Y);
+					updateEmitter(offsetX, offsetY);
+					fireEmitter.Position = location;
 
 
+				}
+			}
+		}
+		public void setDimensions(nfloat coordX, nfloat coordY)
+		{
+			nfloat checkX = coordX;
+			nfloat checkY = coordY;
+			if (checkY >= 4 * (Frame.Height / 5))
+			{
+				Proto2Dim1 = 1;
+				if (checkX >= 2 * (Frame.Width / 3))
+				{
+					Proto2Dim2 = 3;
+					//Proto2Dim3 = 3;
+				}
+				else if (checkX < 2 * (Frame.Width / 3) && checkX >= 1 * (Frame.Width / 3))
+				{
+					Proto2Dim2 = 2;
+					//	Proto2Dim3 = 2;
+				}
+				else
+				{
+					Proto2Dim2 = 1;
+					//	Proto2Dim3 = 3;
+				}
+
+				//myLabel.Text = "Glücklich";
+			}
+			else if (checkY < 4 * (Frame.Height / 5) && checkY >= 3 * (Frame.Height / 5))
+			{
+				Proto2Dim1 = 2;
+				if (checkX >= 2 * (Frame.Width / 3))
+				{
+					Proto2Dim2 = 3;
+					//	Proto2Dim3 = 1;
+				}
+				else if (checkX < 2 * (Frame.Width / 3) && checkX >= 1 * (Frame.Width / 3))
+				{
+					Proto2Dim2 = 2;
+					//Proto2Dim3 = 2;
+				}
+				else
+				{
+					Proto2Dim2 = 1;
+					//Proto2Dim3 = 3;
+				}
+				//myLabel.Text = "Zufrieden";
+
+			}
+			else if (checkY < 3 * (Frame.Height / 5) && checkY >= 2 * (Frame.Height / 5))
+			{
+				Proto2Dim1 = 3;
+				if (checkX >= 2 * (Frame.Width / 3))
+				{
+					Proto2Dim2 = 3;
+					//Proto2Dim3 = 1;
+				}
+				else if (checkX < 2 * (Frame.Width / 3) && checkX >= 1 * (Frame.Width / 3))
+				{
+					Proto2Dim2 = 2;
+					//Proto2Dim3 = 2;
+				}
+				else
+				{
+					Proto2Dim2 = 1;
+					//Proto2Dim3 = 3;
+				}
+				//myLabel.Text = "Beunruhigt";
+
+			}
+			else if (checkY < 2 * (Frame.Height / 5) && checkY >= 1 * (Frame.Height / 5))
+			{
+				Proto2Dim1 = 4;
+				if (checkX >= 2 * (Frame.Width / 3))
+				{
+					Proto2Dim2 = 3;
+					//Proto2Dim3 = 1;
+				}
+				else if (checkX < 2 * (Frame.Width / 3) && checkX >= 1 * (Frame.Width / 3))
+				{
+					Proto2Dim2 = 2;
+					//Proto2Dim3 = 2;
+				}
+				else
+				{
+					Proto2Dim2 = 1;
+					//Proto2Dim3 = 3;
+				}
+				//myLabel.Text = "Beunruhigt";
+
+			}
+			else {
+				Proto2Dim1 = 5;
+				if (checkX >= 2 * (Frame.Width / 3))
+				{
+					Proto2Dim2 = 3;
+					//Proto2Dim3 = 1;
+				}
+				else if (checkX < 2 * (Frame.Width / 3) && checkX >= 1 * (Frame.Width / 3))
+				{
+					Proto2Dim2 = 2;
+					//Proto2Dim3 = 2;
+				}
+				else
+				{
+					Proto2Dim2 = 1;
+					//Proto2Dim3 = 3;
+				}
+				//myLabel.Text = "Nervös";
+				//myLabel.RunAction(SKAction.RotateByAngle(NMath.PI * speed, 10.0));
 			}
 		}
 		public override void TouchesEnded(NSSet touches, UIEvent evt)
@@ -175,200 +469,170 @@ namespace Teatime
 				// Check click
 				var checkX = ((UITouch)touch).LocationInView(View).X;
 				var checkY = ((UITouch)touch).LocationInView(View).Y;
-				if (checkY >= 7 * (Frame.Height / 8))
+				setDimensions(checkX, checkY);
+				/*
+				if (checkY >= 4 * (Frame.Height / 5))
 				{
 					Proto2Dim1 = 1;
 					if (checkX >= 2 * (Frame.Width / 3))
 					{
-						Proto2Dim2 = 1;
-						Proto2Dim3 = 1;
+						Proto2Dim2 = 3;
+						//Proto2Dim3 = 3;
 					}
 					else if (checkX < 2 * (Frame.Width / 3) && checkX >= 1 * (Frame.Width / 3))
 					{
 						Proto2Dim2 = 2;
-						Proto2Dim3 = 2;
+					//	Proto2Dim3 = 2;
 					}
 					else 
 					{
-						Proto2Dim2 = 3;
-						Proto2Dim3 = 3;
+						Proto2Dim2 = 1;
+					//	Proto2Dim3 = 3;
 					}
 
 					//myLabel.Text = "Glücklich";
 				}
-				else if (checkY < 7 * (Frame.Height / 8) && checkY >= 6 * (Frame.Height / 8)){
+				else if (checkY < 4 * (Frame.Height / 5) && checkY >= 3 * (Frame.Height / 5)){
 					Proto2Dim1 = 2;
 					if (checkX >= 2 * (Frame.Width / 3))
 					{
-						Proto2Dim2 = 1;
-						Proto2Dim3 = 1;
+						Proto2Dim2 = 3;
+					//	Proto2Dim3 = 1;
 					}
 					else if (checkX < 2 * (Frame.Width / 3) && checkX >= 1 * (Frame.Width / 3))
 					{
 						Proto2Dim2 = 2;
-						Proto2Dim3 = 2;
+						//Proto2Dim3 = 2;
 					}
 					else
 					{
-						Proto2Dim2 = 3;
-						Proto2Dim3 = 3;
+						Proto2Dim2 = 1;
+						//Proto2Dim3 = 3;
 					}
 					//myLabel.Text = "Zufrieden";
 
 				}
-				else if (checkY < 6 * (Frame.Height / 8) && checkY >= 5 * (Frame.Height / 8))
+				else if (checkY < 3 * (Frame.Height / 5) && checkY >= 2 * (Frame.Height / 5))
 				{
 					Proto2Dim1 = 3;
 					if (checkX >= 2 * (Frame.Width / 3))
 					{
-						Proto2Dim2 = 1;
-						Proto2Dim3 = 1;
+						Proto2Dim2 = 3;
+						//Proto2Dim3 = 1;
 					}
 					else if (checkX < 2 * (Frame.Width / 3) && checkX >= 1 * (Frame.Width / 3))
 					{
 						Proto2Dim2 = 2;
-						Proto2Dim3 = 2;
+						//Proto2Dim3 = 2;
 					}
 					else
 					{
-						Proto2Dim2 = 3;
-						Proto2Dim3 = 3;
+						Proto2Dim2 = 1;
+						//Proto2Dim3 = 3;
 					}
 					//myLabel.Text = "Beunruhigt";
 
 				}
-				else if (checkY < 5 * (Frame.Height / 8) && checkY >= 4 * (Frame.Height / 8))
+				else if (checkY < 2 * (Frame.Height / 5) && checkY >= 1 * (Frame.Height / 5))
 				{
 					Proto2Dim1 = 4;
 					if (checkX >= 2 * (Frame.Width / 3))
 					{
-						Proto2Dim2 = 1;
-						Proto2Dim3 = 1;
+						Proto2Dim2 = 3;
+						//Proto2Dim3 = 1;
 					}
 					else if (checkX < 2 * (Frame.Width / 3) && checkX >= 1 * (Frame.Width / 3))
 					{
 						Proto2Dim2 = 2;
-						Proto2Dim3 = 2;
+						//Proto2Dim3 = 2;
 					}
 					else
-					{
-						Proto2Dim2 = 3;
-						Proto2Dim3 = 3;
-					}
-					//myLabel.Text = "Beunruhigt";
-
-				}
-				else if (checkY < 4 * (Frame.Height / 8) && checkY >= 3 * (Frame.Height / 8))
-				{
-					Proto2Dim1 = 5;
-					if (checkX >= 2 * (Frame.Width / 3))
 					{
 						Proto2Dim2 = 1;
-						Proto2Dim3 = 1;
-					}
-					else if (checkX < 2 * (Frame.Width / 3) && checkX >= 1 * (Frame.Width / 3))
-					{
-						Proto2Dim2 = 2;
-						Proto2Dim3 = 2;
-					}
-					else
-					{
-						Proto2Dim2 = 3;
-						Proto2Dim3 = 3;
-					}
-					//myLabel.Text = "Beunruhigt";
-
-				}
-				else if (checkY < 3 * (Frame.Height / 8) && checkY >= 2 * (Frame.Height / 8))
-				{
-					Proto2Dim1 = 6;
-					if (checkX >= 2 * (Frame.Width / 3))
-					{
-						Proto2Dim2 = 1;
-						Proto2Dim3 = 1;
-					}
-					else if (checkX < 2 * (Frame.Width / 3) && checkX >= 1 * (Frame.Width / 3))
-					{
-						Proto2Dim2 = 2;
-						Proto2Dim3 = 2;
-					}
-					else
-					{
-						Proto2Dim2 = 3;
-						Proto2Dim3 = 3;
-					}
-					//myLabel.Text = "Beunruhigt";
-
-				}
-				else if (checkY < 2 * (Frame.Height / 8) && checkY >= 1 * (Frame.Height / 8))
-				{
-					Proto2Dim1 = 7;
-					if (checkX >= 2 * (Frame.Width / 3))
-					{
-						Proto2Dim2 = 1;
-						Proto2Dim3 = 1;
-					}
-					else if (checkX < 2 * (Frame.Width / 3) && checkX >= 1 * (Frame.Width / 3))
-					{
-						Proto2Dim2 = 2;
-						Proto2Dim3 = 2;
-					}
-					else
-					{
-						Proto2Dim2 = 3;
-						Proto2Dim3 = 3;
+						//Proto2Dim3 = 3;
 					}
 					//myLabel.Text = "Beunruhigt";
 
 				}
 				else {
-					Proto2Dim1 = 8;
+					Proto2Dim1 = 5;
 					if (checkX >= 2 * (Frame.Width / 3))
 					{
-						Proto2Dim2 = 1;
-						Proto2Dim3 = 1;
+						Proto2Dim2 = 3;
+						//Proto2Dim3 = 1;
 					}
 					else if (checkX < 2 * (Frame.Width / 3) && checkX >= 1 * (Frame.Width / 3))
 					{
 						Proto2Dim2 = 2;
-						Proto2Dim3 = 2;
+						//Proto2Dim3 = 2;
 					}
 					else
 					{
-						Proto2Dim2 = 3;
-						Proto2Dim3 = 3;
+						Proto2Dim2 = 1;
+						//Proto2Dim3 = 3;
 					}
 					//myLabel.Text = "Nervös";
 					//myLabel.RunAction(SKAction.RotateByAngle(NMath.PI * speed, 10.0));
-				}
+				}*/
 			}
 		}
 		public override void TouchesBegan(NSSet touches, UIEvent evt)
 		{
+
+			myLabel.Alpha = 0f;
 			// Called when a touch begins
 			foreach (var touch in touches)
 			{
-				//**********
 				UITouch touchc = touches.AnyObject as UITouch;
 				//SKNodeTouches_UITouch touch = touches.AnyObject as SKNodeTouches_UITouch;
 				var locationc = ((UITouch)touchc).LocationInNode(this);
-
-				// Check click
-				nfloat checkX = ((UITouch)touchc).LocationInNode(this).X;
-				nfloat checkY = ((UITouch)touchc).LocationInNode(this).Y;
-			//	oneSprite.RemoveAllActions();
-			//	oneSprite.Position = new CGPoint(checkX, checkY);
-			//	fireEmitter.Position = new CGPoint(checkX, checkY);
-				fireEmitter.Position = locationc;
-				updateEmitter(checkX,checkY);
-				//*******
-				if (firstTouch == false)
+				var nodeType = GetNodeAtPoint(locationc);
+				infoTouch = false;
+				if (nodeType.Name == "info")
 				{
-					//AddChild(oneSprite);
-					AddChild(fireEmitter);
-					firstTouch = true;
+					infoTouch = true;
+					//	SKAction actMove = SKAction.MoveToX(currentSprite.Position.X - 2, 0.1);
+					//	SKAction actMoveBack = SKAction.MoveToX(currentSprite.Position.X + 2, 0.1); 
+					//		SKAction actMove = SKAction.ScaleTo(1f, 1f, 0.2);
+					//		SKAction actMoveBack = SKAction.ScaleTo(0.4f, 0.4f, 0.2);
+					if (switchInfo == false)
+					{
+						switchInfo = true;
+						SKAction seqTexture = SKAction.SetTexture(SKTexture.FromImageNamed(("background_n")));
+						container.RunAction((seqTexture));
+
+					}
+					else {
+						switchInfo = false;
+					
+				//	SKAction seq = SKAction.Sequence(SKAction.WaitForDuration(3));//, actMoveBack);
+				//	SKAction seqTexture = SKAction.SetTexture(SKTexture.FromImageNamed(("background_n")));
+					SKAction seqTextureNormal = SKAction.SetTexture(SKTexture.FromImageNamed(("background")));
+				//	SKAction seqAll = SKAction.Sequence(seqTexture, seq, seqTextureNormal);
+					//currentSprite.Texture = SKTexture.FromImageNamed(("sparkx"));
+					container.RunAction((seqTextureNormal));
+					}
 				}
-			
+				else {
+					//**********
+		
+
+					// Check click
+					nfloat checkX = ((UITouch)touchc).LocationInNode(this).X;
+					nfloat checkY = ((UITouch)touchc).LocationInNode(this).Y;
+					//	oneSprite.RemoveAllActions();
+					//	oneSprite.Position = new CGPoint(checkX, checkY);
+					//	fireEmitter.Position = new CGPoint(checkX, checkY);
+					fireEmitter.Position = locationc;
+					updateEmitter(checkX, checkY);
+					//*******
+					if (firstTouch == false)
+					{
+						//AddChild(oneSprite);
+						AddChild(fireEmitter);
+						firstTouch = true;
+				}
+				}
 				/*
 				UIColor coloring;
 				double speed = 0;

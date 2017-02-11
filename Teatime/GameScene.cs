@@ -24,6 +24,8 @@ namespace Teatime
 		SKLabelNode myLabel2;
 		SKLabelNode myLabel3;
 		SKLabelNode myLabel4;
+		SKLabelNode myLabel5;
+		SKLabelNode myLabel6;
 		SKLabelNode mySave;
 		SKSpriteNode navSprite;
 		nfloat LastX;
@@ -42,70 +44,100 @@ namespace Teatime
 
 			// Setup Scene with SKNodes and call the sparks generator
 			// Set inital bgcolor
-			this.BackgroundColor = UIColor.FromRGBA(100, 200, 200, 155);
+			this.BackgroundColor = UIColor.FromRGBA(100, 200, 150, 120);
 
 			// Define and add Label 1
-			myLabel = new SKLabelNode("AppleSDGothicNeo-Regular")
+			myLabel = new SKLabelNode("AppleSDGothicNeo-UltraLight")
 			{
-				Text = "Guten Tag, wie gehts dir heute?",
+				Text = "Hier kannst du deine Stimmung erfassen",
 				FontSize = 20,
-				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2+140)
+				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2+30)
 			};
 			myLabel.Alpha = 0.9f;
 			myLabel.ZPosition = 1;
 			AddChild(myLabel);
 
-			// Actions and Sequence for Label 2
-			SKAction labelWait = SKAction.WaitForDuration(2);
-			SKAction labelFade = SKAction.FadeOutWithDuration(3);
+			// Actions and Sequence for Label 1
+			SKAction labelWait = SKAction.WaitForDuration(1.5);
+			SKAction labelFade = SKAction.FadeOutWithDuration(1);
 			SKAction labelSeq = SKAction.Sequence(labelWait, labelFade);
 			myLabel.RunAction(labelSeq);
 
 			// Define and add Label 3
-			myLabel2 = new SKLabelNode("AppleSDGothicNeo-Regular")
+			myLabel2 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
 			{
-				Text = "Bewege deinen Finger auf dem Screen",
+				Text = "Berühre den Bildschirm",
 				FontSize = 20,
-				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 +110)
+				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 -30)
 			};
 			myLabel2.Alpha = 0.9f;
 			myLabel2.ZPosition = 1;
 			AddChild(myLabel2);
 
 			// Actions and Sequence for Label 2
-			SKAction action1 = SKAction.WaitForDuration(2);
-			SKAction action2 = SKAction.FadeOutWithDuration(3);
+			SKAction action1 = SKAction.WaitForDuration(1.5);
+			SKAction action2 = SKAction.FadeOutWithDuration(1);
 			SKAction sequence = SKAction.Sequence(action1, action2);
 			myLabel2.RunAction(sequence);
 
 			// Define and add Label 3
-			myLabel3 = new SKLabelNode("AppleSDGothicNeo-Regular")
+			myLabel3 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
 			{
-				Text = "Welche Farbe und Bewegung",
+				Text = "navigiere mit die Kreise mit dem Finger",
 				FontSize = 20,
-				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 140),
+				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 30),
 			};
 			myLabel3.Alpha = 0.0f;
 			myLabel3.ZPosition = 1;
 			AddChild(myLabel3);
 
 			// Define and add Label 4
-			myLabel4 = new SKLabelNode("AppleSDGothicNeo-Regular")
+			myLabel4 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
 			{
-				Text = "passt zu deinem Gemütszustand?",
+				Text = "die Farbe und Bewegung wird sich verändern",
 				FontSize = 20,
-				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 110),
+				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 -30),
 			};
 			myLabel4.Alpha = 0.0f;
 			myLabel4.ZPosition = 1;
 			AddChild(myLabel4);
 
+			// Define and add Label 5
+			myLabel5 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+			{
+				Text = "wenn Farbe und Emotion übereinstimmen",
+				FontSize = 20,
+				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 30),
+			};
+			myLabel5.Alpha = 0.0f;
+			myLabel5.ZPosition = 1;
+			AddChild(myLabel5);
+
+			// Define and add Label 6
+			myLabel6 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+			{
+				Text = "hebe den Finger ab dem Bildschirm",
+				FontSize = 20,
+				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 - 30),
+			};
+			myLabel6.Alpha = 0.0f;
+			myLabel6.ZPosition = 1;
+			AddChild(myLabel6);
+			// Actions and Sequence for label 3 / 4
+			SKAction action111 = SKAction.WaitForDuration(6);
+			SKAction action222 = SKAction.FadeInWithDuration(1);
+			SKAction action333 = SKAction.WaitForDuration(1.5);
+			SKAction action444 = SKAction.FadeOutWithDuration(1);
+			SKAction sequence111 = SKAction.Sequence(action111, action222, action333, action444);
+			myLabel5.RunAction(sequence111);
+			myLabel6.RunAction(sequence111);
+
 
 			// Actions and Sequence for label 3 / 4
-			SKAction action11 = SKAction.WaitForDuration(6);
-			SKAction action22 = SKAction.FadeInWithDuration(2);
-			SKAction action33 = SKAction.WaitForDuration(3);
-			SKAction action44 = SKAction.FadeOutWithDuration(2);
+			SKAction action11 = SKAction.WaitForDuration(2.5);
+			SKAction action22 = SKAction.FadeInWithDuration(1);
+			SKAction action33 = SKAction.WaitForDuration(1.5);
+			SKAction action44 = SKAction.FadeOutWithDuration(1);
 			SKAction sequence11 = SKAction.Sequence(action11, action22,action33,action44);
 			myLabel3.RunAction(sequence11);
 			myLabel4.RunAction(sequence11);
@@ -351,9 +383,14 @@ namespace Teatime
 				fieldNode.Position= new CGPoint(checkX_Location, checkY_Location);
 				if (changeColor % 3 == 0)
 				{
-					
+					var manipulate = (checkY_Location / Frame.Height) + 0.2;
+					if (manipulate > 1)
+					{
+						manipulate = manipulate - 1;
+					}
+
 					// Background Calculating
-					this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
+					this.BackgroundColor = UIColor.FromHSB((nfloat)manipulate, 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
 				}
 				else if (changeColor % 3 == 1)
 				{

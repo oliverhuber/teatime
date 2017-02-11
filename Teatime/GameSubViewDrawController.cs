@@ -28,6 +28,44 @@ namespace Teatime
 
 
 		}
+	
+
+	/*	public override bool ShouldAutorotate()
+
+		{
+
+			return true;
+
+		}
+*/
+
+
+		/*public override UIInterfaceOrientationMask GetSupportedInterfaceOrientations()
+
+		{
+
+			return UIInterfaceOrientationMask.Landscape;
+
+		}*/
+		 bool ShouldAllowLandscape ()
+    {
+			return true;//TopViewController is xController; // implement this to return true when u want it
+		}
+		 public override bool ShouldAutorotate()
+		{
+			return ShouldAllowLandscape(); // implemet this method to return true only when u want it to
+		}
+
+		public override UIInterfaceOrientationMask GetSupportedInterfaceOrientations ()
+    {
+        var shouldAllowOtherOrientation = ShouldAllowLandscape (); // same here
+        if (shouldAllowOtherOrientation) 
+        {
+           // return UIInterfaceOrientationMask.AllButUpsideDown;
+        } 
+
+        return UIInterfaceOrientationMask.Portrait;
+    }
 		public void startPrototype()
 		{
 			// Configure SKview, cast current view
@@ -58,7 +96,7 @@ namespace Teatime
 
 		}
 
-		public override bool ShouldAutorotate()
+		/*public override bool ShouldAutorotate()
 		{
 			return true;
 		}
@@ -67,7 +105,7 @@ namespace Teatime
 		{
 			return UIDevice.CurrentDevice.UserInterfaceIdiom == UIUserInterfaceIdiom.Phone ? UIInterfaceOrientationMask.AllButUpsideDown : UIInterfaceOrientationMask.All;
 		}
-
+*/
 		public override void DidReceiveMemoryWarning()
 		{
 			base.DidReceiveMemoryWarning();

@@ -79,7 +79,7 @@ namespace Teatime
 			navSprite.Color = UIColor.FromHSB((nfloat)0, 1, 0.0f);
 			navSprite.Size = new CGSize(140, 70);
 			navSprite.Position = new CGPoint((this.View.Frame.Width - (70)), (this.View.Frame.Height - (35)));
-			AddChild(navSprite);
+		//	AddChild(navSprite);
 
 			navSpriteTop = new SKSpriteNode();
 			navSpriteTop.Name = "navSpriteTop";
@@ -109,7 +109,7 @@ namespace Teatime
 			mySave.FontColor = UIColor.FromHSB((nfloat)0, 0, 3f);
 			mySave.Alpha = 0.0f;
 			mySave.ZPosition = 2;
-			this.AddChild(mySave);
+			//this.AddChild(mySave);
 		}
 		public void saveProto3Input()
 		{
@@ -308,7 +308,12 @@ namespace Teatime
 
 							};
 							//this.AddChild(sprite);
-							touchedNode.Color = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
+							var manipulate = (checkY / Frame.Height) + 0.2;
+							if (manipulate > 1)
+							{
+								manipulate = manipulate-1;
+							}
+							touchedNode.Color = UIColor.FromHSB((nfloat)(manipulate), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
 							if (touchedNode == spriteTop)
 							{
 								hueTop = (nfloat)(checkY / Frame.Height);
@@ -325,7 +330,7 @@ namespace Teatime
 					if (gameMode == 0)
 					{
 
-						mySave.Alpha = 0.9f;
+						//mySave.Alpha = 0.9f;
 					
 					}
 					//UIColor topColor = spriteTop.Color;
@@ -340,10 +345,10 @@ namespace Teatime
 					{
 						if (checkYBig > Frame.Height / 2)
 						{
-							SKAction action1 = SKAction.MoveToY(this.View.Frame.Height * 2, 0.2);
-							SKAction action2 = SKAction.MoveToY(this.View.Frame.Height / 2, 0.2);
-							SKAction action3 = SKAction.MoveToY(this.View.Frame.Height - 30, 0.2);
-							SKAction action4 = SKAction.MoveToY(this.View.Frame.Height + 30, 0.2);
+							SKAction action1 = SKAction.MoveToY((this.View.Frame.Height * 1.5f)-60, 0.2);
+							SKAction action2 = SKAction.MoveToY((this.View.Frame.Height / 2)-60, 0.2);
+							SKAction action3 = SKAction.MoveToY(this.View.Frame.Height - 100, 0.2);
+							SKAction action4 = SKAction.MoveToY(this.View.Frame.Height - 40, 0.2);
 
 							spriteTop.RunAction(action1);
 							spriteBelow.RunAction(action2);
@@ -354,10 +359,10 @@ namespace Teatime
 							gameMode = 1;
 						}
 						else {
-							SKAction action1 = SKAction.MoveToY(this.View.Frame.Height / 2, 0.2);
-							SKAction action2 = SKAction.MoveToY(0 - this.View.Frame.Height, 0.2);
-							SKAction action3 = SKAction.MoveToY(0 - 30, 0.2);
-							SKAction action4 = SKAction.MoveToY(0 + 30, 0.2);
+							SKAction action1 = SKAction.MoveToY((this.View.Frame.Height / 2)+60, 0.2);
+							SKAction action2 = SKAction.MoveToY((0 - this.View.Frame.Height/2)+60, 0.2);
+							SKAction action3 = SKAction.MoveToY(0 + 20, 0.2);
+							SKAction action4 = SKAction.MoveToY(0 + 80, 0.2);
 
 							spriteTop.RunAction(action1);
 							spriteBelow.RunAction(action2);
