@@ -257,7 +257,7 @@ namespace Teatime
 
 			UIBezierPath tempPath = new UIBezierPath();
 			tempPath.MoveTo(new CGPoint(0, 0));
-			tempPath.AddArc( new CGPoint(0,0),50,0, 2.0f * (float)Math.PI,true);
+			tempPath.AddArc( new CGPoint(0,0),60,0, 2.0f * (float)Math.PI,true);
 			//tempPath.st
 			//tempPath.Fill();
 			//tempPath.ClosePath();
@@ -308,20 +308,12 @@ namespace Teatime
 				if (gameMode!=0 && !spriteTop.HasActions&& !spriteBelow.HasActions) {
 					
 
-					manipulate = (checkY / Frame.Height) + 0.2;
-					if (manipulate > 1)
-					{
-						manipulate = manipulate - 1;
-					}
+				
 					//hueTop = (nfloat)(checkY / Frame.Height);
 					//satTop = 0.5f;
 					//briTop = (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f)));
-					lastColor =  UIColor.FromHSB((nfloat)(manipulate), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
-					followDragNode.FillColor = lastColor;
-					followDragNode.StrokeColor = lastColor;
-					followDragNode.Alpha = 0.8f;
-					followDragNode.Position = locationc;
-
+					//lastColor =  UIColor.FromHSB((nfloat)(manipulate), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
+				
 
 
 					if (gameMode == 2 )
@@ -331,7 +323,9 @@ namespace Teatime
 						{
 							manipulate = manipulate - 1;
 						}
-						hueTop = (nfloat)(checkY / Frame.Height);
+						spriteTop.Alpha = 0f;
+						spriteTopBg.Alpha = 1f;
+						hueTop = (nfloat)(manipulate);
 						satTop = 0.5f;
 						briTop = (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f)));
 						lastColor = UIColor.FromHSB((nfloat)(manipulate), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
@@ -339,12 +333,14 @@ namespace Teatime
 					}
 					else if (gameMode == 1)
 					{
-						manipulate = (checkY / Frame.Height) + 0.2;
+						manipulate = (checkY / Frame.Height) + 0.35;
 						if (manipulate > 1)
 						{
 							manipulate = manipulate - 1;
 						}
-						hueBel = (nfloat)(checkY / Frame.Height);
+						spriteBelow.Alpha = 0f;
+						spriteBelowBg.Alpha = 1f;
+						hueBel = (nfloat)(manipulate);
 						satBel = 0.5f;
 						briBel = (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f)));
 						lastColor = UIColor.FromHSB((nfloat)(manipulate), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
@@ -352,6 +348,10 @@ namespace Teatime
 						spriteBelow.Color = lastColor;
 
 					}
+					followDragNode.FillColor = lastColor;
+					followDragNode.StrokeColor = lastColor;
+					followDragNode.Alpha = 0.8f;
+					followDragNode.Position = locationc;
 
 
 				}
@@ -395,6 +395,9 @@ namespace Teatime
 						nfloat checkY = ((UITouch)touchc).LocationInNode(this).Y;
 
 						nfloat checkYBig = ((UITouch)touchc).LocationInView(View).Y;
+						Proto3Dim1 = (int)((hueTop - hueBel) * 30);
+						Proto3Dim2 = (int)((satTop - satBel) * 30);
+						Proto3Dim3 = (int)((briTop - briBel) * 30);
 
 						/*spriteTop.Alpha = 1f;
 						spriteTopBg.Alpha = 0f;
@@ -503,7 +506,7 @@ namespace Teatime
 								ZPosition = 10         
 
 							};
-							//this.AddChild(sprite);
+							/*//this.AddChild(sprite);
 							manipulate = (checkY / Frame.Height) + 0.2;
 							if (manipulate > 1)
 							{
@@ -530,17 +533,17 @@ namespace Teatime
 
 							if (touchedNode == spriteTop)
 							{
-								hueTop = (nfloat)(checkY / Frame.Height);
-								satTop = 0.5f;
-								briTop = (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f)));
+							//	hueTop = (nfloat)(checkY / Frame.Height);
+							//	satTop = 0.5f;
+							//	briTop = (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f)));
 
 								spriteTop.Alpha = 0f;
 								spriteTopBg.Alpha = 1f;
 							}
 							else {
-								hueBel= (nfloat)(checkY / Frame.Height);
-								satBel= 0.5f;
-								briBel = (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f)));
+								//hueBel= (nfloat)(checkY / Frame.Height);
+								//satBel= 0.5f;
+								//briBel = (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f)));
 
 								spriteBelow.Alpha = 0f;
 								spriteBelowBg.Alpha = 1f;
@@ -557,10 +560,7 @@ namespace Teatime
 
 					//UIColor belColor = spriteBelow.Color;
 
-					Proto3Dim1 = (int)((hueTop - hueBel) * 30) ;
-					Proto3Dim2 = (int)((satTop - satBel) * 30);
-					Proto3Dim3 = (int)((briTop - briBel) * 30);
-
+				
 					if (gameMode == 0)
 					{
 						if (checkYBig > Frame.Height / 2)
