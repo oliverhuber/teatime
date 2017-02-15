@@ -15,15 +15,18 @@ namespace Teatime
 	
 	public class GameSceneDraw : SKScene
 	{
+		
 		public int Proto5Dim1 { get; set; }
 		public int Proto5Dim2 { get; set; }
 		public int Proto5Dim3 { get; set; }
 		// Class declarations of the sprite nodes
-		SKSpriteNode oneSprite;
-		SKSpriteNode secSprite;
-		SKSpriteNode currentSprite;
-		SKSpriteNode lastSprite;
-		SKSpriteNode nextSprite;
+		PointNode oneSprite;
+		PointNode secSprite;
+		PointNode currentSprite;
+		PointNode lastSprite;
+		PointNode nextSprite;
+		PointNode arrowLeftSprite;
+		PointNode arrowRightSprite;
 		bool longPressEnabled = false;
 		LineNodeDraw baseLine;
 		bool startDragInside = false;
@@ -34,9 +37,14 @@ namespace Teatime
 		bool delNode;
 		//LineNode yourline;
 		SKLabelNode myLabel;
+		SKLabelNode myLabel2;
+		SKLabelNode myLabel3;
+
 		SKLabelNode myLabelPos;
 		SKLabelNode myLabelNeg;
 		SKSpriteNode navSprite;
+
+		UITextField inputUserText;
 
 
 		SKEmitterNode fireEmitter;
@@ -49,12 +57,26 @@ namespace Teatime
 		SKShapeNode lastLine;
 		SKShapeNode currentLine;
 		SKShapeNode nextLine;
-		SKSpriteNode activeNode;
+		PointNode activeNode;
 		bool firstTouch;
-		FieldNode spriteLeft;
-		FieldNode spriteRight;
+		PointNode spriteLeft;
+		PointNode spriteRight;
 		SKLabelNode mySave;
 		int gameMode;
+
+		SKSpriteNode categoryTempFilter;
+		SKLabelNode categoryText;
+		SKLabelNode categoryText1;
+		SKLabelNode categoryText2;
+		SKLabelNode categoryText3;
+		SKLabelNode categoryText4;
+		SKLabelNode categoryText5;
+		SKLabelNode categoryText6;
+		SKLabelNode categoryText7;
+		SKLabelNode categoryTextRel;
+		SKLabelNode categoryTextDel;
+		SKLabelNode categoryTextExit;
+
 		protected GameSceneDraw(IntPtr handle) : base(handle)
 		{
 			// Note: this .ctor should not contain any initialization logic.
@@ -85,15 +107,41 @@ namespace Teatime
 			}
 			myLabel = new SKLabelNode("AppleSDGothicNeo-UltraLight")
 			{
-				Text = "Erfasse deinen Schlafzyklus",
+				Text = "Erfasse deine Schlaf- ",
 				FontSize = 18,
-				Position = new CGPoint(Frame.Width / 2, Frame.Height/2  + 50)
+				Position = new CGPoint(Frame.Width / 2, Frame.Height/2  + 100)
 			};
-			myLabel.Alpha = 0.9f;
+			myLabel.Alpha = 0.0f;
 			myLabel.ZPosition = 1;
 			myLabel.FontColor = UIColor.FromHSB(0, 0, 0);
 			AddChild(myLabel);
-			myLabel.RunAction(SKAction.Sequence(SKAction.WaitForDuration(1),SKAction.FadeOutWithDuration(1)));
+			myLabel.RunAction(SKAction.Sequence(SKAction.FadeInWithDuration(1),SKAction.WaitForDuration(1),SKAction.FadeOutWithDuration(1)));
+
+
+			myLabel2 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+			{
+				Text = "und Wachphase.",
+				FontSize = 18,
+				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 70)
+			};
+			myLabel2.Alpha = 0.0f;
+			myLabel2.ZPosition = 1;
+			myLabel2.FontColor = UIColor.FromHSB(0, 0, 0);
+			AddChild(myLabel2);
+			myLabel2.RunAction(SKAction.Sequence(SKAction.WaitForDuration(0.5),SKAction.FadeInWithDuration(1),SKAction.WaitForDuration(1), SKAction.FadeOutWithDuration(1)));
+
+			myLabel3 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+			{
+				Text = "Bestätige mit next >",
+				FontSize = 18,
+				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 40)
+			};
+			myLabel3.Alpha = 0.0f;
+			myLabel3.ZPosition = 1;
+			myLabel3.FontColor = UIColor.FromHSB(0, 0, 0);
+			AddChild(myLabel3);
+			myLabel3.RunAction(SKAction.Sequence(SKAction.WaitForDuration(1), SKAction.FadeInWithDuration(1), SKAction.WaitForDuration(1), SKAction.FadeOutWithDuration(1)));
+
 
 			myLabelPos = new SKLabelNode("AppleSDGothicNeo-UltraLight")
 			{
@@ -107,7 +155,7 @@ namespace Teatime
 			AddChild(myLabelPos);
 			myLabelNeg = new SKLabelNode("AppleSDGothicNeo-UltraLight")
 			{
-				Text = "< Morgen - Abend >",
+				Text = " Zeitachse ",
 				FontSize = 16,
 				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 - 15)
 			};
@@ -139,7 +187,7 @@ namespace Teatime
 
 
 			// Sprite Node
-			secSprite = new SKSpriteNode("sparkfilled");
+			secSprite = new PointNode("sparkfilled");
 			secSprite.Position = new CGPoint(0, Frame.Height/2);
 			secSprite.ZPosition = 1;
 			secSprite.XScale = 0.1f;
@@ -147,9 +195,10 @@ namespace Teatime
 			secSprite.Alpha = 0.8f;
 			secSprite.ColorBlendFactor = 1f;
 			secSprite.Color = UIColor.FromHSB(0, 0, 0);
-		
+
+
 			// Sprite Node
-			oneSprite = new SKSpriteNode("sparkfilled");
+			oneSprite = new PointNode("sparkfilled");
 			oneSprite.Position = new CGPoint(Frame.Width, Frame.Height/2);
 			oneSprite.ZPosition = 1;
 			oneSprite.XScale = 0.1f;
@@ -179,10 +228,24 @@ namespace Teatime
 			yourline = new SKShapeNode();
 			yourline.Path = path;
 			yourline.StrokeColor= UIColor.FromHSB(0, 0, 0);
-			yourline.Alpha = 0.2f;
+			yourline.Alpha = 0.0f;
 			//yourline.ZPosition = 2;
 			baseLine = new LineNodeDraw();
 			baseLine.Name = "baseline";
+			UIBezierPath tempbezier = new UIBezierPath();
+			tempbezier.MoveTo(new CGPoint(0,Frame.Height/2));
+			tempbezier.AddQuadCurveToPoint(
+				new CGPoint(Frame.Width/2, Frame.Height/2),
+				new CGPoint(100,100)
+				);
+			tempbezier.MoveTo(new CGPoint(Frame.Width / 2, Frame.Height / 2));
+			tempbezier.AddQuadCurveToPoint(
+				new CGPoint(Frame.Width, Frame.Height / 2),
+				new CGPoint(200, 100)
+				);
+			//tempbezier.a
+//			tempbezier.ClosePath();
+		//	baseLine.Path = tempbezier.CGPath;
 			baseLine.Path = pathBase;
 			baseLine.StrokeColor = UIColor.FromHSB(0, 0, 0);
 			baseLine.Alpha = 0.1f;
@@ -199,7 +262,7 @@ namespace Teatime
 
 			delNode = false;
 			var gestureLongRecognizer = new UILongPressGestureRecognizer(PressHandler);
-			gestureLongRecognizer.MinimumPressDuration = 1;
+			gestureLongRecognizer.MinimumPressDuration = 0.5;
 			this.View.AddGestureRecognizer(gestureLongRecognizer);
 
 // Night Nodes
@@ -209,7 +272,7 @@ namespace Teatime
 			var locationRight = new CGPoint();
 			locationRight.X = (this.View.Frame.Width + this.View.Frame.Width / 4 +20);
 			locationRight.Y = (this.View.Frame.Height / 2);
-			spriteLeft = new FieldNode()
+			spriteLeft = new PointNode()
 			{
 				Position = locationLeft,
 				Name = "Left",
@@ -220,7 +283,7 @@ namespace Teatime
 
 			};
 
-			spriteRight = new FieldNode()
+			spriteRight = new PointNode()
 			{
 				Position = locationRight,
 				Name = "Right",
@@ -233,6 +296,30 @@ namespace Teatime
 			// Position in comparsion to other SpriteNodes
 			spriteLeft.ZPosition = -1;
 			spriteRight.ZPosition = -1;
+
+
+			// Sprite Node
+			arrowLeftSprite = new PointNode("arrow");
+			arrowLeftSprite.Name = "arrowLeft";
+			arrowLeftSprite.Position = new CGPoint(Frame.Width / 2 - 135, Frame.Height / 2);
+			arrowLeftSprite.ZPosition = 1;
+			arrowLeftSprite.XScale = 1f;
+			arrowLeftSprite.YScale = 1f;
+			arrowLeftSprite.ZRotation = ((System.nfloat)(Math.PI / 2));
+			arrowLeftSprite.Alpha = 0.8f;
+			//arrowLeftSprite.ColorBlendFactor = 1f;
+			//arrowLeftSprite.Color = UIColor.FromHSB(0, 0, 0);
+			// Sprite Node
+			arrowRightSprite = new PointNode("arrow");
+			arrowRightSprite.Name = "arrowRight";
+			arrowRightSprite.Position = new CGPoint(Frame.Width/2 +135, Frame.Height / 2);
+			arrowRightSprite.ZPosition = 1;
+			arrowRightSprite.ZRotation =  -((System.nfloat)(Math.PI / 2));
+			arrowRightSprite.XScale =1f;
+			arrowRightSprite.YScale =1f;
+			arrowRightSprite.Alpha = 0.8f;
+			//arrowLeftSprite.ColorBlendFactor = 1f;
+			//arrowLeftSprite.Color = UIColor.FromHSB(0, 0, 0);
 
 
 			spriteLeft.Size = new CGSize(Frame.Width , Frame.Height );
@@ -250,7 +337,8 @@ namespace Teatime
 			//navSprite.AnchorPoint = new CGPoint(1, 1);
 			navSprite.Position = new CGPoint((this.View.Frame.Width-(70)), (this.View.Frame.Height-(35) ));
 			AddChild(navSprite);
-
+			AddChild(arrowLeftSprite);
+			AddChild(arrowRightSprite);
 
 		}
 		public void saveProto5Input()
@@ -259,7 +347,7 @@ namespace Teatime
 			TeatimeItem item;
 
 
-			foreach (var spriteNode in Children.OfType<SKSpriteNode>())
+			foreach (var spriteNode in Children.OfType<PointNode>())
 			{
 
 				item = new TeatimeItem();
@@ -309,6 +397,7 @@ namespace Teatime
 							restMin = "00";
 						}
 					}
+
 					else {
 						splitHour[0] = splitHour[0];
 						if (splitHour.Length > 1)
@@ -395,7 +484,7 @@ namespace Teatime
 					item.Dim3 = 1;
 
 				}
-				else if (spriteNode.Name == "navSprite")
+				else if (spriteNode.Name == "navSprite" || spriteNode.Name == "arrowLeft" ||spriteNode.Name=="arrowRight")
 				{ 
 				
 				}
@@ -449,14 +538,28 @@ namespace Teatime
 					{
 						selectedMinString = "0" + selectedMinString;
 					}
+					String catText="";
+					if (spriteNode is PointNode)
+					{
+						catText = ((PointNode)spriteNode).Category;
+						if (catText == "")
+						{
+							catText = "No Categorie";
+						}
+					}
+
+
 					// Time calculated
-					item.Comment = splitHour[0] + ":" + selectedMinString;
+					item.Comment = splitHour[0] + ":" + selectedMinString + ";" +catText;
 					item.Dim1 = (int) (Frame.Height / 2 - spriteNode.Position.Y);
 				}
 			
 
+			    if (spriteNode.Name != "navSprite" && spriteNode.Name != "arrowLeft" && spriteNode.Name != "arrowRight")
+				{
+					DatabaseMgmt.Database.SaveItem(item);
+				}
 
-				DatabaseMgmt.Database.SaveItem(item);
 			}
 			// TeatimeItem returnItem =  DatabaseMgmt.Database.GetItem(2);
 			// Console.WriteLine(returnItem.Username);
@@ -475,40 +578,225 @@ namespace Teatime
 		{
 			if (gameMode == 1)
 			{
+				
 				var image = gestureRecognizer.View;
-				if (gestureRecognizer.State == UIGestureRecognizerState.Began
+				if (gestureRecognizer.State == UIGestureRecognizerState.Began || gestureRecognizer.State ==  UIGestureRecognizerState.Recognized
 					|| gestureRecognizer.State == UIGestureRecognizerState.Changed)
 				{
 
 					var location = gestureRecognizer.LocationInView(this.View);
 					var convertLocation = new CGPoint(location.X, this.View.Frame.Height - location.Y);         //var location = gestureRecognizer.LocationOfTouch(0, image);
 																												//	var location = ((UITouch)touch).LocationInNode(this);
+					if (currentSprite != null && currentSprite.Frame.Contains(convertLocation) && currentSprite.Name != "Left" && currentSprite.Name != "Right" && currentSprite.Name != "navSprite" && currentSprite.Name != "arrowLeft" && currentSprite.Name != "arrowRight")
+
+					{
+						gameMode = 2;
+
+						checkSprites();                                                                                         // Sprite Node
+						categoryTempFilter = new SKSpriteNode();
+						categoryTempFilter.Size = new CGSize(Frame.Width, Frame.Height);
+						categoryTempFilter.Position = new CGPoint(Frame.Width / 2, Frame.Height / 2);
+						categoryTempFilter.ZPosition = 100;
+						categoryTempFilter.XScale = 1f;
+						categoryTempFilter.YScale = 1f;
+						categoryTempFilter.ColorBlendFactor = 1f;
+						categoryTempFilter.Alpha = 0.8f;
+						categoryTempFilter.Color = UIColor.FromHSB(0, 0, 0);
+						AddChild(categoryTempFilter);
+						// Time label end
 
 
-					// Time label end
-					checkSprites();
+
+						categoryText = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+						{
+							Text = "Wähle eine Kategorie / Aktion",
+							FontSize = 18,
+							Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 + 200)
+						};
+						categoryText.HorizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left;
+						categoryText.Alpha = 0.9f;
+						categoryText.ZPosition = 101;
+						categoryText.FontColor = UIColor.FromHSB(0, 0, 1f);
+						AddChild(categoryText);
+
+						categoryText2 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+						{
+							Name = "Cat1",
+							Text = "> Kollegium",
+							FontSize = 18,
+							Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 + 160)
+						};
+						categoryText2.HorizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left;
+						categoryText2.Alpha = 0.9f;
+						categoryText2.ZPosition = 101;
+						categoryText2.FontColor = UIColor.FromHSB(0.3f, 0.5f, 1f);
+						AddChild(categoryText2);
+
+						categoryText3 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+						{
+							Name = "Cat2",
+							Text = "> Einzelne Schüler",
+							FontSize = 18,
+							Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 + 130)
+						};
+						categoryText3.HorizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left;
+						categoryText3.Alpha = 0.9f;
+						categoryText3.ZPosition = 101;
+						categoryText3.FontColor = UIColor.FromHSB(0.4f, 0.5f, 1f);
+						AddChild(categoryText3);
+
+						categoryText4 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+						{
+							Name = "Cat3",
+							Text = "> Schülergruppen",
+							FontSize = 18,
+							Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 + 100)
+						};
+						categoryText4.HorizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left;
+						categoryText4.Alpha = 0.9f;
+						categoryText4.ZPosition = 101;
+						categoryText4.FontColor = UIColor.FromHSB(0.5f, 0.5f, 1f);
+						AddChild(categoryText4);
+
+						categoryText5 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+						{
+							Name = "Cat4",
+							Text = "> Eltern",
+							FontSize = 18,
+							Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 + 70)
+						};
+						categoryText5.HorizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left;
+						categoryText5.Alpha = 0.9f;
+						categoryText5.ZPosition = 101;
+						categoryText5.FontColor = UIColor.FromHSB(0.6f, 0.5f, 1f);
+						AddChild(categoryText5);
+
+						categoryText6 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+						{
+							Name = "Cat5",
+							Text = "> Schlaf",
+							FontSize = 18,
+							Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 + 40)
+						};
+						categoryText6.HorizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left;
+						categoryText6.Alpha = 0.9f;
+						categoryText6.ZPosition = 101;
+						categoryText6.FontColor = UIColor.FromHSB(0.7f, 0.5f, 1f);
+						AddChild(categoryText6);
+
+						categoryText7 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+						{
+							Name = "Cat6",
+							Text = "> Privater Grund",
+							FontSize = 18,
+							Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 + 10)
+						};
+						categoryText7.HorizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left;
+						categoryText7.Alpha = 0.9f;
+						categoryText7.ZPosition = 101;
+						categoryText7.FontColor = UIColor.FromHSB(0.8f, 0.5f, 1f);
+						AddChild(categoryText7);
+
+						categoryTextRel = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+						{
+							Name = "CatRelLabel",
+							Text = "> Kategorie zurücksetzen?",
+							FontSize = 18,
+							Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 - 110)
+						};
+						categoryTextRel.HorizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left;
+						categoryTextRel.Alpha = 0.9f;
+						categoryTextRel.ZPosition = 101;
+						categoryTextRel.FontColor = UIColor.FromHSB(0, 0, 1f);
+						AddChild(categoryTextRel);
+
+						categoryTextDel = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+						{
+							Name = "DeleteLabel",
+							Text = "> Zeitpunkt löschen?",
+							FontSize = 18,
+							Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 - 140)
+						};
+						categoryTextDel.HorizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left;
+						categoryTextDel.Alpha = 0.9f;
+						categoryTextDel.ZPosition = 101;
+						categoryTextDel.FontColor = UIColor.FromHSB(0, 0, 1f);
+						AddChild(categoryTextDel);
+
+
+						categoryTextExit = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+						{
+							Name = "ExitLabel",
+							Text = "> Menu verlassen",
+							FontSize = 18,
+							Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 - 170)
+						};
+						categoryTextExit.HorizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left;
+						categoryTextExit.Alpha = 0.9f;
+						categoryTextExit.ZPosition = 101;
+						categoryTextExit.FontColor = UIColor.FromHSB(0, 0, 1f);
+						AddChild(categoryTextExit);
+						//	myLabel2.RunAction(SKAction.Sequence(SKAction.WaitForDuration(1), SKAction.FadeOutWithDuration(1)));
+
+						inputUserText = new UITextField();
+						inputUserText.Frame = new CGRect(View.Bounds.Width / 2 -127 , View.Bounds.Height / 2+3, 225, 28);
+						inputUserText.BackgroundColor = UIColor.FromHSB(0, 0, 0.2f);
+						inputUserText.TextColor = UIColor.FromHSB(0.9f, 0.5f, 1.0f);
+					
+
+						View.AddSubview(inputUserText);
+						inputUserText.ClearButtonMode = UITextFieldViewMode.WhileEditing; 
+
+						inputUserText.ShouldReturn += (textField) =>
+						{
+							inputUserText.ResignFirstResponder();
+							//DatabaseMgmt.inputName = this.userName.Text;
+							setPointCategory(inputUserText.Text, inputUserText.TextColor);
+							return true;
+						};
+						inputUserText.ShouldChangeCharacters = (textField, range, replacementString) =>
+						{
+							var newLength = textField.Text.Length + replacementString.Length - range.Length;
+							return newLength <= 20;
+						};
+						inputUserText.BorderStyle = UITextBorderStyle.RoundedRect;
+						inputUserText.Font = UIFont.FromName("AppleSDGothicNeo-UltraLight", 18.0f);
+						if (currentSprite.Category == "" || currentSprite.Category == "Kollegium" || currentSprite.Category == "Einzelne Schüler" || currentSprite.Category == "Schülergruppen" || currentSprite.Category == "Eltern" || currentSprite.Category == "Schlaf" || currentSprite.Category == "Privater Grund")
+						{
+							inputUserText.AttributedPlaceholder = new NSAttributedString(
+							"> Eigene Kategorie",
+							font: UIFont.FromName("AppleSDGothicNeo-UltraLight", 18.0f),
+							foregroundColor: UIColor.FromHSB(0.9f, 0.5f, 1.0f)
+
+							);
+						}
+						else  {
+							inputUserText.AttributedPlaceholder = new NSAttributedString(
+								"> " + currentSprite.Category,
+							font: UIFont.FromName("AppleSDGothicNeo-UltraLight", 18.0f),
+							foregroundColor: UIColor.FromHSB(0.9f, 0.5f, 1.0f)
+
+							);
+							inputUserText.Text = currentSprite.Category;
+						}
+
+
+
+
+					}
+
+
 					//if (currentSprite.Frame.Contains(location))
-					if (currentSprite.Frame.Contains(convertLocation) && currentSprite.Name != "Left" && currentSprite.Name != "Right"&& currentSprite.Name != "navSprite")
+					if (currentSprite != null && currentSprite.Frame.Contains(convertLocation) && currentSprite.Name != "Left" && currentSprite.Name != "Right"&& currentSprite.Name != "navSprite"&&  currentSprite.Name != "arrowLeft" && currentSprite.Name != "arrowRight")
 
 					{
 
-						SKLabelNode gesLabel;
-						// New Label placed in the middle of the Screen
-						gesLabel = new SKLabelNode("AppleSDGothicNeo-UltraLight")
-						{
-							Text = "X",
-							FontSize = 15,
-							Position = convertLocation
-						};
-						gesLabel.Alpha = 0.0f;
-						gesLabel.ZPosition = 100;
-						//AddChild(gesLabel);
-						longPressEnabled = true;
+					
+						//longPressEnabled = true;
 						//gesLabel.Text = "LongPressed: " + gestureRecognizer.LocationOfTouch(0, image).ToString();
-						gesLabel.Text = "X";
-						gesLabel.Alpha = 1.0f;
 
-						timeLabel.Text = "Zeitpunkt löschen?";
+
+						timeLabel.Text = "";
 
 						//	SKAction actMove = SKAction.MoveToX(currentSprite.Position.X - 2, 0.1);
 						//	SKAction actMoveBack = SKAction.MoveToX(currentSprite.Position.X + 2, 0.1); 
@@ -519,7 +807,7 @@ namespace Teatime
 						SKAction seqTextureNormal = SKAction.SetTexture(SKTexture.FromImageNamed(("sparkfilled")));
 						SKAction seqAll = SKAction.Sequence(seqTexture, seq, seqTextureNormal);
 						//currentSprite.Texture = SKTexture.FromImageNamed(("sparkx"));
-						currentSprite.RunAction(SKAction.RepeatAction(seqAll,10));
+						currentSprite.RunAction(SKAction.RepeatAction(seq,2));
 
 				}
 
@@ -534,10 +822,10 @@ namespace Teatime
 			double diffXNext;
 			bool firstRun = true;
 
-			foreach (var spriteNode in Children.OfType<SKSpriteNode>())
+			foreach (var spriteNode in Children.OfType<PointNode>())
 			{
 
-				if (spriteNode.Name != "Left" && spriteNode.Name != "Right" && spriteNode.Name!="navSprite"){
+				if (spriteNode.Name != "Left" && spriteNode.Name != "Right" && spriteNode.Name!="navSprite"&& spriteNode.Name != "arrowLeft" && spriteNode.Name != "arrowRight"){
 					diffXLast = currentSprite.Position.X - spriteNode.Position.X;
 					diffXNext = spriteNode.Position.X - currentSprite.Position.X;
 					if (firstRun == true)
@@ -591,8 +879,8 @@ namespace Teatime
 						
 						spriteLeft.Position = new CGPoint(0-Frame.Width/2  + offsetX, Frame.Height / 2);
 						//= new CGPoint(currentSprite.Position.X, location.Y);
-
-						timeLabel.Position = new CGPoint(offsetX + 20, Frame.Height / 2 - 50);
+						arrowLeftSprite.Position= new CGPoint( offsetX-20, Frame.Height / 2);
+						timeLabel.Position = new CGPoint(offsetX + 30, Frame.Height / 2 + 15);
 						double selectedHour = (24 / Frame.Width * offsetX);
 						//	double fullHourRest = (24 / Frame.Width * location.X)- Math.Round(24 / Frame.Width * location.X, 0);
 						//	double selectedMin = Math.Round(fullHourRest/100*60,0);
@@ -650,13 +938,14 @@ namespace Teatime
 						// Time label end
 					}
 
-					if (offsetX > Frame.Width / 2 && offsetY < Frame.Height - 70 )
+					if (offsetX > Frame.Width / 2 && offsetY < Frame.Height - 70  )
 					{
 
 						spriteRight.Position = new CGPoint(Frame.Width - Frame.Width / 2 + offsetX, Frame.Height / 2);
 						//= new CGPoint(currentSprite.Position.X, location.Y);
+						arrowRightSprite.Position = new CGPoint(offsetX + 20, Frame.Height / 2);
 
-						timeLabel.Position = new CGPoint(offsetX - 20, Frame.Height / 2 - 50);
+						timeLabel.Position = new CGPoint(offsetX - 30, Frame.Height / 2 + 15);
 						double selectedHour = (24 / Frame.Width * offsetX);
 						//	double fullHourRest = (24 / Frame.Width * location.X)- Math.Round(24 / Frame.Width * location.X, 0);
 						//	double selectedMin = Math.Round(fullHourRest/100*60,0);
@@ -812,11 +1101,19 @@ namespace Teatime
 								}*/
 							}
 						}
-						if (offsetX < nextSprite.Position.X - 5 && offsetX - 5 > lastSprite.Position.X)
+						if (offsetX < nextSprite.Position.X - 8 && offsetX - 8 > lastSprite.Position.X)
 						{
 
 							currentSprite.Position = location;
 							//= new CGPoint(currentSprite.Position.X, location.Y);
+						} 
+						else if (offsetX > nextSprite.Position.X - 8)
+						{
+						currentSprite.Position = new CGPoint(currentSprite.Position.X , offsetY);
+						}
+						else if (offsetX  < lastSprite.Position.X + 8)
+						{
+							currentSprite.Position = new CGPoint(currentSprite.Position.X,offsetY);
 						}
 						//myLabel.Text = offsetX + " " + offsetY;
 						checkSprites();
@@ -825,7 +1122,7 @@ namespace Teatime
 						path.AddLines(new CGPoint[]{
 						new CGPoint (currentSprite.Position.X, currentSprite.Position.Y),
 						new CGPoint (lastSprite.Position.X, lastSprite.Position.Y),
-					});
+						});
 						path.CloseSubpath();
 
 						currentLine.Path = path;
@@ -836,10 +1133,19 @@ namespace Teatime
 						pathNext.AddLines(new CGPoint[]{
 						new CGPoint (currentSprite.Position.X, currentSprite.Position.Y),
 						new CGPoint (nextSprite.Position.X, nextSprite.Position.Y),
-					});
-					pathNext.CloseSubpath();
+						});
+						pathNext.CloseSubpath();
+							
+						nextLine.Path = pathNext;
+						SKAction actMove = SKAction.ScaleTo(0.8f, 0.8f, 0.2);
+						//SKAction actMoveBack = SKAction.ScaleTo(0.4f, 0.4f, 0.2);
+						//SKAction seq = SKAction.Sequence(actMove, actMoveBack);
+						//SKAction seqTexture = SKAction.SetTexture(SKTexture.FromImageNamed(("sparkx")));
+						//SKAction seqTextureNormal = SKAction.SetTexture(SKTexture.FromImageNamed(("sparkfilled")));
+						//SKAction seqAll = SKAction.Sequence(seqTexture, seq, seqTextureNormal);
+						//currentSprite.Texture = SKTexture.FromImageNamed(("sparkx"));
+						currentSprite.RunAction(SKAction.RepeatAction(actMove, 1));
 
-					nextLine.Path = pathNext;
 				}
 
 				}
@@ -853,10 +1159,41 @@ namespace Teatime
 			{
 				//lastSprite = currentSprite;
 				//lastLine = currentLine;
+				var location = ((UITouch)touch).LocationInNode(this);
+				var nodeType = GetNodeAtPoint(location);
+				var spriteNode = nodeType;
+				SKAction actMoveBack = SKAction.ScaleTo(0.4f, 0.4f, 0.2);
+				if (gameMode == 1 && (spriteNode.Name != "Left" && spriteNode.Name != "Right" && spriteNode.Name != "navSprite" && spriteNode.Name != "arrowLeft" && spriteNode.Name != "arrowRight"))
+				{
+					currentSprite.RunAction(SKAction.RepeatAction(actMoveBack, 1));
+				}
 			}
+
 			startDragInside = false;
 			delNode = false;
 		}
+
+		public void setPointCategory(String categoryCustomText, UIColor categoryColor) { 
+			newNode = false;
+			currentSprite.Category = categoryCustomText;
+			timeLabel.Text = categoryCustomText;
+			currentSprite.Color = categoryColor;
+			categoryTempFilter.RemoveFromParent();
+			categoryText.RemoveFromParent();
+			categoryText2.RemoveFromParent();
+			categoryText3.RemoveFromParent();
+			categoryText4.RemoveFromParent();
+			categoryText5.RemoveFromParent();
+			categoryText6.RemoveFromParent();
+			categoryText7.RemoveFromParent();
+			categoryTextRel.RemoveFromParent();
+			categoryTextDel.RemoveFromParent();
+			categoryTextExit.RemoveFromParent();
+			inputUserText.RemoveFromSuperview();
+
+			gameMode = 1;
+		}
+
 		public override void TouchesBegan(NSSet touches, UIEvent evt)
 		{
 
@@ -877,29 +1214,275 @@ namespace Teatime
 				nfloat offsetY = (nfloat)(touchc.LocationInNode(this).Y);
 
 				var nodeType = GetNodeAtPoint(locationc);
+				if (gameMode == 2 && (nodeType is PointNode || nodeType.Name == "ExitLabel"))
+				{
+					newNode = false;
+					categoryTempFilter.RemoveFromParent();
+					categoryText.RemoveFromParent();
+					categoryText2.RemoveFromParent();
+					categoryText3.RemoveFromParent();
+					categoryText4.RemoveFromParent();
+					categoryText5.RemoveFromParent();
+					categoryText6.RemoveFromParent();
+					categoryText7.RemoveFromParent();
+					categoryTextRel.RemoveFromParent();
+					categoryTextDel.RemoveFromParent();
+					categoryTextExit.RemoveFromParent();
+					inputUserText.RemoveFromSuperview();
+					gameMode = 1;
+				}
+				else if (gameMode == 2 && nodeType.Name == "DeleteLabel")
+				{
+					categoryTempFilter.RemoveFromParent();
+					categoryText.RemoveFromParent();
+					categoryText2.RemoveFromParent();
+					categoryText3.RemoveFromParent();
+					categoryText4.RemoveFromParent();
+					categoryText5.RemoveFromParent();
+					categoryText6.RemoveFromParent();
+					categoryText7.RemoveFromParent();
+					categoryTextRel.RemoveFromParent();
+					categoryTextDel.RemoveFromParent();
+					categoryTextExit.RemoveFromParent();
+					inputUserText.RemoveFromSuperview();
+
+					checkSprites();
+					delNode = true;
+					//REMOVAL CODE
+					currentSprite.RemoveFromParent();
+					//spriteNode.Alpha = 0f;
+					var pathCheckRem = new CGPath();
+					pathCheckRem.AddLines(new CGPoint[]{
+									new CGPoint (lastSprite.Position.X, lastSprite.Position.Y),
+									new CGPoint (currentSprite.Position.X, currentSprite.Position.Y),
+
+									});
+					var pathCheckRemNext = new CGPath();
+					pathCheckRemNext.AddLines(new CGPoint[]{
+									new CGPoint (currentSprite.Position.X, currentSprite.Position.Y),
+									new CGPoint (nextSprite.Position.X, nextSprite.Position.Y),
+
+									});
+					timeLabel.Text = "Zeitpunkt gelöscht";
+					foreach (var lineNode in Children.OfType<SKShapeNode>())
+					{
+						if (lineNode.Path.PathBoundingBox == pathCheckRem.PathBoundingBox && lineNode.Name != "baseline")
+						{
+							lineNode.Alpha = 0f;
+							lineNode.RemoveFromParent();
+						}
+						if (lineNode.Path.PathBoundingBox == pathCheckRemNext.PathBoundingBox && lineNode.Name != "baseline")
+						{
+							lineNode.Alpha = 0f;
+							lineNode.RemoveFromParent();
+
+						}
+						/*if (lineNode.Path. == pathCheckReverse.CurrentPoint)
+						{
+							lineNode.Alpha = 0f;
+						}*/
+					}
+					var pathReset = new CGPath();
+					pathReset.AddLines(new CGPoint[]{
+									new CGPoint (lastSprite.Position.X, lastSprite.Position.Y),new CGPoint (nextSprite.Position.X, nextSprite.Position.Y),
+									});
+					SKShapeNode newlineNext = new SKShapeNode();
+					newlineNext.Path = pathReset;
+					newlineNext.StrokeColor = UIColor.FromHSB(0, 0, 0);
+					newlineNext.LineWidth = 2f;
+					newlineNext.Alpha = 0.5f;
+					AddChild(newlineNext);
+					nextLine = newlineNext;
+
+					newNode = false;
+
+
+					gameMode = 1;
+				}
+				else if (gameMode == 2 && nodeType.Name == "Cat1")
+				{
+					newNode = false;
+					timeLabel.Text = "Kollegium";
+					currentSprite.Category = "Kollegium";
+					currentSprite.Color = UIColor.FromHSB(0.3f, 0.5f, 0.8f);
+					categoryTempFilter.RemoveFromParent();
+					categoryText.RemoveFromParent();
+					categoryText2.RemoveFromParent();
+					categoryText3.RemoveFromParent();
+					categoryText4.RemoveFromParent();
+					categoryText5.RemoveFromParent();
+					categoryText6.RemoveFromParent();
+					categoryText7.RemoveFromParent();
+					categoryTextRel.RemoveFromParent();
+					categoryTextDel.RemoveFromParent();
+					categoryTextExit.RemoveFromParent();
+					inputUserText.RemoveFromSuperview();
+
+					gameMode = 1;
+				}
+				else if (gameMode == 2 && nodeType.Name == "Cat2")
+				{
+					newNode = false;
+					timeLabel.Text = "Einzelne Schüler";
+					currentSprite.Category = "Einzelne Schüler";
+					categoryTempFilter.RemoveFromParent();
+					currentSprite.Color = UIColor.FromHSB(0.4f, 0.5f, 0.8f);
+					categoryText.RemoveFromParent();
+					categoryText2.RemoveFromParent();
+					categoryText3.RemoveFromParent();
+					categoryText4.RemoveFromParent();
+					categoryText5.RemoveFromParent();
+					categoryText6.RemoveFromParent();
+					categoryText7.RemoveFromParent();
+					categoryTextRel.RemoveFromParent();
+					categoryTextDel.RemoveFromParent();
+					categoryTextExit.RemoveFromParent();
+					inputUserText.RemoveFromSuperview();
+
+
+					gameMode = 1;
+				}
+				else if (gameMode == 2 && nodeType.Name == "Cat3")
+				{
+					newNode = false;
+					timeLabel.Text = "Schülergruppen";
+					currentSprite.Category = "Schülergruppen";
+					categoryTempFilter.RemoveFromParent();
+					currentSprite.Color = UIColor.FromHSB(0.5f, 0.5f, 0.8f);
+					categoryText.RemoveFromParent();
+					categoryText2.RemoveFromParent();
+					categoryText3.RemoveFromParent();
+					categoryText4.RemoveFromParent();
+					categoryText5.RemoveFromParent();
+					categoryText6.RemoveFromParent();
+					categoryText7.RemoveFromParent();
+					categoryTextRel.RemoveFromParent();
+					categoryTextDel.RemoveFromParent();
+					categoryTextExit.RemoveFromParent();
+					inputUserText.RemoveFromSuperview();
+
+					gameMode = 1;
+				}
+				else if (gameMode == 2 && nodeType.Name == "Cat4")
+				{
+					newNode = false;
+					timeLabel.Text = "Eltern";
+					currentSprite.Category = "Eltern";
+					currentSprite.Color = UIColor.FromHSB(0.6f, 0.5f, 0.8f);
+					categoryTempFilter.RemoveFromParent();
+					categoryText.RemoveFromParent();
+					categoryText2.RemoveFromParent();
+					categoryText3.RemoveFromParent();
+					categoryText4.RemoveFromParent();
+					categoryText5.RemoveFromParent();
+					categoryText6.RemoveFromParent();
+					categoryText7.RemoveFromParent();
+					categoryTextRel.RemoveFromParent();
+					categoryTextDel.RemoveFromParent();
+					categoryTextExit.RemoveFromParent();
+					inputUserText.RemoveFromSuperview();
+
+					gameMode = 1;
+				}
+				else if (gameMode == 2 && nodeType.Name == "Cat5")
+				{
+					newNode = false;
+					timeLabel.Text = "Schlaf";
+					currentSprite.Category = "Schlaf";
+					currentSprite.Color = UIColor.FromHSB(0.7f, 0.5f, 0.8f);
+					categoryTempFilter.RemoveFromParent();
+					categoryText.RemoveFromParent();
+					categoryText2.RemoveFromParent();
+					categoryText3.RemoveFromParent();
+					categoryText4.RemoveFromParent();
+					categoryText5.RemoveFromParent();
+					categoryText6.RemoveFromParent();
+					categoryText7.RemoveFromParent();
+					categoryTextRel.RemoveFromParent();
+					categoryTextDel.RemoveFromParent();
+					categoryTextExit.RemoveFromParent();
+					inputUserText.RemoveFromSuperview();
+
+
+					gameMode = 1;
+				}
+				else if (gameMode == 2 && nodeType.Name == "Cat6")
+				{
+					newNode = false;
+					timeLabel.Text = "Privater Grund";
+					currentSprite.Category = "Privater Grund";
+					currentSprite.Color = UIColor.FromHSB(0.8f, 0.5f, 0.8f);
+					categoryTempFilter.RemoveFromParent();
+					categoryText.RemoveFromParent();
+					categoryText2.RemoveFromParent();
+					categoryText3.RemoveFromParent();
+					categoryText4.RemoveFromParent();
+					categoryText5.RemoveFromParent();
+					categoryText6.RemoveFromParent();
+					categoryText7.RemoveFromParent();
+					categoryTextRel.RemoveFromParent();
+					categoryTextDel.RemoveFromParent();
+					categoryTextExit.RemoveFromParent();
+					inputUserText.RemoveFromSuperview();
+
+					gameMode = 1;
+				}
+				else if (gameMode == 2 && nodeType.Name == "CatRelLabel")
+				{
+					newNode = false;
+					currentSprite.Category = "";
+					timeLabel.Text = "Keine Kategorie";
+					currentSprite.Color = UIColor.FromHSB(0.0f, 0.0f, 0.2f);
+					categoryTempFilter.RemoveFromParent();
+					categoryText.RemoveFromParent();
+					categoryText2.RemoveFromParent();
+					categoryText3.RemoveFromParent();
+					categoryText4.RemoveFromParent();
+					categoryText5.RemoveFromParent();
+					categoryText6.RemoveFromParent();
+					categoryText7.RemoveFromParent();
+					categoryTextRel.RemoveFromParent();
+					categoryTextDel.RemoveFromParent();
+					categoryTextExit.RemoveFromParent();
+					inputUserText.RemoveFromSuperview();
+
+					gameMode = 1;
+				}
 				if (((nodeType is SKLabelNode && nodeType.Name == "next" )|| nodeType.Name=="navSprite") && gameMode == 0 )
 				{
 					myLabel.RemoveAllActions();
+					myLabel2.RemoveAllActions();
+					myLabel3.RemoveAllActions();
+
+					myLabel.Alpha = 0f;
+					myLabel2.Alpha = 0f;
+					myLabel3.Alpha = 0f;
 
 					gameMode = 1;
-					myLabel.Text = "Bewerte deine Stimmung rückblickend";
+					myLabel.Text = "Bewerte nun deine Stimmung rückblickend";
+					myLabel2.Text = "Drücke lange auf einen Punkt um diesem";
+					myLabel3.Text = "eine Kategorie zuzuordnen";
+
 					spriteLeft.Alpha = 0.8f;
 					spriteLeft.Color = UIColor.FromHSB((nfloat)0, 0, 0.8f);
-
 					spriteRight.Alpha = 0.8f;
 					spriteRight.Color = UIColor.FromHSB((nfloat)0, 0, 0.8f);
-
 					timeLabel.Text = "";
 					myLabelPos.Text = "+";
 					myLabelNeg.Text = "_";
 					myLabel.RunAction(SKAction.Sequence(SKAction.FadeInWithDuration(1), SKAction.WaitForDuration(2), SKAction.FadeOutWithDuration(1)));
-					foreach (var spriteNode in Children.OfType<SKSpriteNode>())
+					myLabel2.RunAction(SKAction.Sequence(SKAction.WaitForDuration(0.5),SKAction.FadeInWithDuration(1), SKAction.WaitForDuration(2), SKAction.FadeOutWithDuration(1)));
+					myLabel3.RunAction(SKAction.Sequence(SKAction.WaitForDuration(1),SKAction.FadeInWithDuration(1), SKAction.WaitForDuration(2), SKAction.FadeOutWithDuration(1)));
+					foreach (var spriteNode in Children.OfType<PointNode>())
 					{
-
-						if (spriteNode.Name != "Left" && spriteNode.Name != "Right" && spriteNode.Name != "navSprite")
+						if (spriteNode.Name == "arrowLeft" || spriteNode.Name == "arrowRight")
+						{
+							spriteNode.Alpha = 0.0f;
+						}
+						else if (spriteNode.Name != "Left" && spriteNode.Name != "Right" && spriteNode.Name != "navSprite")
 						{
 							spriteNode.Alpha = 1f;
-							spriteNode.Color = UIColor.FromHSB(0, 0, 0.2f);		
+							//spriteNode.Color = UIColor.FromHSB(0, 0, 0.2f);		
 						}
 					}
 					foreach (var lineNode in Children.OfType<SKShapeNode>())
@@ -907,7 +1490,7 @@ namespace Teatime
 						if (lineNode.Name != "baseline")
 						{
 							lineNode.Alpha = 0.5f;
-							lineNode.StrokeColor = UIColor.FromHSB(0, 0, 0f);
+						//	lineNode.StrokeColor = UIColor.FromHSB(0, 0, 0f);
 							//lineNode.RemoveFromParent();
 						}
 					}
@@ -916,27 +1499,41 @@ namespace Teatime
 				else if (((nodeType is SKLabelNode && nodeType.Name == "next") || nodeType.Name == "navSprite") && gameMode == 1)
 				{
 					myLabel.RemoveAllActions();
+					myLabel2.RemoveAllActions();
+					myLabel3.RemoveAllActions();
+
+					myLabel.Alpha = 0f;
+					myLabel2.Alpha = 0f;
+					myLabel3.Alpha = 0f;
+
 					spriteLeft.ZPosition = -2;
 					spriteRight.ZPosition = -2;
 					gameMode = 0;
-					myLabel.Text = "Erfasse deinen Schlafzyklus";
+					myLabel.Text = "Erfasse deine Schlaf-";
+					myLabel2.Text = "und Wachphase";
+					myLabel3.Text = "Bestätige mit next >";
 					spriteLeft.Alpha = 0.8f;
 					spriteLeft.Color = UIColor.FromHSB((nfloat)0, 0, 0.2f);
-
 					spriteRight.Alpha = 0.8f;
 					spriteRight.Color = UIColor.FromHSB((nfloat)0, 0, 0.2f);
 
 					timeLabel.Text = "";
 					myLabelPos.Text = "";
-					myLabelNeg.Text = "< Morgen - Abend >";
+					myLabelNeg.Text = " Zeitachse ";
 					myLabel.RunAction(SKAction.Sequence(SKAction.FadeInWithDuration(1), SKAction.WaitForDuration(2), SKAction.FadeOutWithDuration(1)));
-					foreach (var spriteNode in Children.OfType<SKSpriteNode>())
+					myLabel2.RunAction(SKAction.Sequence(SKAction.WaitForDuration(0.5),SKAction.FadeInWithDuration(1), SKAction.WaitForDuration(2), SKAction.FadeOutWithDuration(1)));
+					myLabel3.RunAction(SKAction.Sequence(SKAction.WaitForDuration(1),SKAction.FadeInWithDuration(1), SKAction.WaitForDuration(2), SKAction.FadeOutWithDuration(1)));
+					foreach (var spriteNode in Children.OfType<PointNode>())
 					{
 
-						if (spriteNode.Name != "Left" && spriteNode.Name != "Right" && spriteNode.Name != "navSprite")
+						if (spriteNode.Name == "arrowLeft" || spriteNode.Name == "arrowRight")
 						{
-							//spriteNode.Alpha = 0.5f;
-							spriteNode.Color = UIColor.FromHSB(0, 0, 0.6f);
+							spriteNode.Alpha = 0.8f;
+						}
+						else if (spriteNode.Name != "Left" && spriteNode.Name != "Right" && spriteNode.Name != "navSprite")
+						{
+							spriteNode.Alpha = 0.2f;
+							//spriteNode.Color = UIColor.FromHSB(0, 0, 0.6f);
 
 						}
 					}
@@ -944,9 +1541,9 @@ namespace Teatime
 					{
 						if (lineNode.Name != "baseline")
 						{
-							//lineNode.Alpha = 0.2f;
+							lineNode.Alpha = 0.02f;
 							//lineNode.RemoveFromParent();
-							lineNode.StrokeColor = UIColor.FromHSB(0, 0, 0.4f);
+							//lineNode.StrokeColor = UIColor.FromHSB(0, 0, 0.4f);
 
 						}
 					}
@@ -955,19 +1552,19 @@ namespace Teatime
 				else if (gameMode == 1)
 				{
 
-					foreach (var spriteNode in Children.OfType<SKSpriteNode>())
+					foreach (var spriteNode in Children.OfType<PointNode>())
 					{
 						/*	if (spriteNode.HasActions)
 							{
 								newNode = false;
 								delNode = true;
 							}*/
-						if (spriteNode.Name != "Left" && spriteNode.Name != "Right" && spriteNode.Name != "navSprite")
+						if (spriteNode.Name != "Left" && spriteNode.Name != "Right" && spriteNode.Name != "navSprite" && spriteNode.Name!="arrowLeft" && spriteNode.Name!="arrowRight")
 						{
 
-							if (spriteNode.Frame.Contains(((UITouch)touch).LocationInNode(this)))
+							if (spriteNode.Frame.Contains(((UITouch)touch).LocationInNode(this)) || ((spriteNode.Position.X==checkX) && spriteNode.Position.X>0))//|| ((checkX-spriteNode.Position.X)<1&& spriteNode.Position.X > 0))
 							{
-								if (spriteNode.HasActions == true)
+								/*if (spriteNode.HasActions == true)
 								{
 									currentSprite = spriteNode;
 									checkSprites();
@@ -977,16 +1574,16 @@ namespace Teatime
 									spriteNode.Alpha = 0f;
 									var pathCheckRem = new CGPath();
 									pathCheckRem.AddLines(new CGPoint[]{
-							new CGPoint (lastSprite.Position.X, lastSprite.Position.Y),
-							new CGPoint (currentSprite.Position.X, currentSprite.Position.Y),
+									new CGPoint (lastSprite.Position.X, lastSprite.Position.Y),
+									new CGPoint (currentSprite.Position.X, currentSprite.Position.Y),
 
-							});
+									});
 									var pathCheckRemNext = new CGPath();
 									pathCheckRemNext.AddLines(new CGPoint[]{
-							new CGPoint (currentSprite.Position.X, currentSprite.Position.Y),
-							new CGPoint (nextSprite.Position.X, nextSprite.Position.Y),
+									new CGPoint (currentSprite.Position.X, currentSprite.Position.Y),
+									new CGPoint (nextSprite.Position.X, nextSprite.Position.Y),
 
-							});
+									});
 									timeLabel.Text = "Zeitpunkt gelöscht";
 									foreach (var lineNode in Children.OfType<SKShapeNode>())
 									{
@@ -1005,12 +1602,11 @@ namespace Teatime
 										{
 											lineNode.Alpha = 0f;
 										}*/
-									}
+									/*}
 									var pathReset = new CGPath();
 									pathReset.AddLines(new CGPoint[]{
-							new CGPoint (lastSprite.Position.X, lastSprite.Position.Y),
-							new CGPoint (nextSprite.Position.X, nextSprite.Position.Y),
-							});
+									new CGPoint (lastSprite.Position.X, lastSprite.Position.Y),new CGPoint (nextSprite.Position.X, nextSprite.Position.Y),
+									});
 									SKShapeNode newlineNext = new SKShapeNode();
 									newlineNext.Path = pathReset;
 									newlineNext.StrokeColor = UIColor.FromHSB(0, 0, 0);
@@ -1021,7 +1617,7 @@ namespace Teatime
 
 									newNode = false;
 
-								}
+								}*/
 
 								// Time label Start
 								timeLabel.Position = new CGPoint(spriteNode.Position.X, spriteNode.Position.Y + 50);
@@ -1093,16 +1689,16 @@ namespace Teatime
 
 								var pathCheck = new CGPath();
 								pathCheck.AddLines(new CGPoint[]{
-							new CGPoint (lastSprite.Position.X, lastSprite.Position.Y),
-							new CGPoint (currentSprite.Position.X, currentSprite.Position.Y),
+									new CGPoint (lastSprite.Position.X, lastSprite.Position.Y),
+									new CGPoint (currentSprite.Position.X, currentSprite.Position.Y),
 
-						});
+								});
 								var pathCheckNext = new CGPath();
 								pathCheckNext.AddLines(new CGPoint[]{
-							new CGPoint (currentSprite.Position.X, currentSprite.Position.Y),
-							new CGPoint (nextSprite.Position.X, nextSprite.Position.Y),
+									new CGPoint (currentSprite.Position.X, currentSprite.Position.Y),
+									new CGPoint (nextSprite.Position.X, nextSprite.Position.Y),
 
-						});
+								});
 
 								foreach (var lineNode in Children.OfType<SKShapeNode>())
 								{
@@ -1121,8 +1717,7 @@ namespace Teatime
 									}*/
 								}
 
-
-
+								
 							}
 						}
 
@@ -1135,8 +1730,9 @@ namespace Teatime
 
 
 
-						currentSprite = new SKSpriteNode("sparkfilled");
+						currentSprite = new PointNode("sparkfilled");
 						currentSprite.Position = new CGPoint(checkX, checkY);
+						currentSprite.Category = "";
 						//currentSprite.Size=
 						currentSprite.ZPosition = 1;
 						currentSprite.XScale = 0.4f;

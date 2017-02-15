@@ -299,24 +299,24 @@ namespace Teatime
 			fireEmitter.Position = location;
 			fireEmitter.NumParticlesToEmit = 0;
 			fireEmitter.ZPosition = 2;
-			fireEmitter.ParticleAlpha = 0.3f;
+			fireEmitter.ParticleAlpha = 0.4f;
 			//fireEmitter.EmissionAngle = 300f;
 			fireEmitter.XAcceleration = 0;
 			fireEmitter.YAcceleration = 1;
-			fireEmitter.EmissionAngle = 10f;
+			fireEmitter.EmissionAngle = 100f;
 			//	fireEmitter.ParticleLifetimeRange
 			fireEmitter.TargetNode = this;
 			UIImage image = UIImage.FromBundle("spark");
 			fireEmitter.ParticleScale = 0.4f;
 			fireEmitter.ParticleSpeedRange = 100f;
-			fireEmitter.ParticleScaleRange = 0.3f;
+			fireEmitter.ParticleScaleRange = 0.5f;
 			fireEmitter.ParticleScaleSpeed = -0.1f;
 			fireEmitter.ParticleBirthRate = 500;
-			fireEmitter.ParticlePositionRange = new CGVector(100f, 100f);
+			fireEmitter.ParticlePositionRange = new CGVector(120f, 120f);
 			fireEmitter.ParticleLifetimeRange = 10f;
 			fireEmitter.ParticleRotationRange = 10f;
 			//fireEmitter.ParticleLifetime = 10f;
-			fireEmitter.EmissionAngleRange = 100f;
+			fireEmitter.EmissionAngleRange = 200f;
 			fireEmitter.ParticleTexture = SKTexture.FromImageNamed(("spark"));
 			//this.AddChild(fireEmitter);
 
@@ -324,10 +324,11 @@ namespace Teatime
 		}
 		public void updateEmitter(nfloat coordX,nfloat coordY) { 
 			//fireEmitter.ParticleScale = 0.6f * ((1/Frame.Width)*coordX) +0.2f ;
-			fireEmitter.ParticleSpeedRange = 100f+coordX;
+			fireEmitter.ParticleSpeedRange = 10f+(coordX/5);
 			//fireEmitter.ParticleScaleRange = 0.3f*((1 / Frame.Width) * coordX*10) +0.2f;
-			fireEmitter.ParticleScaleSpeed = -0.2f;
-			fireEmitter.ParticleBirthRate = 50+(coordX);
+			fireEmitter.ParticleScaleSpeed = -0.02f;
+
+			fireEmitter.ParticleBirthRate = 20f+(coordX/5);
 		
 		}
 		public override void TouchesMoved(NSSet touches, UIEvent evt)

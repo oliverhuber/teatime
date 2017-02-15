@@ -387,14 +387,14 @@ namespace Teatime
 					if (checkX > (Frame.Width / 2)) {
 						updateLines(true, false, false, false);
 						SKAction act1 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 1f), 1f, 0);
-						SKAction act2 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 0f), 0f, 0.5);
+						SKAction act2 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 0f), 0f, 1);
 						SKAction seq = SKAction.Sequence(act1, act2);
 						rightUpperSprite.RunAction(seq);
 					}
 					else {
 						updateLines(false, true, false, false);
 						SKAction act1 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 1f), 1f, 0);
-						SKAction act2 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 0f), 0f, 0.5);
+						SKAction act2 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 0f), 0f, 1);
 						SKAction seq = SKAction.Sequence(act1, act2);
 						leftUpperSprite.RunAction(seq);
 					}
@@ -405,14 +405,14 @@ namespace Teatime
 					if (checkX > (Frame.Width / 2)) {
 						updateLines(false, false, true, false);
 						SKAction act1 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 1f), 1f, 0);
-						SKAction act2 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 0f), 0f, 0.5);
+						SKAction act2 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 0f), 0f, 1);
 						SKAction seq = SKAction.Sequence(act1, act2);
 						rightLowerSprite.RunAction(seq);
 					}
 					else {
 						updateLines(false, false, false, true);
 						SKAction act1 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 1f), 1f, 0);
-						SKAction act2 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 0f), 0f, 0.5);
+						SKAction act2 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 0f), 0f, 1);
 						SKAction seq = SKAction.Sequence(act1, act2);
 						leftLowerSprite.RunAction(seq);
 					}
