@@ -592,26 +592,21 @@ namespace Teatime
 				if (nodeType.Name == "info")
 				{
 					infoTouch = true;
-					//	SKAction actMove = SKAction.MoveToX(currentSprite.Position.X - 2, 0.1);
-					//	SKAction actMoveBack = SKAction.MoveToX(currentSprite.Position.X + 2, 0.1); 
-					//		SKAction actMove = SKAction.ScaleTo(1f, 1f, 0.2);
-					//		SKAction actMoveBack = SKAction.ScaleTo(0.4f, 0.4f, 0.2);
+
 					if (switchInfo == false)
 					{
 						switchInfo = true;
 						SKAction seqTexture = SKAction.SetTexture(SKTexture.FromImageNamed(("background_n")));
 						container.RunAction((seqTexture));
-
+						SKAction seqTextureInfo = SKAction.SetTexture(SKTexture.FromImageNamed(("inforeverse")));
+						infoSprite.RunAction((seqTextureInfo));
 					}
 					else {
 						switchInfo = false;
-					
-				//	SKAction seq = SKAction.Sequence(SKAction.WaitForDuration(3));//, actMoveBack);
-				//	SKAction seqTexture = SKAction.SetTexture(SKTexture.FromImageNamed(("background_n")));
-					SKAction seqTextureNormal = SKAction.SetTexture(SKTexture.FromImageNamed(("background")));
-				//	SKAction seqAll = SKAction.Sequence(seqTexture, seq, seqTextureNormal);
-					//currentSprite.Texture = SKTexture.FromImageNamed(("sparkx"));
-					container.RunAction((seqTextureNormal));
+						SKAction seqTextureNormal = SKAction.SetTexture(SKTexture.FromImageNamed(("background")));
+						container.RunAction((seqTextureNormal));
+						SKAction seqTextureInfoNormal = SKAction.SetTexture(SKTexture.FromImageNamed(("info")));
+						infoSprite.RunAction((seqTextureInfoNormal));
 					}
 				}
 				else {

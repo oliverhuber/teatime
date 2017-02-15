@@ -555,5 +555,8 @@
         <image name="sparkfilled" width="128" height="128"/>
         <image name="info" width="128" height="128"/>
         <image name="background_n" width="640" height="1136"/>
+        <image name="arrowcircle" width="128" height="128"/>
+        <image name="arrow" width="128" height="128"/>
+        <image name="inforeverse" width="128" height="128"/>
     </resources>
 </document>

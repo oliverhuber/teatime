@@ -133,6 +133,10 @@
     <ImageAsset Include="Assets.xcassets\arrowcircle.imageset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\arrowcircle.imageset\updown.png" />
     <ImageAsset Include="Assets.xcassets\arrow.imageset\updown_blank.png" />
+    <ImageAsset Include="Assets.xcassets\inforeverse.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\inforeverse.imageset\info_reverse.png" />
+    <ImageAsset Include="Assets.xcassets\transparent.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\transparent.imageset\transparent.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -148,6 +152,8 @@
     <Folder Include="Assets.xcassets\info.imageset\" />
     <Folder Include="Assets.xcassets\arrow.imageset\" />
     <Folder Include="Assets.xcassets\arrowcircle.imageset\" />
+    <Folder Include="Assets.xcassets\inforeverse.imageset\" />
+    <Folder Include="Assets.xcassets\transparent.imageset\" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="GameScene.sks" />
