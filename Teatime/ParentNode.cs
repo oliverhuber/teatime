@@ -23,6 +23,7 @@ namespace Teatime
 			get;
 			set;
 		}
+
 		public ParentNode(String name)
 		{
 			UIImage image = UIImage.FromBundle("spark");
@@ -34,11 +35,15 @@ namespace Teatime
 			this.PhysicsBody.AffectedByGravity = false;
 			this.PhysicsBody.AllowsRotation = true;
 			this.PhysicsBody.CollisionBitMask = 0;
-			this.PhysicsBody.LinearDamping = 1;
-			this.PhysicsBody.AngularDamping = (System.nfloat)(rnd.NextDouble() * (1 - 0.5) + 0.5);
-			this.PhysicsBody.Mass = 0.06f;
+			this.PhysicsBody.LinearDamping = 0.2f;
+			this.PhysicsBody.AngularDamping = (System.nfloat)(rnd.NextDouble() * (2 - 0.5) + 0.5);
+			this.PhysicsBody.Mass = 0.8f;
 
 
+		}
+		public void massOfBody(nfloat mass)
+		{
+			this.PhysicsBody.Mass = mass;
 		}
 		public void followDrag()
 		{

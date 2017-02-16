@@ -17,6 +17,7 @@ namespace Teatime
 		public int Proto1Dim2 { get; set; }
 		public int Proto1Dim3 { get; set; }
 		bool pressAndFollow;
+		SKSpriteNode container;
 		CGPoint globalCenter;
 		SKFieldNode fieldNode;
 		SKSpriteNode backgroundSprite;
@@ -28,6 +29,9 @@ namespace Teatime
 		SKLabelNode myLabel6;
 		SKLabelNode mySave;
 		SKSpriteNode navSprite;
+		bool switchInfo;
+		bool infoTouch;
+		SKSpriteNode infoSprite;
 		nfloat LastX;
 		nfloat LastY;
 		int changeColor;
@@ -41,7 +45,8 @@ namespace Teatime
 			Proto1Dim1 = 0;
 			Proto1Dim2 = 0;
 			Proto1Dim3 = 0;
-
+			switchInfo = false;
+			infoTouch = false;
 			// Setup Scene with SKNodes and call the sparks generator
 			// Set inital bgcolor
 			this.BackgroundColor = UIColor.FromRGBA(100, 200, 150, 120);
@@ -168,7 +173,7 @@ namespace Teatime
 			mySave.FontColor = UIColor.FromHSB((nfloat)0, 0, 3f);
 			mySave.Alpha = 0.9f;
 			mySave.ZPosition = 2;
-			this.AddChild(mySave);
+		//	this.AddChild(mySave);
 
 			navSprite = new SKSpriteNode();
 			navSprite.Name = "navSprite";
@@ -178,7 +183,24 @@ namespace Teatime
 			navSprite.Size = new CGSize(140, 70);
 			navSprite.Position = new CGPoint((this.View.Frame.Width - (70)), (this.View.Frame.Height - (35)));
 			AddChild(navSprite);
+			container = new SKSpriteNode("background");
+			container.Size = new CGSize(Frame.Width, Frame.Height);
+			container.Position = new CGPoint(Frame.Width / 2, Frame.Height / 2);
+			container.Size = new CGSize(Frame.Width, Frame.Height);
+			container.ZPosition = 0;
+			container.Alpha = 0f;
+			AddChild(container);
 
+			infoSprite = new SKSpriteNode("info");
+			infoSprite.Position = new CGPoint(Frame.Width - 40, Frame.Height - 40);
+			infoSprite.ZPosition = 10;
+			infoSprite.XScale = 0.6f;
+			infoSprite.YScale = 0.6f;
+			infoSprite.Alpha = 0.8f;
+			infoSprite.Name = "info";
+			//	infoSprite.ColorBlendFactor = 1f;
+			//infoSprite.Color = UIColor.FromHSB(0, 0, 0);
+			AddChild(infoSprite);
 
 			// Set Color Flag
 			changeColor = 0;
@@ -186,7 +208,7 @@ namespace Teatime
 			generateSparks();
 			//generateCoordinateSystem();
 		}
-		public override void Update(double currentTime )
+	/*	public override void Update(double currentTime )
 		{
 			//UPDATE FAST
 			if (pressAndFollow == true)
@@ -194,7 +216,7 @@ namespace Teatime
 				updateCenter();
 			}
 		}
-
+*/
 
 		public void changeTexture()
 		{
@@ -204,7 +226,7 @@ namespace Teatime
 				spark.changeTexture();
 			}
 		}
-		public void updateCenter()
+	/*	public void updateCenter()
 		{
 			Random rnd = new Random();
 			CGPoint center = globalCenter;
@@ -215,11 +237,61 @@ namespace Teatime
 				spark.parentNode.centerOfNode = center;
 				spark.RemoveAllActions();
 				spark.parentNode.RemoveAllActions();
-				double scaleSpeed= (rnd.NextDouble() * (1 - 0.5) + 0.5);
+				double scaleSpeed = (rnd.NextDouble() * (1 - 0.5) + 0.5);
 				SKAction action1 = SKAction.ScaleTo(3, scaleSpeed);
 				SKAction action2 = SKAction.ScaleTo(1, scaleSpeed);
 				var sequence = SKAction.Sequence(action1, action2);
 				spark.RunAction(SKAction.RepeatActionForever(sequence));
+			}
+		}*/
+		public void updateCenter(nfloat offsetX,nfloat offsetY)
+		{
+			Random rnd = new Random();
+			CGPoint center = globalCenter;
+			// Change Texture for all SkarkNodes
+			foreach (var spark in Children.OfType<SparkNode>())
+			{
+				spark.centerOfNode = center;
+				spark.parentNode.centerOfNode = center;
+				spark.RemoveAllActions();
+				spark.parentNode.RemoveAllActions();
+				//double scaleSpeed= (rnd.NextDouble() * (1 - 0.5) + 0.5);
+				//	SKAction action1 = SKAction.ScaleTo(3, scaleSpeed);
+				//	SKAction action2 = SKAction.ScaleTo(1, scaleSpeed);
+				//	var sequence = SKAction.Sequence(action1, action2);
+				//	spark.RunAction(SKAction.RepeatActionForever(sequence));
+				spark.Alpha = 1/(100 + Frame.Width)* (offsetX + 50);
+				spark.parentNode.Alpha = spark.Alpha;
+
+				if ((offsetY < 5 * (Frame.Height / 5) && offsetY >= 4 * (Frame.Height / 5))) {
+					spark.massOfBody(1);
+					spark.parentNode.massOfBody(1);
+				}
+				else if ((offsetY < 4 * (Frame.Height / 5) && offsetY >= 3 * (Frame.Height / 5)))
+				{
+					spark.massOfBody(0.8f);
+					spark.parentNode.massOfBody(0.8f);
+
+				}
+				else if ((offsetY < 3 * (Frame.Height / 5) && offsetY >= 2 * (Frame.Height / 5)))
+				{
+					spark.massOfBody(0.6f);
+					spark.parentNode.massOfBody(0.6f);
+
+				}
+				else if ((offsetY < 2 * (Frame.Height / 5) && offsetY >= 1 * (Frame.Height / 5)))
+				{
+					spark.massOfBody(0.4f);
+					spark.parentNode.massOfBody(0.4f);
+
+
+				}
+				else if ((offsetY < 1 * (Frame.Height / 5) && offsetY >= 0 * (Frame.Height / 5)))
+				{
+					spark.massOfBody(0.2f);
+					spark.parentNode.massOfBody(0.2f);
+
+				}
 
 				/*if (spark.Position.X > center.X && spark.Position.Y > center.Y)
 				{
@@ -354,14 +426,132 @@ namespace Teatime
 			// Do first update of the all sparks, that the will have a base movement
 			updateSparks(1, true,false,0,false);
 		}
-	
+		public void setDimensions(nfloat coordX, nfloat coordY)
+		{
+			double speed;
+			nfloat checkX = coordX;
+			nfloat checkY = coordY;
+			if (checkY >= 4 * (Frame.Height / 5))
+			{
+				speed = 4;
+				Proto1Dim1 = 1;
+				if (checkX >= 2 * (Frame.Width / 3))
+				{
+					Proto1Dim2 = 3;
+					//Proto1Dim3 = 3;
+				}
+				else if (checkX < 2 * (Frame.Width / 3) && checkX >= 1 * (Frame.Width / 3))
+				{
+					Proto1Dim2 = 2;
+					//	Proto1Dim3 = 2;
+				}
+				else
+				{
+					Proto1Dim2 = 1;
+					//	Proto1Dim3 = 3;
+				}
+				updateSparks(speed, false, false, 0, false);
+				//myLabel.Text = "Glücklich";
+			}
+			else if (checkY < 4 * (Frame.Height / 5) && checkY >= 3 * (Frame.Height / 5))
+			{
+				speed = 3.5;
+				Proto1Dim1 = 2;
+				if (checkX >= 2 * (Frame.Width / 3))
+				{
+					Proto1Dim2 = 3;
+					//	Proto1Dim3 = 1;
+				}
+				else if (checkX < 2 * (Frame.Width / 3) && checkX >= 1 * (Frame.Width / 3))
+				{
+					Proto1Dim2 = 2;
+					//Proto1Dim3 = 2;
+				}
+				else
+				{
+					Proto1Dim2 = 1;
+					//Proto1Dim3 = 3;
+				}
+				//myLabel.Text = "Zufrieden";
+				updateSparks(speed, true, true, 2, false);
+			}
+			else if (checkY < 3 * (Frame.Height / 5) && checkY >= 2 * (Frame.Height / 5))
+			{
+				speed = 3;
+				Proto1Dim1 = 3;
+				if (checkX >= 2 * (Frame.Width / 3))
+				{
+					Proto1Dim2 = 3;
+					//Proto1Dim3 = 1;
+				}
+				else if (checkX < 2 * (Frame.Width / 3) && checkX >= 1 * (Frame.Width / 3))
+				{
+					Proto1Dim2 = 2;
+					//Proto1Dim3 = 2;
+				}
+				else
+				{
+					Proto1Dim2 = 1;
+					//Proto1Dim3 = 3;
+				}
+				//myLabel.Text = "Beunruhigt";
+				updateSparks(speed, true, true, 4, false);
+			}
+			else if (checkY < 2 * (Frame.Height / 5) && checkY >= 1 * (Frame.Height / 5))
+			{
+				speed = 2.5;
+				Proto1Dim1 = 4;
+				if (checkX >= 2 * (Frame.Width / 3))
+				{
+					Proto1Dim2 = 3;
+					//Proto1Dim3 = 1;
+				}
+				else if (checkX < 2 * (Frame.Width / 3) && checkX >= 1 * (Frame.Width / 3))
+				{
+					Proto1Dim2 = 2;
+					//Proto1Dim3 = 2;
+				}
+				else
+				{
+					Proto1Dim2 = 1;
+					//Proto1Dim3 = 3;
+				}
+				//myLabel.Text = "Beunruhigt";
+				updateSparks(speed, true, true, 4, true);
+			}
+			else {
+				
+				speed = 2;
+				Proto1Dim1 = 5;
+				if (checkX >= 2 * (Frame.Width / 3))
+				{
+					Proto1Dim2 = 3;
+					//Proto1Dim3 = 1;
+				}
+				else if (checkX < 2 * (Frame.Width / 3) && checkX >= 1 * (Frame.Width / 3))
+				{
+					Proto1Dim2 = 2;
+					//Proto1Dim3 = 2;
+				}
+				else
+				{
+					Proto1Dim2 = 1;
+					//Proto1Dim3 = 3;
+				}
+				//myLabel.Text = "Nervös";
+				//myLabel.RunAction(SKAction.RotateByAngle(NMath.PI * speed, 10.0));
+
+				updateSparks(speed, true, true, 6, true);
+
+			}
+		}
 		// If finger moved on screen
 		public override void TouchesMoved(NSSet touches, UIEvent evt)
 		{
 			base.TouchesMoved(touches, evt);
 			UITouch touch = touches.AnyObject as UITouch;
 
-			if (touch != null)
+			if (touch != null && infoTouch==false)
 			{
 				pressAndFollow = true;
 				fieldNode.Enabled = true;
@@ -383,14 +573,17 @@ namespace Teatime
 				fieldNode.Position= new CGPoint(checkX_Location, checkY_Location);
 				if (changeColor % 3 == 0)
 				{
-					var manipulate = (checkY_Location / Frame.Height) + 0.2;
+					var manipulate = (checkY_Location / Frame.Height)  + 0.18;
 					if (manipulate > 1)
 					{
 						manipulate = manipulate - 1;
 					}
 
 					// Background Calculating
-					this.BackgroundColor = UIColor.FromHSB((nfloat)manipulate, 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
+					this.BackgroundColor = UIColor.FromHSB((nfloat)manipulate, 0.5f, (nfloat)0.8f);//(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
+				
+				
+				
 				}
 				else if (changeColor % 3 == 1)
 				{
@@ -410,8 +603,9 @@ namespace Teatime
 
 				//if (Math.Abs((int)checkX_Location) % 1 == 0)
 				//{
-					globalCenter = new CGPoint(checkX_Location, checkY_Location);
-					this.updateCenter();
+				globalCenter = new CGPoint(checkX_Location, checkY_Location);
+				setDimensions(offsetX, offsetY);
+				this.updateCenter(offsetX,offsetY);
 
 			
 			}
@@ -456,16 +650,16 @@ namespace Teatime
 				//Release the Changed center
 				this.revertCenter();
 				fieldNode.Enabled = false;
+				infoTouch = false;
 				// Check click
 				var checkX = ((UITouch)touch).LocationInView(View).X;
 				var checkY = ((UITouch)touch).LocationInView(View).Y;
-				double speed = 0;
-				if (checkY > 3 * (Frame.Height / 4))
+				/*if (checkY > 3 * (Frame.Height / 4))
 				{
 					Proto1Dim1 = 1;
 					Proto1Dim2 = 1;
 					Proto1Dim3 = 1;
-					speed = 0.1;
+					speed = 2;
 					updateSparks(speed, true, true, 8, true);
 				}
 				else if (checkY < 3 * (Frame.Height / 4) && checkY > Frame.Height / 2)
@@ -473,7 +667,7 @@ namespace Teatime
 					Proto1Dim1 = 2;
 					Proto1Dim2 = 2;
 					Proto1Dim3 = 2;
-					speed = 0.5;
+					speed = 3;
 					updateSparks(speed, true, true, 4, true);
 				}
 				else if (checkY < Frame.Height / 2 && checkY > Frame.Height / 4)
@@ -481,7 +675,7 @@ namespace Teatime
 					Proto1Dim1 = 3;
 					Proto1Dim2 = 3;
 					Proto1Dim3 = 3;
-					speed = 2;
+					speed = 4;
 					updateSparks(speed, true, true, 2, false);
 				}
 				else {
@@ -490,7 +684,8 @@ namespace Teatime
 					Proto1Dim3 = 4;
 					speed = 5;
 					updateSparks(speed, false, false, 0, false);
-				}
+				}*/
+				this.setDimensions(checkX, checkY);
 			}
 			pressAndFollow = false;
 
@@ -513,7 +708,29 @@ namespace Teatime
 				//var checkX = ((UITouch)touchc).LocationInNode(this).X;
 				//var checkY = ((UITouch)touchc).LocationInNode(this).Y;
 				var nodeType = GetNodeAtPoint(locationc);
-				if ((nodeType is SKLabelNode && nodeType.Name == "next") || nodeType.Name == "navSprite")
+				if (nodeType.Name == "info" || nodeType.Name == "navSprite")
+				{
+					infoTouch = true;
+
+					if (switchInfo == false)
+					{
+						container.Alpha = 1f;
+						switchInfo = true;
+						//SKAction seqTexture = SKAction.SetTexture(SKTexture.FromImageNamed(("background_n")));
+						//container.RunAction((seqTexture));
+						SKAction seqTextureInfo = SKAction.SetTexture(SKTexture.FromImageNamed(("inforeverse")));
+						infoSprite.RunAction((seqTextureInfo));
+					}
+					else {
+						container.Alpha = 0f;
+						switchInfo = false;
+						//SKAction seqTextureNormal = SKAction.SetTexture(SKTexture.FromImageNamed(("background")));
+						//container.RunAction((seqTextureNormal));
+						SKAction seqTextureInfoNormal = SKAction.SetTexture(SKTexture.FromImageNamed(("info")));
+						infoSprite.RunAction((seqTextureInfoNormal));
+					}
+				}
+				else if ((nodeType is SKLabelNode && nodeType.Name == "next") || nodeType.Name == "navSprite")
 				{
 					changeColor++;
 
@@ -538,28 +755,28 @@ namespace Teatime
 						// Background Calculating
 						this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
 					}
-					// Check to which part the finger is moved to and update the sparks
-					double speed = 0;
-					if (checkY > 3 * (Frame.Height / 4))
-					{
-						speed = 0.1;
-						updateSparks(speed, true, true, 8, true);
-					}
-					else if (checkY < 3 * (Frame.Height / 4) && checkY > Frame.Height / 2)
-					{
-						speed = 0.5;
-						updateSparks(speed, true, true, 4, true);
-					}
-					else if (checkY < Frame.Height / 2 && checkY > Frame.Height / 4)
-					{
-						speed = 2;
-						updateSparks(speed, true, true, 2, false);
-					}
-					else {
-						speed = 5;
-						updateSparks(speed, false, false, 0, false);
-					}
-
+					/*	// Check to which part the finger is moved to and update the sparks
+						double speed = 0;
+						if (checkY > 3 * (Frame.Height / 4))
+						{
+							speed = 2;
+							updateSparks(speed, true, true, 8, true);
+						}
+						else if (checkY < 3 * (Frame.Height / 4) && checkY > Frame.Height / 2)
+						{
+							speed = 3;
+							updateSparks(speed, true, true, 4, true);
+						}
+						else if (checkY < Frame.Height / 2 && checkY > Frame.Height / 4)
+						{
+							speed = 4;
+							updateSparks(speed, true, true, 2, false);
+						}
+						else {
+							speed = 5;
+							updateSparks(speed, false, false, 0, false);
+						}
+	*/
 					LastX = checkX;
 					LastY = checkY;
 				// Double tapped

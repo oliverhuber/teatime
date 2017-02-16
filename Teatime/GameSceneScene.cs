@@ -31,6 +31,8 @@ namespace Teatime
 		FieldNode spriteBelowBg;
 		SKEmitterNode fireEmitter;
 		Random rnd = new Random();
+		bool startDragMenu;
+		bool actionDone;
 		protected GameSceneScene(IntPtr handle) : base(handle)
 		{
 			// Note: this .ctor should not contain any initialization logic.
@@ -114,6 +116,8 @@ namespace Teatime
 			mySave.Alpha = 0.0f;
 			mySave.ZPosition = 2;
 			//this.AddChild(mySave);
+			startDragMenu = false;
+			actionDone = false;
 		}
 		public void saveProto3Input()
 		{
@@ -230,7 +234,7 @@ namespace Teatime
 				XScale = 1,
 				YScale = 1,
 				Alpha = 1f,
-				Color = UIColor.FromHSB((nfloat)0, 0, 0.3f)
+				Color = UIColor.FromHSB((nfloat)0.8f, 0.5f, 0.5f)
 
 			};
 			spriteBelow = new FieldNode()
@@ -240,7 +244,7 @@ namespace Teatime
 				XScale = 1,
 				YScale = 1,
 				Alpha = 1f,
-				Color = UIColor.FromHSB((nfloat)0, 0, 0.6f)
+				Color = UIColor.FromHSB((nfloat)0.5f, 0.5f, 0.5f)
 
 			};
 
@@ -305,10 +309,12 @@ namespace Teatime
 				// Check click
 				nfloat checkX = ((UITouch)touch).LocationInNode(this).X;
 				nfloat checkY = ((UITouch)touch).LocationInNode(this).Y;
-				if (gameMode!=0 && !spriteTop.HasActions&& !spriteBelow.HasActions) {
+				nfloat checkYBig = ((UITouch)touch).LocationInView(View).Y;
+
+				if (gameMode!=0  && startDragMenu == false) {
 					
 
-				
+
 					//hueTop = (nfloat)(checkY / Frame.Height);
 					//satTop = 0.5f;
 					//briTop = (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f)));
@@ -316,7 +322,7 @@ namespace Teatime
 				
 
 
-					if (gameMode == 2 )
+					if (gameMode == 2  && checkY > 0 + 70 )
 					{
 						manipulate = (checkY / Frame.Height) + 0.2;
 						if (manipulate > 1)
@@ -330,10 +336,14 @@ namespace Teatime
 						briTop = (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f)));
 						lastColor = UIColor.FromHSB((nfloat)(manipulate), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
 						spriteTop.Color = lastColor;
+						followDragNode.FillColor = lastColor;
+						followDragNode.StrokeColor = lastColor;
+						followDragNode.Alpha = 0.8f;
+						followDragNode.Position = locationc;
 					}
-					else if (gameMode == 1)
+					else if (gameMode == 1 && checkY < Frame.Height - 70)
 					{
-						manipulate = (checkY / Frame.Height) + 0.35;
+						manipulate = (checkY / Frame.Height) + 0.37;
 						if (manipulate > 1)
 						{
 							manipulate = manipulate - 1;
@@ -346,15 +356,155 @@ namespace Teatime
 						lastColor = UIColor.FromHSB((nfloat)(manipulate), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
 
 						spriteBelow.Color = lastColor;
-
+						followDragNode.FillColor = lastColor;
+						followDragNode.StrokeColor = lastColor;
+						followDragNode.Alpha = 0.8f;
+						followDragNode.Position = locationc;
 					}
-					followDragNode.FillColor = lastColor;
-					followDragNode.StrokeColor = lastColor;
-					followDragNode.Alpha = 0.8f;
-					followDragNode.Position = locationc;
+
 
 
 				}
+				if (gameMode == 2 && checkY <= 0 + 100 && startDragMenu == true && actionDone == true)
+				{
+					spriteTopBg.Position = new CGPoint(spriteTopBg.Position.X, ((this.View.Frame.Height * 0.5f)  + 60) + checkY);
+					spriteBelowBg.Position = new CGPoint(spriteBelowBg.Position.X, -this.View.Frame.Height / 2  + 60 + checkY);
+					spriteTop.Position = new CGPoint(spriteTop.Position.X, ((this.View.Frame.Height * 0.5f)  + 60) + checkY);
+					spriteBelow.Position = new CGPoint(spriteBelowBg.Position.X, -this.View.Frame.Height / 2  + 60 + checkY);
+					myLabel.Position = new CGPoint(myLabel2.Position.X, checkY + 80);
+					myLabel2.Position = new CGPoint(myLabel.Position.X, checkY + 20);
+					navSpriteTop.Position = new CGPoint(navSpriteTop.Position.X, checkY + 80);
+					navSpriteBottom.Position = new CGPoint(navSpriteBottom.Position.X, checkY + 20);
+				}
+				else if (gameMode == 2 && checkY > 0 + 100 && startDragMenu == true && actionDone==true)
+				{
+					SKAction action1 = SKAction.MoveToY(this.View.Frame.Height, 0.2);
+					SKAction action2 = SKAction.MoveToY(0, 0.2);
+					SKAction action3 = SKAction.MoveToY(this.View.Frame.Height / 2 + 20, 0.2);
+					SKAction action4 = SKAction.MoveToY(this.View.Frame.Height / 2 - 40, 0.2);
+
+					spriteTop.RunAction(action1);
+					spriteTopBg.RunAction(action1);
+					spriteBelow.RunAction(action2);
+					spriteBelowBg.RunAction(action2);
+					myLabel.RunAction(action3);
+					myLabel2.RunAction(action4);
+					navSpriteTop.RunAction(action4);
+					navSpriteBottom.RunAction(action3);
+
+					gameMode = 0;
+					//startDragMenu = false;
+					actionDone = false;
+
+				}
+
+				else if (gameMode == 1 && checkY >= Frame.Height - 100 && startDragMenu == true && actionDone == true)
+				{
+
+
+
+					//Move
+					spriteTopBg.Position = new CGPoint(spriteTopBg.Position.X, ((this.View.Frame.Height * 1.5f) - Frame.Height - 60) + checkY);
+					spriteBelowBg.Position = new CGPoint(spriteBelowBg.Position.X,  this.View.Frame.Height / 2 -Frame.Height -60 +checkY);
+					spriteTop.Position = new CGPoint(spriteTop.Position.X, ((this.View.Frame.Height * 1.5f) - Frame.Height  - 60) + checkY);
+					spriteBelow.Position = new CGPoint(spriteBelowBg.Position.X, this.View.Frame.Height / 2 -Frame.Height- 60 + checkY);
+					myLabel.Position = new CGPoint(myLabel2.Position.X, checkY  - 40);
+					myLabel2.Position = new CGPoint(myLabel.Position.X, checkY  - 100);
+					navSpriteTop.Position = new CGPoint(navSpriteTop.Position.X, checkY - 40);
+					navSpriteBottom.Position = new CGPoint(navSpriteBottom.Position.X, checkY - 100);
+
+
+				} else if (gameMode == 1 && checkY < Frame.Height - 100 && startDragMenu == true && actionDone == true)
+				{
+					SKAction action1 = SKAction.MoveToY(this.View.Frame.Height, 0.2);
+					SKAction action2 = SKAction.MoveToY(0, 0.2);
+					SKAction action3 = SKAction.MoveToY(this.View.Frame.Height / 2 + 20, 0.2);
+					SKAction action4 = SKAction.MoveToY(this.View.Frame.Height / 2 - 40, 0.2);
+
+					spriteTop.RunAction(action1);
+					spriteTopBg.RunAction(action1);
+					spriteBelow.RunAction(action2);
+					spriteBelowBg.RunAction(action2);
+					myLabel.RunAction(action3);
+					myLabel2.RunAction(action4);
+					navSpriteTop.RunAction(action4);
+					navSpriteBottom.RunAction(action3);
+					//startDragMenu = false;
+					actionDone = false;
+
+					gameMode = 0;
+				}
+
+				if (gameMode == 0  && startDragMenu == true && actionDone == true)
+				{
+					if (checkY <= (Frame.Height / 2) + 70 && checkY  > Frame.Height / 2)
+					{
+
+
+						//Move
+						spriteTopBg.Position=new CGPoint(spriteTopBg.Position.X,this.View.Frame.Height/2+checkY);
+						spriteBelowBg.Position = new CGPoint(spriteBelowBg.Position.X, checkY-this.View.Frame.Height / 2);
+						spriteTop.Position = new CGPoint(spriteTop.Position.X, this.View.Frame.Height/2+checkY);
+						spriteBelow.Position = new CGPoint(spriteBelow.Position.X, checkY - this.View.Frame.Height / 2);
+						myLabel.Position = new CGPoint(myLabel2.Position.X, checkY + 20);
+						myLabel2.Position = new CGPoint(myLabel.Position.X, checkY - 40);
+						navSpriteTop.Position = new CGPoint(navSpriteTop.Position.X, checkY + 20);
+						navSpriteBottom.Position = new CGPoint(navSpriteBottom.Position.X, checkY - 40);
+					}
+					else if (checkY >= (Frame.Height / 2) - 70 && checkY < Frame.Height / 2)
+					{
+						//Move
+						//Move
+						spriteTopBg.Position = new CGPoint(spriteTopBg.Position.X, this.View.Frame.Height/2 + checkY);
+						spriteBelowBg.Position = new CGPoint(spriteBelowBg.Position.X,checkY - this.View.Frame.Height / 2);
+						spriteTop.Position = new CGPoint(spriteTop.Position.X, this.View.Frame.Height/2 + checkY);
+						spriteBelow.Position = new CGPoint(spriteBelow.Position.X, checkY - this.View.Frame.Height / 2);
+						myLabel.Position = new CGPoint(myLabel2.Position.X, checkY + 20);
+						myLabel2.Position = new CGPoint(myLabel.Position.X, checkY - 40);
+						navSpriteTop.Position = new CGPoint(navSpriteTop.Position.X, checkY + 20);
+						navSpriteBottom.Position = new CGPoint(navSpriteBottom.Position.X, checkY - 40);
+					}
+					else if (checkY > (Frame.Height / 2+70))
+					{
+						SKAction action1 = SKAction.MoveToY((this.View.Frame.Height * 1.5f)-60, 0.2);
+						SKAction action2 = SKAction.MoveToY((this.View.Frame.Height / 2)-60, 0.2);
+						SKAction action3 = SKAction.MoveToY(this.View.Frame.Height - 100, 0.2);
+						SKAction action4 = SKAction.MoveToY(this.View.Frame.Height - 40, 0.2);
+
+						spriteTopBg.RunAction(action1);
+						spriteBelowBg.RunAction(action2);
+						spriteTop.RunAction(action1);
+						spriteBelow.RunAction(action2);
+						myLabel2.RunAction(action3);
+						myLabel.RunAction(action4);
+						navSpriteTop.RunAction(action4);
+						navSpriteBottom.RunAction(action3);
+						gameMode = 1;
+						//startDragMenu = false;
+						actionDone = false;
+					}
+					else if (checkY < Frame.Height / 2 -70) {
+						SKAction action1 = SKAction.MoveToY((this.View.Frame.Height / 2)+60, 0.2);
+						SKAction action2 = SKAction.MoveToY((0 - this.View.Frame.Height/2)+60, 0.2);
+						SKAction action3 = SKAction.MoveToY(0 + 20, 0.2);
+						SKAction action4 = SKAction.MoveToY(0 + 80, 0.2);
+
+						spriteTopBg.RunAction(action1);
+						spriteBelowBg.RunAction(action2);
+						spriteTop.RunAction(action1);
+						spriteBelow.RunAction(action2);
+						myLabel2.RunAction(action3);
+						myLabel.RunAction(action4);
+						navSpriteTop.RunAction(action4);
+						navSpriteBottom.RunAction(action3);
+						gameMode = 2;
+					//	startDragMenu = false;
+						actionDone = false;
+
+
+					}
+				}
+
 			}
 		}
 		public override void TouchesEnded(NSSet touches, UIEvent evt)
@@ -371,7 +521,8 @@ namespace Teatime
 				var locationc = ((UITouch)touchc).LocationInNode(this);
 				var nodeType = GetNodeAtPoint(locationc);
 				//FieldNode touchedNode = (Teatime.FieldNode)GetNodeAtPoint(locationc);
-
+				startDragMenu = false;
+				actionDone = false;
 				if (gameMode != 0) 
 				//if (nodeType is FieldNode || (nodeType.Name == "navSpriteTop" && gameMode == 0) || (nodeType.Name == "navSpriteBottom" && gameMode == 0) || (nodeType is SKLabelNode && gameMode == 0))
 				{
@@ -380,61 +531,10 @@ namespace Teatime
 					spriteBelow.Alpha = 1f;
 					spriteBelowBg.Alpha = 0f;
 					followDragNode.Alpha = 0f;
-					if (nodeType is FieldNode && !nodeType.HasActions)
-					{
-						//SKAction seqTexture = SKAction.SetTexture(SKTexture.FromImageNamed(("transparent")));
+					Proto3Dim1 = (int)((hueTop - hueBel) * 30);
+					Proto3Dim2 = (int)((satTop - satBel) * 30);
+					Proto3Dim3 = (int)((briTop - briBel) * 30);
 
-						//nodeType.RunAction((seqTexture));
-						//nodeType.Alpha = 1f;
-						//nodeType.RemoveAllActions();
-					//	((FieldNode)nodeType).ColorBlendFactor = 1f;
-
-						
-						// Check click
-						nfloat checkX = ((UITouch)touchc).LocationInNode(this).X;
-						nfloat checkY = ((UITouch)touchc).LocationInNode(this).Y;
-
-						nfloat checkYBig = ((UITouch)touchc).LocationInView(View).Y;
-						Proto3Dim1 = (int)((hueTop - hueBel) * 30);
-						Proto3Dim2 = (int)((satTop - satBel) * 30);
-						Proto3Dim3 = (int)((briTop - briBel) * 30);
-
-						/*spriteTop.Alpha = 1f;
-						spriteTopBg.Alpha = 0f;
-						spriteBelow.Alpha = 1f;
-						spriteBelowBg.Alpha = 0f;
-
-
-						if (gameMode == 2 && (nodeType.Name == "Top"))
-						{
-							manipulate = (checkY / Frame.Height) + 0.2;
-							if (manipulate > 1)
-							{
-								manipulate = manipulate - 1;
-							}
-							hueTop = (nfloat)(checkY / Frame.Height);
-							satTop = 0.5f;
-							briTop = (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f)));
-							//lastColor = UIColor.FromHSB((nfloat)(manipulate), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
-							//spriteTop.Color = lastColor;
-						}
-						else if (gameMode == 1 && (nodeType.Name == "Below"))  {
-							manipulate = (checkY / Frame.Height) + 0.2;
-							if (manipulate > 1)
-							{
-								manipulate = manipulate - 1;
-							}
-							hueBel = (nfloat)(checkY / Frame.Height);
-							satBel = 0.5f;
-							briBel = (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f)));
-							//lastColor = UIColor.FromHSB((nfloat)(manipulate), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
-
-							//spriteBelow.Color = lastColor;
-
-						}*/
-						//lastColor = UIColor.FromHSB((nfloat)(manipulate), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
-						//((FieldNode)nodeType).Color = lastColor;
-					}
 				}
 			}
 		}
@@ -456,14 +556,32 @@ namespace Teatime
 
 
 				var nodeType = GetNodeAtPoint(locationc);
-				if ((nodeType is SKLabelNode && gameMode !=0) || (nodeType.Name=="navSprite" && gameMode != 0)  || (nodeType.Name=="navSpriteTop" && gameMode != 0) || (nodeType.Name=="navSpriteBottom" && gameMode != 0))
+
+				if (gameMode == 0 && checkY >= (Frame.Height / 2) - 70 && checkY <= (Frame.Height / 2) + 70)
+				{
+					startDragMenu = true;
+					actionDone = true;
+				}
+			    else if (gameMode == 1 && checkY > Frame.Height - 120)
+				{
+					startDragMenu = true;
+					actionDone = true;
+
+				}
+				else if (gameMode == 2 && checkY < 0 + 120)
+				{
+					startDragMenu = true;
+					actionDone = true;
+
+				}
+				/*if ((nodeType is SKLabelNode && gameMode != 0) || (nodeType.Name == "navSprite" && gameMode != 0) || (nodeType.Name == "navSpriteTop" && gameMode != 0) || (nodeType.Name == "navSpriteBottom" && gameMode != 0))
 				{
 					mySave.Alpha = 0.0f;
 
-					SKAction action1 = SKAction.MoveToY(this.View.Frame.Height , 0.2);
+					SKAction action1 = SKAction.MoveToY(this.View.Frame.Height, 0.2);
 					SKAction action2 = SKAction.MoveToY(0, 0.2);
-					SKAction action3 = SKAction.MoveToY(this.View.Frame.Height/2 +20, 0.2);
-					SKAction action4 = SKAction.MoveToY(this.View.Frame.Height/2 - 40, 0.2);
+					SKAction action3 = SKAction.MoveToY(this.View.Frame.Height / 2 + 20, 0.2);
+					SKAction action4 = SKAction.MoveToY(this.View.Frame.Height / 2 - 40, 0.2);
 
 					spriteTop.RunAction(action1);
 					spriteTopBg.RunAction(action1);
@@ -473,21 +591,48 @@ namespace Teatime
 					myLabel2.RunAction(action4);
 					navSpriteTop.RunAction(action4);
 					navSpriteBottom.RunAction(action3);
-					/*var locationTop = new CGPoint();
-					locationTop.X = (this.View.Frame.Width / 2);
-					locationTop.Y = (this.View.Frame.Height);
-					var locationBelow = new CGPoint();
-					locationBelow.X = (this.View.Frame.Width / 2);
-					locationBelow.Y = 0;
-					spriteTop.Position = locationTop;
-					spriteBelow.Position = locationBelow;
-					myLabel.Position = new CGPoint(Frame.Width / 2, (Frame.Height / 2) + 20);
-					myLabel2.Position = new CGPoint(Frame.Width / 2, (Frame.Height / 2) - 40);*/
+
 					gameMode = 0;
 
-				}
+				}*/
+				 if (gameMode == 0)
+				{
+					 if ((checkY) < Frame.Height / 2 - 70)
+						{
+						SKAction action1 = SKAction.MoveToY((this.View.Frame.Height * 1.5f) - 60, 0.2);
+						SKAction action2 = SKAction.MoveToY((this.View.Frame.Height / 2) - 60, 0.2);
+						SKAction action3 = SKAction.MoveToY(this.View.Frame.Height - 100, 0.2);
+						SKAction action4 = SKAction.MoveToY(this.View.Frame.Height - 40, 0.2);
 
-				else if (nodeType is FieldNode || (nodeType.Name == "navSpriteTop" && gameMode == 0) || (nodeType.Name == "navSpriteBottom" && gameMode == 0) || (nodeType is SKLabelNode && gameMode == 0) )
+						spriteTopBg.RunAction(action1);
+						spriteBelowBg.RunAction(action2);
+						spriteTop.RunAction(action1);
+						spriteBelow.RunAction(action2);
+						myLabel2.RunAction(action3);
+						myLabel.RunAction(action4);
+						navSpriteTop.RunAction(action4);
+						navSpriteBottom.RunAction(action3);
+						gameMode = 1;
+					}
+					else if ((checkY) > Frame.Height / 2 + 70)
+					{
+						SKAction action1 = SKAction.MoveToY((this.View.Frame.Height / 2) + 60, 0.2);
+						SKAction action2 = SKAction.MoveToY((0 - this.View.Frame.Height / 2) + 60, 0.2);
+						SKAction action3 = SKAction.MoveToY(0 + 20, 0.2);
+						SKAction action4 = SKAction.MoveToY(0 + 80, 0.2);
+
+						spriteTopBg.RunAction(action1);
+						spriteBelowBg.RunAction(action2);
+						spriteTop.RunAction(action1);
+						spriteBelow.RunAction(action2);
+						myLabel2.RunAction(action3);
+						myLabel.RunAction(action4);
+						navSpriteTop.RunAction(action4);
+						navSpriteBottom.RunAction(action3);
+						gameMode = 2;
+					}
+				}
+				else if (startDragMenu==false && nodeType is FieldNode || (nodeType.Name == "navSpriteTop" && gameMode == 0) || (nodeType.Name == "navSpriteBottom" && gameMode == 0) || (nodeType is SKLabelNode && gameMode == 0) )
 				{
 					//	touchedNode.Color = UIColor.FromHSB((nfloat)0, 0, 1);
 					// Define Spark with location and alpha
@@ -506,97 +651,30 @@ namespace Teatime
 								ZPosition = 10         
 
 							};
-							/*//this.AddChild(sprite);
-							manipulate = (checkY / Frame.Height) + 0.2;
-							if (manipulate > 1)
-							{
-								manipulate = manipulate-1;
-							}
-							lastColor = UIColor.FromHSB((nfloat)(manipulate), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
-							touchedNode.Color = lastColor;
-							/*	if (touchedNode == spriteTop)
-								{
-									//switchInfo = true;
-									SKAction seqTexture = SKAction.SetTexture(SKTexture.FromImageNamed(("background")));
-									touchedNode.RunAction((seqTexture));
-
-								}
-								else {
-									//switchInfo = false;
-									SKAction seqTextureNormal = SKAction.SetTexture(SKTexture.FromImageNamed(("background")));
-									touchedNode.RunAction((seqTextureNormal));
-
-								}*/
-
-
+					
 
 
 							if (touchedNode == spriteTop)
 							{
-							//	hueTop = (nfloat)(checkY / Frame.Height);
-							//	satTop = 0.5f;
-							//	briTop = (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f)));
 
 								spriteTop.Alpha = 0f;
 								spriteTopBg.Alpha = 1f;
 							}
 							else {
-								//hueBel= (nfloat)(checkY / Frame.Height);
-								//satBel= 0.5f;
-								//briBel = (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f)));
+
 
 								spriteBelow.Alpha = 0f;
 								spriteBelowBg.Alpha = 1f;
 							}
 						}
 					}
-					if (gameMode == 0)
-					{
 
-						//mySave.Alpha = 0.9f;
-					
-					}
 					//UIColor topColor = spriteTop.Color;
 
 					//UIColor belColor = spriteBelow.Color;
 
 				
-					if (gameMode == 0)
-					{
-						if (checkYBig > Frame.Height / 2)
-						{
-							SKAction action1 = SKAction.MoveToY((this.View.Frame.Height * 1.5f)-60, 0.2);
-							SKAction action2 = SKAction.MoveToY((this.View.Frame.Height / 2)-60, 0.2);
-							SKAction action3 = SKAction.MoveToY(this.View.Frame.Height - 100, 0.2);
-							SKAction action4 = SKAction.MoveToY(this.View.Frame.Height - 40, 0.2);
 
-							spriteTopBg.RunAction(action1);
-							spriteBelowBg.RunAction(action2);
-							spriteTop.RunAction(action1);
-							spriteBelow.RunAction(action2);
-							myLabel2.RunAction(action3);
-							myLabel.RunAction(action4);
-							navSpriteTop.RunAction(action4);
-							navSpriteBottom.RunAction(action3);
-							gameMode = 1;
-						}
-						else {
-							SKAction action1 = SKAction.MoveToY((this.View.Frame.Height / 2)+60, 0.2);
-							SKAction action2 = SKAction.MoveToY((0 - this.View.Frame.Height/2)+60, 0.2);
-							SKAction action3 = SKAction.MoveToY(0 + 20, 0.2);
-							SKAction action4 = SKAction.MoveToY(0 + 80, 0.2);
-
-							spriteTopBg.RunAction(action1);
-							spriteBelowBg.RunAction(action2);
-							spriteTop.RunAction(action1);
-							spriteBelow.RunAction(action2);
-							myLabel2.RunAction(action3);
-							myLabel.RunAction(action4);
-							navSpriteTop.RunAction(action4);
-							navSpriteBottom.RunAction(action3);
-							gameMode = 2;
-						}
-					}
 				}
 
 			}

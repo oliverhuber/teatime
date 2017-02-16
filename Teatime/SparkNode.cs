@@ -38,10 +38,15 @@ namespace Teatime
 			this.PhysicsBody.AffectedByGravity = false;
 			this.PhysicsBody.AllowsRotation = true;
 			this.PhysicsBody.CollisionBitMask = 0;
-			this.PhysicsBody.LinearDamping = (System.nfloat)(rnd.NextDouble() * (1 - 0.2) + 0.2);
-			this.PhysicsBody.AngularDamping = (System.nfloat)(rnd.NextDouble() * (1 - 0.2) + 0.2);
-			this.PhysicsBody.Mass = 0.06f;
+			//this.PhysicsBody.ApplyAngularImpulse(10);
+			this.PhysicsBody.LinearDamping = (System.nfloat)(rnd.NextDouble() * (0.5 - 0.2) + 0.2);
+			this.PhysicsBody.AngularDamping = (System.nfloat)(rnd.NextDouble() * (2 - 0.2) + 0.2);
+			this.PhysicsBody.Mass = 1.06f;
 
+		}
+		public void massOfBody(nfloat mass)
+		{
+			this.PhysicsBody.Mass = mass;
 		}
 		public void followDrag() {
 			this.RemoveAllActions();

@@ -165,8 +165,8 @@ namespace Teatime
 			infoSprite = new SKSpriteNode("info");
 			infoSprite.Position = new CGPoint(Frame.Width -40, Frame.Height -40);
 			infoSprite.ZPosition = 10;
-			infoSprite.XScale = 0.8f;
-			infoSprite.YScale = 0.8f;
+			infoSprite.XScale = 0.6f;
+			infoSprite.YScale = 0.6f;
 			infoSprite.Alpha = 0.8f;
 			infoSprite.Name = "info";
 		//	infoSprite.ColorBlendFactor = 1f;
@@ -627,7 +627,7 @@ namespace Teatime
 						//AddChild(oneSprite);
 						AddChild(fireEmitter);
 						firstTouch = true;
-				}
+					}
 				}
 				/*
 				UIColor coloring;
