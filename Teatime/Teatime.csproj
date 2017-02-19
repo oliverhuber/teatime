@@ -117,7 +117,6 @@
     <ImageAsset Include="Assets.xcassets\spark3.imageset\spark3.png" />
     <ImageAsset Include="Assets.xcassets\spark4.imageset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\spark4.imageset\spark4.png" />
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\120 - iPhone Teatime.png" />
     <ImageAsset Include="Assets.xcassets\line.imageset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\line.imageset\line.png" />
     <ImageAsset Include="Assets.xcassets\sparkx.imageset\Contents.json" />
@@ -137,6 +136,10 @@
     <ImageAsset Include="Assets.xcassets\inforeverse.imageset\info_reverse.png" />
     <ImageAsset Include="Assets.xcassets\transparent.imageset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\transparent.imageset\transparent.png" />
+    <ImageAsset Include="Assets.xcassets\background_info_p1.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\background_info_p1.imageset\background_proto1.png" />
+    <ImageAsset Include="Assets.xcassets\Image.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\120 - iPhone Teatime Final.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -154,6 +157,7 @@
     <Folder Include="Assets.xcassets\arrowcircle.imageset\" />
     <Folder Include="Assets.xcassets\inforeverse.imageset\" />
     <Folder Include="Assets.xcassets\transparent.imageset\" />
+    <Folder Include="Assets.xcassets\background_info_p1.imageset\" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="GameScene.sks" />
@@ -164,6 +168,8 @@
     <BundleResource Include="GameSceneScene.sks" />
     <BundleResource Include="GameSceneLine.sks" />
     <BundleResource Include="GameSceneDraw.sks" />
+    <BundleResource Include="Resources\logoteatime_white_3_filled.png" />
+    <BundleResource Include="Resources\logoteatime_white_2_128%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="LaunchScreen.storyboard" />
@@ -223,6 +229,10 @@
     <Compile Include="TableSouce.cs" />
     <Compile Include="CustomCell.cs" />
     <Compile Include="PointNode.cs" />
+    <Compile Include="RootViewController.cs" />
+    <Compile Include="RootViewController.designer.cs">
+      <DependentUpon>RootViewController.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

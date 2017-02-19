@@ -20,11 +20,13 @@ namespace Teatime
 		}
 		public override void ViewDidLoad()
 		{
-			base.ViewDidLoad();
+
 			// Configure the view.
+		//	UIDevice.CurrentDevice.SetValueForKey(new NSNumber((int)PreferredInterfaceOrientationForPresentation()), new NSString("orientation"));
+		//	UIDevice.CurrentDevice.SetValueForKey(new NSNumber((int)PreferredInterfaceOrientationForPresentation()), new NSString("orientation"));
 
+			base.ViewDidLoad();		
 			startPrototype();
-
 
 
 		}
@@ -55,16 +57,34 @@ namespace Teatime
 		{
 			return ShouldAllowLandscape(); // implemet this method to return true only when u want it to
 		}
+	
+
+	/*	 (NSUInteger)supportedInterfaceOrientations {
+    if ([[UIDevice currentDevice]
+		userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        // iPad: Allow all orientations
+        return UIInterfaceOrientationMaskAll;
+    } else {
+        // iPhone: Allow only landscape
+        return UIInterfaceOrientationMaskLandscape;
+    }
+}*/
+		
+		public override UIInterfaceOrientation PreferredInterfaceOrientationForPresentation()
+		{
+			//return base.PreferredInterfaceOrientationForPresentation();
+			return UIInterfaceOrientation.LandscapeLeft;
+		}
+
 
 		public override UIInterfaceOrientationMask GetSupportedInterfaceOrientations ()
     {
-        var shouldAllowOtherOrientation = ShouldAllowLandscape (); // same here
-        if (shouldAllowOtherOrientation) 
+        //var shouldAllowOtherOrientation = ShouldAllowLandscape (); // same here
+       // if (shouldAllowOtherOrientation) 
         {
-           // return UIInterfaceOrientationMask.AllButUpsideDown;
+				return UIInterfaceOrientationMask.Landscape;
         } 
-
-        return UIInterfaceOrientationMask.Portrait;
+			    //return UIInterfaceOrientationMask.Portrait;
     }
 		public void startPrototype()
 		{
@@ -83,7 +103,7 @@ namespace Teatime
 			scene.Size = View.Bounds.Size;
 			skView.PresentScene(scene);
 
-
+			base.ViewDidLoad();
 		}
 
 

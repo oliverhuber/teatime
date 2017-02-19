@@ -86,7 +86,7 @@
                                     <constraint id="326" firstItem="224" firstAttribute="height" constant="42"/>
                                 </constraints>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="232" translatesAutoresizingMaskIntoConstraints="NO" image="logoteatime_white.png" alpha="0.8" misplaced="YES">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="232" translatesAutoresizingMaskIntoConstraints="NO" image="logoteatime_white_2_128.png" alpha="0.8" misplaced="YES">
                                 <rect key="frame" x="237" y="13" width="95" height="58"/>
                                 <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="299" y="13" width="95" height="58"/>
@@ -164,6 +164,7 @@
                                     <action selector="GotoNext_TouchUpInside:" destination="1109" id="1108" eventType="touchUpInside"/>
                                     <action selector="GotoNext4_TouchUpInside:" destination="1111" id="1110" eventType="touchUpInside"/>
                                     <segue id="1167" destination="1121" kind="show"/>
+                                    <action selector="GotoNext6_TouchUpInside:" destination="BV1-FR-VrT" id="1352" eventType="touchUpInside"/>
                                 </connections>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
@@ -266,7 +267,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="159" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" alpha="0.8">
-                                <rect key="frame" x="14" y="20" width="104" height="53"/>
+                                <rect key="frame" x="3" y="14" width="104" height="53"/>
                                 <connections>
                                     <segue id="180" destination="10" kind="unwind" unwindAction="UnwindToPrototypes:"/>
                                     <action selector="UnwindProto_TouchUpInside:" destination="7" id="182" eventType="touchUpInside"/>
@@ -274,7 +275,7 @@
                                 <fontDescription key="fontDescription" name="AppleSDGothicNeo-UltraLight" family="Apple SD Gothic Neo" pointSize="17"/>
                                 <size key="titleShadowOffset" width="0" height="0"/>
                                 <state key="normal" title="&lt; back">
-                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <color key="titleColor" colorSpace="calibratedWhite" white="1" alpha="1"/>
                                 </state>
                             </button>
                         </subviews>
@@ -290,7 +291,7 @@
         </scene>
         <scene sceneID="92">
             <objects>
-                <navigationController id="93" sceneMemberID="viewController" title="Teatime" modalTransitionStyle="crossDissolve" modalPresentationStyle="overFullScreen" navigationBarHidden="YES">
+                <navigationController id="93" sceneMemberID="viewController" title="Teatime" modalTransitionStyle="crossDissolve" modalPresentationStyle="overFullScreen" navigationBarHidden="YES" customClass="RootViewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="95">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -323,7 +324,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="264" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" alpha="0.8">
-                                <rect key="frame" x="1" y="19" width="100" height="48"/>
+                                <rect key="frame" x="1" y="17" width="100" height="48"/>
                                 <connections>
                                     <action selector="UnwindProto_TouchUpInside:" destination="268" id="267" eventType="touchUpInside"/>
                                     <segue id="270" destination="243" kind="unwind" unwindAction="UnwindToPrototypes:"/>
@@ -359,7 +360,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1040" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" alpha="0.8">
-                                <rect key="frame" x="20" y="13" width="87" height="57"/>
+                                <rect key="frame" x="0.0" y="9" width="87" height="57"/>
                                 <connections>
                                     <action selector="UnwindProto_TouchUpInside:" destination="1042" id="1041" eventType="touchUpInside"/>
                                     <action selector="UnwindProtoColor_TouchUpInside:" destination="1046" id="1045" eventType="touchUpInside"/>
@@ -369,7 +370,7 @@
                                 <fontDescription key="fontDescription" name="AppleSDGothicNeo-UltraLight" family="Apple SD Gothic Neo" pointSize="17"/>
                                 <size key="titleShadowOffset" width="0" height="0"/>
                                 <state key="normal" title="&lt; back">
-                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <color key="titleColor" colorSpace="calibratedWhite" white="1" alpha="1"/>
                                 </state>
                             </button>
                         </subviews>
@@ -396,7 +397,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1092" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" alpha="0.8">
-                                <rect key="frame" x="20" y="20" width="79" height="51"/>
+                                <rect key="frame" x="12" y="19" width="79" height="51"/>
                                 <connections>
                                     <action selector="UnwindProto_TouchUpInside:" destination="1094" id="1093" eventType="touchUpInside"/>
                                     <action selector="UnwindProtoColor_TouchUpInside:" destination="1096" id="1095" eventType="touchUpInside"/>
@@ -443,7 +444,7 @@
                                 <fontDescription key="fontDescription" name="AppleSDGothicNeo-UltraLight" family="Apple SD Gothic Neo" pointSize="17"/>
                                 <size key="titleShadowOffset" width="0" height="0"/>
                                 <state key="normal" title="&lt; back">
-                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <color key="titleColor" colorSpace="calibratedWhite" white="0.666666666666667" alpha="1"/>
                                 </state>
                             </button>
                         </subviews>
@@ -558,5 +559,9 @@
         <image name="arrowcircle" width="128" height="128"/>
         <image name="arrow" width="128" height="128"/>
         <image name="inforeverse" width="128" height="128"/>
+        <image name="transparent" width="128" height="128"/>
+        <image name="background_info_p1" width="640" height="1136"/>
+        <image name="logoteatime_white_3_filled.png" width="1280" height="800"/>
+        <image name="logoteatime_white_2_128.png" width="128" height="80"/>
     </resources>
 </document>

@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" colorSpace="calibratedRGB" red="0.25882352941176473" green="0.69411764705882351" blue="0.807843137254902" alpha="1"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="7" translatesAutoresizingMaskIntoConstraints="NO" image="logoteatime_white.png" alpha="0.65" semanticContentAttribute="forceLeftToRight" misplaced="YES" horizontalCompressionResistancePriority="178" verticalCompressionResistancePriority="162">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="7" translatesAutoresizingMaskIntoConstraints="NO" image="logoteatime_white_3_filled.png" alpha="0.65" semanticContentAttribute="forceLeftToRight" misplaced="YES" horizontalCompressionResistancePriority="178" verticalCompressionResistancePriority="162">
                                 <rect key="frame" x="146" y="176" width="307" height="247"/>
                                 <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="55" y="-160" width="600" height="600"/>
@@ -48,5 +48,17 @@
         <image name="spark" width="64" height="64"/>
         <image name="logoteatime.png" width="1280" height="800"/>
         <image name="logoteatime_white.png" width="1280" height="800"/>
+        <image name="line" width="64" height="64"/>
+        <image name="sparkfilled" width="128" height="128"/>
+        <image name="sparkx" width="128" height="128"/>
+        <image name="info" width="128" height="128"/>
+        <image name="background_n" width="640" height="1136"/>
+        <image name="arrowcircle" width="128" height="128"/>
+        <image name="arrow" width="128" height="128"/>
+        <image name="inforeverse" width="128" height="128"/>
+        <image name="transparent" width="128" height="128"/>
+        <image name="background_info_p1" width="640" height="1136"/>
+        <image name="logoteatime_white_3_filled.png" width="1280" height="800"/>
+        <image name="logoteatime_white_2_128.png" width="128" height="80"/>
     </resources>
 </document>

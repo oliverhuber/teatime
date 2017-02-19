@@ -1,17 +1,14 @@
-using Foundation;
 using System;
 using UIKit;
 using SpriteKit;
 namespace Teatime
 {
-    public partial class GameSubViewSpriteController : UIViewController
-    {
+	public partial class GameSubViewSpriteController : UIViewController
+	{
 		GameSceneSprite scene;
-        public GameSubViewSpriteController (IntPtr handle) : base (handle)
-        {
-			// Only test for commit
-			// Only test for local branch change in Xamarin
-			// Only test direct push from Xamarin
+		public GameSubViewSpriteController(IntPtr handle) : base(handle)
+		{
+
 		}
 		public GameSubViewSpriteController()
 		{
@@ -26,11 +23,14 @@ namespace Teatime
 			base.ViewDidLoad();
 
 			// Configure the view.
+			startPrototype();
+		}
+		public void startPrototype()
+		{
+			// Configure the view.
 			var skView = (SKView)View;
 			skView.ShowsFPS = false;
 			skView.ShowsNodeCount = false;
-
-			/* Sprite Kit applies additional optimizations to improve rendering performance */
 			skView.IgnoresSiblingOrder = true;
 
 			// Create and configure the scene.
@@ -42,6 +42,7 @@ namespace Teatime
 		}
 		partial void UnwindProtoSprite_TouchUpInside(UIButton sender)
 		{
+			// If back button is clicked save prototype
 			scene.saveProto2Input();
 		}
 	}

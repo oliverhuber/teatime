@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Linq;
+using AudioToolbox;
 using CoreGraphics;
 using CoreImage;
 using Foundation;
@@ -33,6 +34,7 @@ namespace Teatime
 		Random rnd = new Random();
 		bool startDragMenu;
 		bool actionDone;
+		nfloat lastY;
 		protected GameSceneScene(IntPtr handle) : base(handle)
 		{
 			// Note: this .ctor should not contain any initialization logic.
@@ -310,7 +312,7 @@ namespace Teatime
 				nfloat checkX = ((UITouch)touch).LocationInNode(this).X;
 				nfloat checkY = ((UITouch)touch).LocationInNode(this).Y;
 				nfloat checkYBig = ((UITouch)touch).LocationInView(View).Y;
-
+				lastY = checkY;
 				if (gameMode!=0  && startDragMenu == false) {
 					
 
@@ -379,23 +381,41 @@ namespace Teatime
 				else if (gameMode == 2 && checkY > 0 + 100 && startDragMenu == true && actionDone==true)
 				{
 					SKAction action1 = SKAction.MoveToY(this.View.Frame.Height, 0.2);
+					SKAction action1_1 = SKAction.MoveToY(this.View.Frame.Height + 5, 0.1);
+					SKAction action1_2 = SKAction.MoveToY(this.View.Frame.Height - 5, 0.1);
+
 					SKAction action2 = SKAction.MoveToY(0, 0.2);
+					SKAction action2_1 = SKAction.MoveToY(0 + 5, 0.1);
+					SKAction action2_2 = SKAction.MoveToY(0 - 5, 0.1);
+
 					SKAction action3 = SKAction.MoveToY(this.View.Frame.Height / 2 + 20, 0.2);
+					SKAction action3_1 = SKAction.MoveToY(this.View.Frame.Height / 2 + 25, 0.1);
+					SKAction action3_2 = SKAction.MoveToY(this.View.Frame.Height / 2 + 15, 0.1);
+
 					SKAction action4 = SKAction.MoveToY(this.View.Frame.Height / 2 - 40, 0.2);
+					SKAction action4_1 = SKAction.MoveToY(this.View.Frame.Height / 2 - 35, 0.1);
+					SKAction action4_2 = SKAction.MoveToY(this.View.Frame.Height / 2 - 45, 0.1);
 
-					spriteTop.RunAction(action1);
-					spriteTopBg.RunAction(action1);
-					spriteBelow.RunAction(action2);
-					spriteBelowBg.RunAction(action2);
-					myLabel.RunAction(action3);
-					myLabel2.RunAction(action4);
-					navSpriteTop.RunAction(action4);
-					navSpriteBottom.RunAction(action3);
+					SKAction seq1 = SKAction.Sequence(action1_1, action1_2, action1);
+					SKAction seq2 = SKAction.Sequence(action2_1, action2_2, action2);
+					SKAction seq3 = SKAction.Sequence(action3_1, action3_2, action3);
+					SKAction seq4 = SKAction.Sequence(action4_1, action4_2, action4);
 
+					spriteTop.RunAction(seq1);
+					spriteTopBg.RunAction(seq1);
+
+					spriteBelow.RunAction(seq2);
+					spriteBelowBg.RunAction(seq2);
+
+					navSpriteBottom.RunAction(seq3);
+					myLabel.RunAction(seq3);
+
+					myLabel2.RunAction(seq4);
+					navSpriteTop.RunAction(seq4);
 					gameMode = 0;
 					//startDragMenu = false;
 					actionDone = false;
-
+					//SystemSound.Vibrate.PlayAlertSound();
 				}
 
 				else if (gameMode == 1 && checkY >= Frame.Height - 100 && startDragMenu == true && actionDone == true)
@@ -417,20 +437,40 @@ namespace Teatime
 				} else if (gameMode == 1 && checkY < Frame.Height - 100 && startDragMenu == true && actionDone == true)
 				{
 					SKAction action1 = SKAction.MoveToY(this.View.Frame.Height, 0.2);
-					SKAction action2 = SKAction.MoveToY(0, 0.2);
-					SKAction action3 = SKAction.MoveToY(this.View.Frame.Height / 2 + 20, 0.2);
-					SKAction action4 = SKAction.MoveToY(this.View.Frame.Height / 2 - 40, 0.2);
+					SKAction action1_1 = SKAction.MoveToY(this.View.Frame.Height + 5, 0.1);
+					SKAction action1_2 = SKAction.MoveToY(this.View.Frame.Height - 5, 0.1);
 
-					spriteTop.RunAction(action1);
-					spriteTopBg.RunAction(action1);
-					spriteBelow.RunAction(action2);
-					spriteBelowBg.RunAction(action2);
-					myLabel.RunAction(action3);
-					myLabel2.RunAction(action4);
-					navSpriteTop.RunAction(action4);
-					navSpriteBottom.RunAction(action3);
+					SKAction action2 = SKAction.MoveToY(0, 0.2);
+					SKAction action2_1 = SKAction.MoveToY(0 + 5, 0.1);
+					SKAction action2_2 = SKAction.MoveToY(0 - 5, 0.1);
+
+					SKAction action3 = SKAction.MoveToY(this.View.Frame.Height / 2 + 20, 0.2);
+					SKAction action3_1 = SKAction.MoveToY(this.View.Frame.Height / 2 + 25, 0.1);
+					SKAction action3_2 = SKAction.MoveToY(this.View.Frame.Height / 2 + 15, 0.1);
+
+					SKAction action4 = SKAction.MoveToY(this.View.Frame.Height / 2 - 40, 0.2);
+					SKAction action4_1 = SKAction.MoveToY(this.View.Frame.Height / 2 - 35, 0.1);
+					SKAction action4_2 = SKAction.MoveToY(this.View.Frame.Height / 2 - 45, 0.1);
+
+					SKAction seq1 = SKAction.Sequence(action1_2, action1_1, action1);
+					SKAction seq2 = SKAction.Sequence(action2_2, action2_1, action2);
+					SKAction seq3 = SKAction.Sequence(action3_2, action3_1, action3);
+					SKAction seq4 = SKAction.Sequence(action4_2, action4_1, action4);
+
+					spriteTop.RunAction(seq1);
+					spriteTopBg.RunAction(seq1);
+
+					spriteBelow.RunAction(seq2);
+					spriteBelowBg.RunAction(seq2);
+
+					navSpriteBottom.RunAction(seq3);
+					myLabel.RunAction(seq3);
+
+					myLabel2.RunAction(seq4);
+					navSpriteTop.RunAction(seq4);
 					//startDragMenu = false;
 					actionDone = false;
+					//SystemSound.Vibrate.PlaySystemSound();
 
 					gameMode = 0;
 				}
@@ -466,37 +506,78 @@ namespace Teatime
 					}
 					else if (checkY > (Frame.Height / 2+70))
 					{
-						SKAction action1 = SKAction.MoveToY((this.View.Frame.Height * 1.5f)-60, 0.2);
-						SKAction action2 = SKAction.MoveToY((this.View.Frame.Height / 2)-60, 0.2);
-						SKAction action3 = SKAction.MoveToY(this.View.Frame.Height - 100, 0.2);
-						SKAction action4 = SKAction.MoveToY(this.View.Frame.Height - 40, 0.2);
+						SKAction action1 = SKAction.MoveToY((this.View.Frame.Height * 1.5f) - 60, 0.2);
+						SKAction action1_1 = SKAction.MoveToY((this.View.Frame.Height * 1.5f) - 55, 0.1);
+						SKAction action1_2 = SKAction.MoveToY((this.View.Frame.Height * 1.5f) - 65, 0.1);
 
-						spriteTopBg.RunAction(action1);
-						spriteBelowBg.RunAction(action2);
-						spriteTop.RunAction(action1);
-						spriteBelow.RunAction(action2);
-						myLabel2.RunAction(action3);
-						myLabel.RunAction(action4);
-						navSpriteTop.RunAction(action4);
-						navSpriteBottom.RunAction(action3);
+
+						SKAction action2 = SKAction.MoveToY((this.View.Frame.Height / 2) - 60, 0.2);
+						SKAction action2_1 = SKAction.MoveToY((this.View.Frame.Height / 2) - 55, 0.1);
+						SKAction action2_2 = SKAction.MoveToY((this.View.Frame.Height / 2) - 65, 0.1);
+
+
+						SKAction action3 = SKAction.MoveToY(this.View.Frame.Height - 100, 0.2);
+						SKAction action3_1 = SKAction.MoveToY(this.View.Frame.Height - 95, 0.1);
+						SKAction action3_2 = SKAction.MoveToY(this.View.Frame.Height - 105, 0.1);
+
+
+						SKAction action4 = SKAction.MoveToY(this.View.Frame.Height - 40, 0.2);
+						SKAction action4_1 = SKAction.MoveToY(this.View.Frame.Height - 35, 0.1);
+						SKAction action4_2 = SKAction.MoveToY(this.View.Frame.Height - 45, 0.1);
+
+						SKAction seq1 = SKAction.Sequence(action1_1, action1_2, action1);
+						SKAction seq2 = SKAction.Sequence(action2_1, action2_2, action2);
+						SKAction seq3 = SKAction.Sequence(action3_1, action3_2, action3);
+						SKAction seq4 = SKAction.Sequence(action4_1, action4_2, action4);
+
+						spriteTop.RunAction(seq1);
+						spriteTopBg.RunAction(seq1);
+
+						spriteBelow.RunAction(seq2);
+						spriteBelowBg.RunAction(seq2);
+
+						navSpriteBottom.RunAction(seq3);
+						myLabel2.RunAction(seq3);
+
+						myLabel.RunAction(seq4);
+						navSpriteTop.RunAction(seq4);
 						gameMode = 1;
 						//startDragMenu = false;
 						actionDone = false;
 					}
 					else if (checkY < Frame.Height / 2 -70) {
-						SKAction action1 = SKAction.MoveToY((this.View.Frame.Height / 2)+60, 0.2);
-						SKAction action2 = SKAction.MoveToY((0 - this.View.Frame.Height/2)+60, 0.2);
-						SKAction action3 = SKAction.MoveToY(0 + 20, 0.2);
-						SKAction action4 = SKAction.MoveToY(0 + 80, 0.2);
+						SKAction action1 = SKAction.MoveToY((this.View.Frame.Height / 2) + 60, 0.2);
+						SKAction action1_1 = SKAction.MoveToY((this.View.Frame.Height / 2) + 55, 0.1);
+						SKAction action1_2 = SKAction.MoveToY((this.View.Frame.Height / 2) + 65, 0.1);
 
-						spriteTopBg.RunAction(action1);
-						spriteBelowBg.RunAction(action2);
-						spriteTop.RunAction(action1);
-						spriteBelow.RunAction(action2);
-						myLabel2.RunAction(action3);
-						myLabel.RunAction(action4);
-						navSpriteTop.RunAction(action4);
-						navSpriteBottom.RunAction(action3);
+						SKAction action2 = SKAction.MoveToY((0 - this.View.Frame.Height / 2) + 60, 0.2);
+						SKAction action2_1 = SKAction.MoveToY((0 - this.View.Frame.Height / 2) + 55, 0.1);
+						SKAction action2_2 = SKAction.MoveToY((0 - this.View.Frame.Height / 2) + 65, 0.1);
+
+						SKAction action3 = SKAction.MoveToY(0 + 20, 0.2);
+						SKAction action3_1 = SKAction.MoveToY(0 + 15, 0.1);
+						SKAction action3_2 = SKAction.MoveToY(0 + 25, 0.1);
+
+						SKAction action4 = SKAction.MoveToY(0 + 80, 0.2);
+						SKAction action4_1 = SKAction.MoveToY(0 + 75, 0.1);
+						SKAction action4_2 = SKAction.MoveToY(0 + 85, 0.1);
+
+						SKAction seq1 = SKAction.Sequence(action1_1, action1_2, action1);
+						SKAction seq2 = SKAction.Sequence(action2_1, action2_2, action2);
+						SKAction seq3 = SKAction.Sequence(action3_1, action3_2, action3);
+						SKAction seq4 = SKAction.Sequence(action4_1, action4_2, action4);
+
+						spriteTop.RunAction(seq1);
+						spriteTopBg.RunAction(seq1);
+
+						spriteBelow.RunAction(seq2);
+						spriteBelowBg.RunAction(seq2);
+
+						navSpriteBottom.RunAction(seq3);
+						myLabel2.RunAction(seq3);
+
+						myLabel.RunAction(seq4);
+						navSpriteTop.RunAction(seq4);
 						gameMode = 2;
 					//	startDragMenu = false;
 						actionDone = false;
@@ -521,7 +602,154 @@ namespace Teatime
 				var locationc = ((UITouch)touchc).LocationInNode(this);
 				var nodeType = GetNodeAtPoint(locationc);
 				//FieldNode touchedNode = (Teatime.FieldNode)GetNodeAtPoint(locationc);
-				startDragMenu = false;
+				if (actionDone == true && startDragMenu == true && (lastY > Frame.Height / 2 - 70) && lastY < Frame.Height/2 )
+				{
+					SKAction action1 = SKAction.MoveToY(this.View.Frame.Height, 0.2);
+					SKAction action1_1 = SKAction.MoveToY(this.View.Frame.Height+5, 0.1);
+					SKAction action1_2 = SKAction.MoveToY(this.View.Frame.Height-5, 0.1);
+
+					SKAction action2 = SKAction.MoveToY(0, 0.2);
+					SKAction action2_1 = SKAction.MoveToY(0+5, 0.1);
+					SKAction action2_2 = SKAction.MoveToY(0-5, 0.1);
+
+					SKAction action3 = SKAction.MoveToY(this.View.Frame.Height / 2 + 20, 0.2);
+					SKAction action3_1 = SKAction.MoveToY(this.View.Frame.Height / 2 + 25, 0.1);
+					SKAction action3_2 = SKAction.MoveToY(this.View.Frame.Height / 2 + 15, 0.1);
+
+					SKAction action4 = SKAction.MoveToY(this.View.Frame.Height / 2 - 40, 0.2);
+					SKAction action4_1 = SKAction.MoveToY(this.View.Frame.Height / 2 - 35, 0.1);
+					SKAction action4_2 = SKAction.MoveToY(this.View.Frame.Height / 2 - 45, 0.1);
+
+					SKAction seq1 = SKAction.Sequence(action1_1, action1_2, action1);
+					SKAction seq2 = SKAction.Sequence(action2_1, action2_2, action2);
+					SKAction seq3 = SKAction.Sequence(action3_1, action3_2, action3);
+					SKAction seq4 = SKAction.Sequence(action4_1, action4_2, action4);
+
+					spriteTop.RunAction(seq1);
+					spriteTopBg.RunAction(seq1);
+
+					spriteBelow.RunAction(seq2);
+					spriteBelowBg.RunAction(seq2);
+
+					navSpriteBottom.RunAction(seq3);
+					myLabel.RunAction(seq3);
+
+					myLabel2.RunAction(seq4);
+					navSpriteTop.RunAction(seq4);
+
+				}
+				else if (actionDone == true && startDragMenu == true && (lastY < Frame.Height / 2 + 70) && lastY > Frame.Height / 2)
+				{
+					SKAction action1 = SKAction.MoveToY(this.View.Frame.Height, 0.2);
+					SKAction action1_1 = SKAction.MoveToY(this.View.Frame.Height + 5, 0.1);
+					SKAction action1_2 = SKAction.MoveToY(this.View.Frame.Height - 5, 0.1);
+
+					SKAction action2 = SKAction.MoveToY(0, 0.2);
+					SKAction action2_1 = SKAction.MoveToY(0 + 5, 0.1);
+					SKAction action2_2 = SKAction.MoveToY(0 - 5, 0.1);
+
+					SKAction action3 = SKAction.MoveToY(this.View.Frame.Height / 2 + 20, 0.2);
+					SKAction action3_1 = SKAction.MoveToY(this.View.Frame.Height / 2 + 25, 0.1);
+					SKAction action3_2 = SKAction.MoveToY(this.View.Frame.Height / 2 + 15, 0.1);
+
+					SKAction action4 = SKAction.MoveToY(this.View.Frame.Height / 2 - 40, 0.2);
+					SKAction action4_1 = SKAction.MoveToY(this.View.Frame.Height / 2 - 35, 0.1);
+					SKAction action4_2 = SKAction.MoveToY(this.View.Frame.Height / 2 - 45, 0.1);
+
+					SKAction seq1 = SKAction.Sequence(action1_2, action1_1, action1);
+					SKAction seq2 = SKAction.Sequence(action2_2, action2_1, action2);
+					SKAction seq3 = SKAction.Sequence(action3_2, action3_1, action3);
+					SKAction seq4 = SKAction.Sequence(action4_2, action4_1, action4);
+
+					spriteTop.RunAction(seq1);
+					spriteTopBg.RunAction(seq1);
+
+					spriteBelow.RunAction(seq2);
+					spriteBelowBg.RunAction(seq2);
+
+					navSpriteBottom.RunAction(seq3);
+					myLabel.RunAction(seq3);
+
+					myLabel2.RunAction(seq4);
+					navSpriteTop.RunAction(seq4);
+				}
+			
+				else if (gameMode == 1 && lastY > Frame.Height - 100 && startDragMenu == true && actionDone == true)
+				{
+					SKAction action1 = SKAction.MoveToY((this.View.Frame.Height * 1.5f) - 60, 0.2);
+					SKAction action1_1 = SKAction.MoveToY((this.View.Frame.Height * 1.5f) - 55, 0.1);
+					SKAction action1_2 = SKAction.MoveToY((this.View.Frame.Height * 1.5f) - 65, 0.1);
+
+
+					SKAction action2 = SKAction.MoveToY((this.View.Frame.Height / 2) - 60, 0.2);
+					SKAction action2_1 = SKAction.MoveToY((this.View.Frame.Height / 2) - 55, 0.1);
+					SKAction action2_2 = SKAction.MoveToY((this.View.Frame.Height / 2) - 65, 0.1);
+
+
+					SKAction action3 = SKAction.MoveToY(this.View.Frame.Height - 100, 0.2);
+					SKAction action3_1 = SKAction.MoveToY(this.View.Frame.Height - 95, 0.1);
+					SKAction action3_2 = SKAction.MoveToY(this.View.Frame.Height - 105, 0.1);
+
+
+					SKAction action4 = SKAction.MoveToY(this.View.Frame.Height - 40, 0.2);
+					SKAction action4_1 = SKAction.MoveToY(this.View.Frame.Height - 35, 0.1);
+					SKAction action4_2 = SKAction.MoveToY(this.View.Frame.Height - 45, 0.1);
+
+					SKAction seq1 = SKAction.Sequence(action1_1, action1_2, action1);
+					SKAction seq2 = SKAction.Sequence(action2_1, action2_2, action2);
+					SKAction seq3 = SKAction.Sequence(action3_1, action3_2, action3);
+					SKAction seq4 = SKAction.Sequence(action4_1, action4_2, action4);
+
+					spriteTop.RunAction(seq1);
+					spriteTopBg.RunAction(seq1);
+
+					spriteBelow.RunAction(seq2);
+					spriteBelowBg.RunAction(seq2);
+
+					navSpriteBottom.RunAction(seq3);
+					myLabel2.RunAction(seq3);
+
+					myLabel.RunAction(seq4);
+					navSpriteTop.RunAction(seq4);
+				}
+				else if (gameMode == 2 && lastY < 0 + 100 && startDragMenu == true && actionDone == true)
+				{
+
+					SKAction action1 = SKAction.MoveToY((this.View.Frame.Height / 2) + 60, 0.2);
+					SKAction action1_1 = SKAction.MoveToY((this.View.Frame.Height / 2) + 55, 0.1);
+					SKAction action1_2 = SKAction.MoveToY((this.View.Frame.Height / 2) + 65, 0.1);
+
+					SKAction action2 = SKAction.MoveToY((0 - this.View.Frame.Height / 2) + 60, 0.2);
+					SKAction action2_1 = SKAction.MoveToY((0 - this.View.Frame.Height / 2) + 55, 0.1);
+					SKAction action2_2 = SKAction.MoveToY((0 - this.View.Frame.Height / 2) + 65, 0.1);
+
+					SKAction action3 = SKAction.MoveToY(0 + 20, 0.2);
+					SKAction action3_1 = SKAction.MoveToY(0 + 15, 0.1);
+					SKAction action3_2 = SKAction.MoveToY(0 + 25, 0.1);
+
+					SKAction action4 = SKAction.MoveToY(0 + 80, 0.2);
+					SKAction action4_1 = SKAction.MoveToY(0 + 75, 0.1);
+					SKAction action4_2 = SKAction.MoveToY(0 + 85, 0.1);
+
+					SKAction seq1 = SKAction.Sequence(action1_1, action1_2, action1);
+					SKAction seq2 = SKAction.Sequence(action2_1, action2_2, action2);
+					SKAction seq3 = SKAction.Sequence(action3_1, action3_2, action3);
+					SKAction seq4 = SKAction.Sequence(action4_1, action4_2, action4);
+
+					spriteTop.RunAction(seq1);
+					spriteTopBg.RunAction(seq1);
+
+					spriteBelow.RunAction(seq2);
+					spriteBelowBg.RunAction(seq2);
+
+					navSpriteBottom.RunAction(seq3);
+					myLabel2.RunAction(seq3);
+
+					myLabel.RunAction(seq4);
+					navSpriteTop.RunAction(seq4);
+				}
+			
+		 	    startDragMenu = false;
 				actionDone = false;
 				if (gameMode != 0) 
 				//if (nodeType is FieldNode || (nodeType.Name == "navSpriteTop" && gameMode == 0) || (nodeType.Name == "navSpriteBottom" && gameMode == 0) || (nodeType is SKLabelNode && gameMode == 0))

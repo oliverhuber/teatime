@@ -58,27 +58,22 @@ namespace Teatime
 			gameSubViewSpriteController = myStoryboard.InstantiateViewController("GameSubViewSpriteController") as GameSubViewSpriteController;
 			gameSubViewSceneController= myStoryboard.InstantiateViewController("GameSubViewSceneController") as GameSubViewSceneController;
 
-			/*gotoProto1.TouchUpInside += (object sender, System.EventArgs e) =>
+			/*
+			 * gotoProto1.TouchUpInside += (object sender, System.EventArgs e) =>
 			{
 				this.NavigationController.PushViewController(gameSubViewController, true);
-			};	*/
+			};	
+			*/
 
 			this.userName.Placeholder = "Dein Name";
-			//this.userName.
-			//this.userName.BackgroundColor = UIColor.FromRGB((int)78, (int)91, (int)216);
-			//this.userName.TextColor = UIColor.White;
-			    this.userName.ShouldReturn += (textField) =>
+			this.userName.ShouldReturn += (textField) =>
 			{
 				userName.ResignFirstResponder();
 				DatabaseMgmt.inputName = this.userName.Text;
 				return true;
 			};
 
-
 		}
-
-
-
 
 		// Buttons on Main Storyboard, both are connected with a segue to another Controller
 		partial void GotoNext2_TouchUpInside(UIButton sender)
@@ -89,14 +84,8 @@ namespace Teatime
 		{
 		}
 
-		public override bool ShouldAutorotate()
+		partial void GotoNext6_TouchUpInside(UIButton sender)
 		{
-			return true;
-		}
-
-		partial void GotoNext4_TouchUpInside(UIButton sender)
-		{
-		//	throw new NotImplementedException();
 		}
 
 		public override UIInterfaceOrientationMask GetSupportedInterfaceOrientations()
@@ -114,6 +103,12 @@ namespace Teatime
 		{
 			return true;
 		}
+
+		public override bool ShouldAutorotate()
+		{
+			return true;
+		}
+
 	}
 
 }

@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AudioToolbox;
 using CoreGraphics;
 using CoreImage;
 using Foundation;
@@ -263,6 +264,8 @@ namespace Teatime
 			delNode = false;
 			var gestureLongRecognizer = new UILongPressGestureRecognizer(PressHandler);
 			gestureLongRecognizer.MinimumPressDuration = 0.5;
+			gestureLongRecognizer.AllowableMovement = 5f;
+
 			this.View.AddGestureRecognizer(gestureLongRecognizer);
 
 // Night Nodes
@@ -590,6 +593,8 @@ namespace Teatime
 					if (currentSprite != null && currentSprite.Frame.Contains(convertLocation) && currentSprite.Name != "Left" && currentSprite.Name != "Right" && currentSprite.Name != "navSprite" && currentSprite.Name != "arrowLeft" && currentSprite.Name != "arrowRight")
 
 					{
+						SystemSound.Vibrate.PlaySystemSound();
+
 						gameMode = 2;
 
 						checkSprites();                                                                                         // Sprite Node
