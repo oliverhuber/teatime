@@ -15,32 +15,32 @@ namespace Teatime
 		public int Proto1Dim3 { get; set; }
 
 		// Define Labels for the Intro Text
-		SKLabelNode infoLabel1;
-		SKLabelNode infoLabel2;
-		SKLabelNode infoLabel3;
-		SKLabelNode infoLabel4;
-		SKLabelNode infoLabel5;
-		SKLabelNode infoLabel6;
-		SKLabelNode infoLabel7;
-		SKLabelNode mySave;
+		private SKLabelNode infoLabel1;
+		private SKLabelNode infoLabel2;
+		private SKLabelNode infoLabel3;
+		private SKLabelNode infoLabel4;
+		private SKLabelNode infoLabel5;
+		private SKLabelNode infoLabel6;
+		private SKLabelNode infoLabel7;
+		private SKLabelNode mySave;
 
-		SKSpriteNode container;
-		SKSpriteNode backgroundSprite;
-		SKSpriteNode infoSprite;
-		SKSpriteNode navSprite;
-		SKSpriteNode infoNode;
-		SKSpriteNode infoNode2;
-		SKSpriteNode infoNode3;
-		SKSpriteNode cancelSpark;
-		SKSpriteNode teatimeSprite;
+		private SKSpriteNode container;
+		private SKSpriteNode backgroundSprite;
+		private SKSpriteNode infoSprite;
+		private SKSpriteNode navSprite;
+		private SKSpriteNode infoNode;
+		private SKSpriteNode infoNode2;
+		private SKSpriteNode infoNode3;
+		private SKSpriteNode cancelSpark;
+		private SKSpriteNode teatimeSprite;
 
-		CGPoint globalCenter;
-		SKFieldNode fieldNode;
+		private CGPoint globalCenter;
+		private SKFieldNode fieldNode;
 
-		bool switchInfo;
-		bool infoTouch;
+		private bool switchInfo;
+		private bool infoTouch;
 
-		int changeColor;
+		private int changeColor;
 
 		protected GameScene(IntPtr handle) : base(handle)
 		{
@@ -58,11 +58,11 @@ namespace Teatime
 			infoTouch = false;
 
 			// Set inital bgcolor
-			this.BackgroundColor = UIColor.FromRGBA(100, 200, 150, 120);
+			BackgroundColor = UIColor.FromRGBA(100, 200, 150, 120);
 
 			// Background Sprite
 			backgroundSprite = new SKSpriteNode("spark");
-			backgroundSprite.ScaleTo(this.Frame.Size);
+			backgroundSprite.ScaleTo(Frame.Size);
 			backgroundSprite.Position = new CGPoint(Frame.Width / 2, Frame.Height / 2);
 			backgroundSprite.ZPosition = 0;
 			backgroundSprite.Alpha = 0.3f;
@@ -84,19 +84,19 @@ namespace Teatime
 				Position = new CGPoint(Frame.Width - 65, (Frame.Height - 53))
 			};
 			mySave.Name = "next";
-			mySave.FontColor = UIColor.FromHSB((nfloat)0, 0, 3f);
+			mySave.FontColor = UIColor.FromHSB(0, 0, 3f);
 			mySave.Alpha = 0.9f;
 			mySave.ZPosition = 10;
-			// this.AddChild(mySave);
+			// AddChild(mySave);
 
 			// Invisible sprite node to change to Info Mode, on the right top side infront of the info sprite 
 			navSprite = new SKSpriteNode();
 			navSprite.Name = "navSprite";
 			navSprite.Alpha = 0.0000001f;
 			navSprite.ZPosition = 10;
-			navSprite.Color = UIColor.FromHSB((nfloat)0, 1, 0.0f);
+			navSprite.Color = UIColor.FromHSB(0, 1, 0.0f);
 			navSprite.Size = new CGSize(140, 70);
-			navSprite.Position = new CGPoint((this.View.Frame.Width - (70)), (this.View.Frame.Height - (35)));
+			navSprite.Position = new CGPoint((View.Frame.Width - (70)), (View.Frame.Height - (35)));
 			AddChild(navSprite);
 
 			// Container field to fill different background (Info Mode)
@@ -118,16 +118,16 @@ namespace Teatime
 			AddChild(infoSprite);
 
 			// Start with the info text
-			setInfoText();
+			SetInfoText();
 
 			// Set Color Flag
 			changeColor = 0;
 
 			// Generate Sparks
-			generateSparks();
+			GenerateSparks();
 		}
 
-		public void setInfoText()
+		private void SetInfoText()
 		{
 			// Define and add Label 1
 			infoLabel1 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
@@ -214,19 +214,19 @@ namespace Teatime
 			AddChild(infoLabel7);
 
 			// Do Actions on the Label Nodes (wait, fade in, wait, fade out)
-			doActionSequenceOnNode(infoLabel1, 1, 1, 2, 1, 0.8f);
-			doActionSequenceOnNode(infoLabel2, 2, 1, 2, 1, 0.8f);
-			doActionSequenceOnNode(infoLabel3, 6, 1, 2, 1, 0.8f);
-			doActionSequenceOnNode(infoLabel4, 7, 1, 2, 1, 0.8f);
-			doActionSequenceOnNode(infoLabel5, 11, 1, 2, 1, 0.8f);
-			doActionSequenceOnNode(infoLabel6, 12, 1, 2, 1, 0.8f);
-			doActionSequenceOnNode(infoLabel7, 0, 1, 16, 1, 0.7f);
+			DoActionSequenceOnNode(infoLabel1, 1, 1, 2, 1, 0.8f);
+			DoActionSequenceOnNode(infoLabel2, 2, 1, 2, 1, 0.8f);
+			DoActionSequenceOnNode(infoLabel3, 6, 1, 2, 1, 0.8f);
+			DoActionSequenceOnNode(infoLabel4, 7, 1, 2, 1, 0.8f);
+			DoActionSequenceOnNode(infoLabel5, 11, 1, 2, 1, 0.8f);
+			DoActionSequenceOnNode(infoLabel6, 12, 1, 2, 1, 0.8f);
+			DoActionSequenceOnNode(infoLabel7, 0, 1, 16, 1, 0.7f);
 
 			// Define and add Info Box rect
 			infoNode = new SKSpriteNode();
 			infoNode.Size = new CGSize(Frame.Width, Frame.Height);
 			infoNode.Position = new CGPoint(Frame.Width / 2, Frame.Height / 2);
-			infoNode.Color = UIColor.FromHSB((nfloat)0, 0, 0.3f);
+			infoNode.Color = UIColor.FromHSB(0, 0, 0.3f);
 			infoNode.ZPosition = 99;
 			infoNode.Name = "infoNode";
 			infoNode.Alpha = 0.0f;
@@ -236,7 +236,7 @@ namespace Teatime
 			infoNode2 = new SKSpriteNode();
 			infoNode2.Size = new CGSize(Frame.Width - 60, 150);
 			infoNode2.Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 15);
-			infoNode2.Color = UIColor.FromHSB((nfloat)0, 0, 0.3f);
+			infoNode2.Color = UIColor.FromHSB(0, 0, 0.3f);
 			infoNode2.ZPosition = 98;
 			infoNode2.Name = "infoNode";
 			infoNode2.Alpha = 0.0f;
@@ -246,7 +246,7 @@ namespace Teatime
 			infoNode3 = new SKSpriteNode();
 			infoNode3.Size = new CGSize(Frame.Width - 40, 150);
 			infoNode3.Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 15);
-			infoNode3.Color = UIColor.FromHSB((nfloat)0, 0, 0.3f);
+			infoNode3.Color = UIColor.FromHSB(0, 0, 0.3f);
 			infoNode3.ZPosition = 98;
 			infoNode3.Name = "infoNode";
 			infoNode3.Alpha = 0.0f;
@@ -258,8 +258,8 @@ namespace Teatime
 			cancelSpark.ZPosition = 1000;
 			cancelSpark.Alpha = 0.0f;
 			cancelSpark.SetScale(0.6f);
-			cancelSpark.Color = UIColor.FromHSB((nfloat)0, 0, 0.0f);
-			cancelSpark.Position = new CGPoint((this.View.Frame.Width - (40)), (this.View.Frame.Height / 2 + (70)));
+			cancelSpark.Color = UIColor.FromHSB(0, 0, 0.0f);
+			cancelSpark.Position = new CGPoint((View.Frame.Width - (40)), (View.Frame.Height / 2 + (70)));
 			AddChild(cancelSpark);
 
 			// Define and add Teatime Icon for the Info Box
@@ -268,26 +268,26 @@ namespace Teatime
 			teatimeSprite.ZPosition = 1000;
 			teatimeSprite.Alpha = 0.0f;
 			teatimeSprite.SetScale(0.35f);
-			teatimeSprite.Color = UIColor.FromHSB((nfloat)0, 0, 0.0f);
-			teatimeSprite.Position = new CGPoint((0 + (40)), (this.View.Frame.Height / 2 + (70)));
+			teatimeSprite.Color = UIColor.FromHSB(0, 0, 0.0f);
+			teatimeSprite.Position = new CGPoint((0 + (40)), (View.Frame.Height / 2 + (70)));
 			AddChild(teatimeSprite);
 
 			// Actions and Sequence for Info Nodes
-			doActionSequenceOnNode(infoNode, 0, 1, 16, 1, 0.3f);
-			doActionSequenceOnNode(infoNode3, 0, 1, 16, 1, 0.3f);
-			doActionSequenceOnNode(cancelSpark, 0, 1, 16, 1, 0.3f);
-			doActionSequenceOnNode(teatimeSprite, 0, 1, 16, 1, 0.3f);
+			DoActionSequenceOnNode(infoNode, 0, 1, 16, 1, 0.3f);
+			DoActionSequenceOnNode(infoNode3, 0, 1, 16, 1, 0.3f);
+			DoActionSequenceOnNode(cancelSpark, 0, 1, 16, 1, 0.3f);
+			DoActionSequenceOnNode(teatimeSprite, 0, 1, 16, 1, 0.3f);
 		}
 
 		// Do SKActions in a sequence on the given Sprite Node (wait, fade in, wait, fade out)
-		public void doActionSequenceOnNode(SKNode node, double waitSec, double fadeInSec, double waitSecMiddle, double fadeOutSec, nfloat maxAlpha)
+		private void DoActionSequenceOnNode(SKNode node, double waitSec, double fadeInSec, double waitSecMiddle, double fadeOutSec, nfloat maxAlpha)
 		{
 			SKAction sequence = SKAction.Sequence(SKAction.WaitForDuration(waitSec), SKAction.FadeAlphaTo(maxAlpha, fadeInSec), SKAction.WaitForDuration(waitSecMiddle), SKAction.FadeOutWithDuration(fadeOutSec));
 			node.RunAction(sequence);
 		}
 
 		// Remove the Info Text (fade out)
-		public void releaseInfoText()
+		private void ReleaseInfoText()
 		{
 			SKAction actionOut = SKAction.FadeOutWithDuration(0.2);
 
@@ -319,7 +319,7 @@ namespace Teatime
 		}
 
 		// Update Center, calculate new Alpha Value and Mass for All Spark and related Parent Nodes depending on the location of touch
-		public void updateCenter(nfloat offsetX, nfloat offsetY)
+		private void UpdateCenter(nfloat offsetX, nfloat offsetY)
 		{
 			CGPoint center = globalCenter;
 
@@ -327,71 +327,71 @@ namespace Teatime
 			foreach (var spark in Children.OfType<SparkNode>())
 			{
 				// Set the globalCenter value to the nodes
-				spark.centerOfNode = center;
-				spark.parentNode.centerOfNode = center;
+				spark.CenterOfNode = center;
+				spark.ParentNode.CenterOfNode = center;
 
 				// Remove all Actions
 				spark.RemoveAllActions();
-				spark.parentNode.RemoveAllActions();
+				spark.ParentNode.RemoveAllActions();
 
 				// Set the new Alpha Value
 				spark.Alpha = ((1 / (Frame.Width) * (offsetX)) / 10f * 4f) + 0.1f;
-				spark.parentNode.Alpha = spark.Alpha;
+				spark.ParentNode.Alpha = spark.Alpha;
 
 				// Depending on the location of touch set the MassOfBody (Whole view is divided in 5 different parts)
 				if ((offsetY < 5 * (Frame.Height / 5) && offsetY >= 4 * (Frame.Height / 5)))
 				{
-					spark.massOfBody(1);
-					spark.parentNode.massOfBody(1);
+					spark.MassOfBody(1);
+					spark.ParentNode.MassOfBody(1);
 				}
 				else if ((offsetY < 4 * (Frame.Height / 5) && offsetY >= 3 * (Frame.Height / 5)))
 				{
-					spark.massOfBody(0.8f);
-					spark.parentNode.massOfBody(0.8f);
+					spark.MassOfBody(0.8f);
+					spark.ParentNode.MassOfBody(0.8f);
 
 				}
 				else if ((offsetY < 3 * (Frame.Height / 5) && offsetY >= 2 * (Frame.Height / 5)))
 				{
-					spark.massOfBody(0.6f);
-					spark.parentNode.massOfBody(0.6f);
+					spark.MassOfBody(0.6f);
+					spark.ParentNode.MassOfBody(0.6f);
 				}
 				else if ((offsetY < 2 * (Frame.Height / 5) && offsetY >= 1 * (Frame.Height / 5)))
 				{
-					spark.massOfBody(0.4f);
-					spark.parentNode.massOfBody(0.4f);
+					spark.MassOfBody(0.4f);
+					spark.ParentNode.MassOfBody(0.4f);
 				}
 				else if ((offsetY < 1 * (Frame.Height / 5) && offsetY >= 0 * (Frame.Height / 5)))
 				{
-					spark.massOfBody(0.2f);
-					spark.parentNode.massOfBody(0.2f);
+					spark.MassOfBody(0.2f);
+					spark.ParentNode.MassOfBody(0.2f);
 
 				}
 			}
 		}
 
 		// Revert the center value back to the node itselfs center value
-		public void revertCenter()
+		private void RevertCenter()
 		{
 			// Remove the global Center and set the fixed center of the nodes itself
 			foreach (var spark in Children.OfType<SparkNode>())
 			{
-				spark.centerOfNode = spark.centerOfNodeFixed;
-				spark.parentNode.centerOfNode = spark.parentNode.centerOfNodeFixed;
+				spark.CenterOfNode = spark.CenterOfNodeFixed;
+				spark.ParentNode.CenterOfNode = spark.ParentNode.CenterOfNodeFixed;
 			}
 		}
 
 		// Update all SparkNodes with speed, random factor, disturbfactor and vibration
-		public void updateSparks(double speed, bool random, bool disturb, int disturbFactor, bool vibrate)
+		private void UpdateSparks(double speed, bool random, bool disturb, int disturbFactor, bool vibrate)
 		{
 			// Update all SparkNodes with speed, random factor, disturbfactor and vibration
 			foreach (var spark in Children.OfType<SparkNode>())
 			{
-				spark.moveAnimation(speed, random, disturb, disturbFactor, vibrate);
+				spark.MoveAnimation(speed, random, disturb, disturbFactor, vibrate);
 			}
 		}
 
 		// Generate the sparks particles
-		public void generateSparks()
+		private void GenerateSparks()
 		{
 			// Inital speed 
 			var speed = 0;
@@ -403,8 +403,8 @@ namespace Teatime
 				{
 					// Calculate location of each Spark (5 Sparks per row, for 10 rows)
 					var location = new CGPoint();
-					location.X = (((this.View.Frame.Width / 6) * (2 * i)) - (this.View.Frame.Width / 6));
-					location.Y = (((this.View.Frame.Height / 12) * (2 * y)) - (this.View.Frame.Height / 12));
+					location.X = (((View.Frame.Width / 6) * (2 * i)) - (View.Frame.Width / 6));
+					location.Y = (((View.Frame.Height / 12) * (2 * y)) - (View.Frame.Height / 12));
 
 					// Define inital sparks with location and alpha
 					var sprite = new SparkNode("spark")
@@ -416,8 +416,8 @@ namespace Teatime
 					};
 
 					// Set the Center for the node
-					sprite.centerOfNode = location;
-					sprite.centerOfNodeFixed = location;
+					sprite.CenterOfNode = location;
+					sprite.CenterOfNodeFixed = location;
 
 					// Define Rotation, is zero because of the inital speed
 					var action = SKAction.RotateByAngle(NMath.PI * speed * i, 10.0);
@@ -437,8 +437,8 @@ namespace Teatime
 					};
 
 					// Set the Center for the node
-					parent.centerOfNode = location;
-					parent.centerOfNodeFixed = location;
+					parent.CenterOfNode = location;
+					parent.CenterOfNodeFixed = location;
 
 					// Define Rotation, is zero because of the inital speed
 					var paction = SKAction.RotateByAngle(NMath.PI * speed * i, 10.0);
@@ -451,19 +451,19 @@ namespace Teatime
 					AddChild(sprite);
 
 					// Add the ParentNode to the SparkNode
-					sprite.parentNode = parent;
+					sprite.ParentNode = parent;
 
 					// Add the ParentNode to the scene
 					AddChild(parent);
 				}
 			}
 			// Do first update of the all sparks, that they will have a base movement
-			updateSparks(1, true, false, 0, false);
+			UpdateSparks(1, true, false, 0, false);
 		}
 
 		// Calculate the different dimensions based on the location
 		// Update all Spark Nodes with local Animation and speed
-		public void setDimensions(nfloat coordX, nfloat coordY)
+		private void SetDimensions(nfloat coordX, nfloat coordY)
 		{
 			double speed;
 			nfloat checkX = coordX;
@@ -472,30 +472,30 @@ namespace Teatime
 			{
 				speed = 4;
 				Proto1Dim1 = 1;
-				updateSparks(speed, false, false, 0, false);
+				UpdateSparks(speed, false, false, 0, false);
 			}
 			else if (checkY < 4 * (Frame.Height / 5) && checkY >= 3 * (Frame.Height / 5))
 			{
 				speed = 3.5;
 				Proto1Dim1 = 2;
-				updateSparks(speed, true, true, 2, false);
+				UpdateSparks(speed, true, true, 2, false);
 			}
 			else if (checkY < 3 * (Frame.Height / 5) && checkY >= 2 * (Frame.Height / 5))
 			{
 				speed = 3;
 				Proto1Dim1 = 3;
-				updateSparks(speed, true, true, 4, false);
+				UpdateSparks(speed, true, true, 4, false);
 			}
 			else if (checkY < 2 * (Frame.Height / 5) && checkY >= 1 * (Frame.Height / 5))
 			{
 				speed = 2.5;
 				Proto1Dim1 = 4;
-				updateSparks(speed, true, true, 4, true);
+				UpdateSparks(speed, true, true, 4, true);
 			}
 			else {
 				speed = 2;
 				Proto1Dim1 = 5;
-				updateSparks(speed, true, true, 6, true);
+				UpdateSparks(speed, true, true, 6, true);
 
 			}
 
@@ -524,9 +524,9 @@ namespace Teatime
 				UITouch touchc = touches.AnyObject as UITouch;
 
 				// Check click
-				var locationc = ((UITouch)touchc).LocationInNode(this);
-				var checkX = ((UITouch)touchc).LocationInView(View).X;
-				var checkY = ((UITouch)touchc).LocationInView(View).Y;
+				var locationc = touchc.LocationInNode(this);
+				var checkX = touchc.LocationInView(View).X;
+				var checkY = touchc.LocationInView(View).Y;
 
 				// other coordinate system
 				//var checkX = ((UITouch)touchc).LocationInNode(this).X;
@@ -536,7 +536,7 @@ namespace Teatime
 				var nodeAtLocation = GetNodeAtPoint(locationc);
 				if (nodeAtLocation.Name == "cancelSpark")
 				{
-					releaseInfoText();
+					ReleaseInfoText();
 				}
 				else 
 				{
@@ -576,21 +576,21 @@ namespace Teatime
 							if (changeColor % 3 == 0)
 							{
 								// Background Calculating (Default Mode)
-								this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
+								BackgroundColor = UIColor.FromHSB((checkY / Frame.Height), 0.5f, (((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
 							}
 							else if (changeColor % 3 == 1)
 							{
 								// Background Calculating
-								this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 1f, (nfloat)(((checkX / Frame.Width) / 2) * 1 + ((0.3333333f))));
+								BackgroundColor = UIColor.FromHSB((checkY / Frame.Height), 1f, (((checkX / Frame.Width) / 2) * 1 + ((0.3333333f))));
 							}
 							else if (changeColor % 3 == 2)
 							{
 								// Background Calculating
-								this.BackgroundColor = UIColor.FromHSB((nfloat)0, 0, (nfloat)(((checkX / Frame.Width) / 2) * 1 + ((0.3333333f))));
+								BackgroundColor = UIColor.FromHSB(0, 0, (((checkX / Frame.Width) / 2) * 1 + ((0.3333333f))));
 							}
 							else {
 								// Background Calculating
-								this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
+								BackgroundColor = UIColor.FromHSB((checkY / Frame.Height), 0.5f, (((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
 							}
 						}
 					}
@@ -603,7 +603,7 @@ namespace Teatime
 		{
 			base.TouchesMoved(touches, evt);
 			UITouch touch = touches.AnyObject as UITouch;
-			var locationc = ((UITouch)touch).LocationInNode(this);
+			var locationc = touch.LocationInNode(this);
 
 			// get the node at touched location
 			var nodeAtLocation = GetNodeAtPoint(locationc);
@@ -611,7 +611,7 @@ namespace Teatime
 			// Release the info text if cancel icon is clicked
 			if (nodeAtLocation.Name == "cancelSpark")
 			{
-				releaseInfoText();
+				ReleaseInfoText();
 			}
 			else 
 			{
@@ -628,8 +628,8 @@ namespace Teatime
 
 					// other coordinate system
 					// 0 of Y is bottom
-					var checkX_Location = ((UITouch)touch).LocationInNode(this).X;
-					var checkY_Location = ((UITouch)touch).LocationInNode(this).Y;
+					var checkX_Location = touch.LocationInNode(this).X;
+					var checkY_Location = touch.LocationInNode(this).Y;
 
 					float checkX = offsetX;
 					float checkY = offsetY;
@@ -638,35 +638,34 @@ namespace Teatime
 
 					if (changeColor % 3 == 0)
 					{
-						var manipulate = (checkY_Location / Frame.Height) + 0.18;
+						var manipulate = (checkY_Location / Frame.Height) + 0.18f;
 						if (manipulate > 1)
 						{
 							manipulate = manipulate - 1;
 						}
 
 						// Background Calculating
-						this.BackgroundColor = UIColor.FromHSB((nfloat)manipulate, 0.5f, (nfloat)0.8f);//(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
-
+						BackgroundColor = UIColor.FromHSB(manipulate, 0.5f, 0.8f);
 					}
 					else if (changeColor % 3 == 1)
 					{
 						// Background Calculating
-						this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 1f, (nfloat)(((checkX / Frame.Width) / 2) * 1 + ((0.3333333f))));
+						BackgroundColor = UIColor.FromHSB((checkY / Frame.Height), 1f, (((checkX / Frame.Width) / 2) * 1 + ((0.3333333f))));
 					}
 					else if (changeColor % 3 == 2)
 					{
 						// Background Calculating
-						this.BackgroundColor = UIColor.FromHSB((nfloat)0, 0, (nfloat)(((checkX / Frame.Width) / 2) * 1 + ((0.3333333f))));
+						BackgroundColor = UIColor.FromHSB(0, 0, (((checkX / Frame.Width) / 2) * 1 + ((0.3333333f))));
 					}
 					else {
 						// Background Calculating
-						this.BackgroundColor = UIColor.FromHSB((nfloat)(checkY / Frame.Height), 0.5f, (nfloat)(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
+						BackgroundColor = UIColor.FromHSB((checkY / Frame.Height), 0.5f,(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
 					}
 
 					// Check to which part the finger is moved to and update the sparks
 					globalCenter = new CGPoint(checkX_Location, checkY_Location);
-					setDimensions(offsetX, offsetY);
-					this.updateCenter(offsetX, offsetY);
+					SetDimensions(offsetX, offsetY);
+					UpdateCenter(offsetX, offsetY);
 				}
 			}
 		}
@@ -674,7 +673,7 @@ namespace Teatime
 		{
 			base.TouchesEnded(touches, evt);
 			UITouch touch = touches.AnyObject as UITouch;
-			var locationc = ((UITouch)touch).LocationInNode(this);
+			var locationc = touch.LocationInNode(this);
 			var nodeAtLocation = GetNodeAtPoint(locationc);
 			if (touch != null)
 			{
@@ -682,22 +681,22 @@ namespace Teatime
 				if (nodeAtLocation.Name != "infoNode" && nodeAtLocation.Name != "infoLabel")
 				{
 					//Release the Changed center
-					this.revertCenter();
+					RevertCenter();
 					fieldNode.Enabled = false;
 					infoTouch = false;
 
 					// Check touch location
-					var checkX = ((UITouch)touch).LocationInView(View).X;
-					var checkY = ((UITouch)touch).LocationInView(View).Y;
+					var checkX = touch.LocationInView(View).X;
+					var checkY = touch.LocationInView(View).Y;
 
 					// Update dimensions
-					this.setDimensions(checkX, checkY);
+					SetDimensions(checkX, checkY);
 				}
 			}
 		}
 
 		// Save Dimensions
-		public void saveProto1Input()
+		public void SaveProto1Input()
 		{
 			TeatimeItem item;
 			item = new TeatimeItem();

@@ -1,5 +1,4 @@
-﻿using System;
-using SpriteKit;
+﻿using SpriteKit;
 using UIKit;
 
 namespace Teatime
@@ -10,15 +9,15 @@ namespace Teatime
 		{
 		}
 
-		public PointNode(String name)
+		public PointNode(string name)
 		{
 			UIImage image = UIImage.FromBundle(name);
-			this.Name = name;
-			this.ZPosition = 12;
-			this.Texture = SKTexture.FromImageNamed((name));
-			this.Size = image.Size;
+			Name = name;
+			ZPosition = 12;
+			Texture = SKTexture.FromImageNamed((name));
+			Size = image.Size;
 		}
-		public String Category
+		public string Category
 		{
 			get;
 			set;

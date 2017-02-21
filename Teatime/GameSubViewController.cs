@@ -6,7 +6,7 @@ namespace Teatime
 {
 	public partial class GameSubViewController : UIViewController
 	{
-		GameScene scene;
+		private GameScene scene;
 
 		protected GameSubViewController(IntPtr handle) : base(handle)
 		{
@@ -21,10 +21,10 @@ namespace Teatime
 			base.ViewDidLoad();
 
 			// Configure the view.
-			startPrototype();
+			StartPrototype();
 		}
 
-		public void startPrototype()
+		private void StartPrototype()
 		{
 			// Configure SKview, cast current view
 			var skView = (SKView)View;
@@ -45,7 +45,7 @@ namespace Teatime
 		partial void UnwindProto_TouchUpInside(UIButton sender)
 		{
 			// If back button is clicked save prototype
-			scene.saveProto1Input();
+			scene.SaveProto1Input();
 		}
 
 		public override bool ShouldAutorotate()

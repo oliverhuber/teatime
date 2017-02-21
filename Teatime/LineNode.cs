@@ -1,169 +1,138 @@
 ﻿using System;
-using System.Drawing;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using CoreGraphics;
-using CoreImage;
-using Foundation;
 using SpriteKit;
 using UIKit;
 namespace Teatime
 {
 	public class LineNode : SKSpriteNode
 	{
-		Random rnd = new Random();
-	/*	public CGPoint centerOfNode
-		{
-			get;
-			set;
-		}*/
-		public bool rndMove
+		public bool RndMove
 		{
 			get;
 			set;
 		}
-		public double speedLocal
+
+		public double SpeedLocal
 		{
 			get;
 			set;
 		}
-		public nfloat sizeLocal
+
+		public nfloat SizeLocal
 		{
 			get;
 			set;
 		}
+
 		public LineNode()
 		{
 		}
-		public LineNode(String name)
+
+		public LineNode(string name)
 		{
+			// Generate Line Node
 			UIImage image = UIImage.FromBundle("line");
-			this.Name = name;
-			this.ZPosition = 12;
-			this.Texture = SKTexture.FromImageNamed(("line"));
-			this.Size = image.Size;
-			rndMove = false;
+			Name = name;
+			ZPosition = 12;
+			Texture = SKTexture.FromImageNamed(("line"));
+			Size = image.Size;
+			RndMove = false;
 		}
-		public void enableMove(double speedSec, bool rndMove)
+
+		public void EnableMove(double speedSec)
 		{
+			// Set size and speed
+			SpeedLocal = speedSec;
+			SizeLocal = 2f;
 
-			SKAction scaleUp;
-			SKAction scaleUpWaveUp;
-			SKAction scaleDownWaveUp;
-			SKAction scaleUpWaveDown;
-			SKAction scaleDownWaveDown;
-			SKAction scaleDown;
-
-			//speedUp = speedUp + 1;
-			var speed = speedSec;
-
-
-			this.speedLocal = speedSec;
-			this.sizeLocal = 2f;
-
-			/*SKAction moveDown = SKAction.MoveToY(this.Position.Y - 200, speed);
-			SKAction moveUp = SKAction.MoveToY(this.Position.Y + 200, speed);
-
-			scaleUp = SKAction.ScaleYTo(2f, speed);
-			scaleDown = SKAction.ScaleYTo(0.5f, speed);
-			moveSeq = SKAction.Sequence(moveDown, moveUp);
-			scaleSeq = SKAction.Sequence(scaleUp,scaleDown);
-			this.RunAction(SKAction.RepeatActionForever(scaleSeq));
-*/
-
-			scaleUp = SKAction.ScaleYTo(sizeLocal, speedLocal);
-			scaleUpWaveUp = SKAction.ScaleYTo(sizeLocal + 0.3f, 0.1);
-			scaleUpWaveDown = SKAction.ScaleYTo(sizeLocal, 0.1);
-
-			scaleDown = SKAction.ScaleYTo(0.5f, speedLocal);
-			scaleDownWaveDown = SKAction.ScaleYTo(0.5f - 0.3f, 0.1);
-			scaleDownWaveUp = SKAction.ScaleYTo(0.5f, 0.1);
+			// Define Line Node Movement
+			SKAction scaleUp = SKAction.ScaleYTo(SizeLocal, SpeedLocal);
+			SKAction scaleUpWaveUp = SKAction.ScaleYTo(SizeLocal + 0.3f, 0.1);
+			SKAction scaleUpWaveDown = SKAction.ScaleYTo(SizeLocal, 0.1);
+			SKAction scaleDown = SKAction.ScaleYTo(0.5f, SpeedLocal);
+			SKAction scaleDownWaveDown = SKAction.ScaleYTo(0.5f - 0.3f, 0.1);
+			SKAction scaleDownWaveUp = SKAction.ScaleYTo(0.5f, 0.1);
 			SKAction scaleSeq = SKAction.Sequence(scaleUp, scaleUpWaveUp, scaleUpWaveDown, scaleDown, scaleDownWaveDown, scaleDownWaveUp);
-			this.RunAction(SKAction.RepeatActionForever(scaleSeq));
 
-
-		//	this.RunAction(SKAction.RepeatActionForever(moveSeq));
-
+			RunAction(SKAction.RepeatActionForever(scaleSeq));
 		}
-		public void setUpdateSpeed(bool speedUp, bool sizeUp, bool speedDown, bool sizeDown)
+
+		// Update Speed Method
+		public void SetUpdateSpeed(bool speedUp, bool sizeUp, bool speedDown, bool sizeDown)
 		{
+			// Update Speed and Size, check if higher or lower and do actions
+			RemoveAllActions();
 
+			// One Time move to default size
+			RunAction(SKAction.ScaleYTo(0.5f, 0.1));
 
-			this.RemoveAllActions();
-			SKAction scaleUp;
-			SKAction scaleUpWaveUp;
-			SKAction scaleDownWaveUp;
-			SKAction scaleUpWaveDown;
-			SKAction scaleDownWaveDown;
-			SKAction scaleDown;
-			this.RunAction(SKAction.ScaleYTo(0.5f, 0.1));
-			//while (this.HasActions == true)
-			{
-
-			}
 			if (speedUp == true)
 			{
-				speedLocal = speedLocal - 0.1f;
+				SpeedLocal = SpeedLocal - 0.1f;
 			}
 			if (speedDown == true)
 			{
-				speedLocal = speedLocal + 0.1f;
-
+				SpeedLocal = SpeedLocal + 0.1f;
 			}
-			if (speedLocal < 0.1f)
+			// Min Speed
+			if (SpeedLocal < 0.1f)
 			{
-				speedLocal = 0.1f;
+				SpeedLocal = 0.1f;
 			}
 			if (sizeUp == true)
 			{
-				sizeLocal = sizeLocal + 0.2f;
+				SizeLocal = SizeLocal + 0.2f;
 			}
 			if (sizeDown == true)
 			{
-				sizeLocal = sizeLocal - 0.2f;
-
+				SizeLocal = SizeLocal - 0.2f;
 			}
-			if (sizeLocal < 0.1f)
+			// Min Size
+			if (SizeLocal < 0.1f)
 			{
-				sizeLocal = 0.1f;
+				SizeLocal = 0.1f;
 			}
-			scaleUp = SKAction.ScaleYTo(sizeLocal, speedLocal);
-			scaleUpWaveUp = SKAction.ScaleYTo(sizeLocal + 0.3f, 0.1);
-			scaleUpWaveDown = SKAction.ScaleYTo(sizeLocal, 0.1);
 
-			scaleDown = SKAction.ScaleYTo(0.5f, speedLocal);
-			scaleDownWaveDown = SKAction.ScaleYTo(0.5f - 0.3f, 0.1);
-			scaleDownWaveUp = SKAction.ScaleYTo(0.5f, 0.1);
+			// Updated actions
+			SKAction scaleUp = SKAction.ScaleYTo(SizeLocal, SpeedLocal);
+			SKAction scaleUpWaveUp = SKAction.ScaleYTo(SizeLocal + 0.3f, 0.1);
+			SKAction scaleUpWaveDown = SKAction.ScaleYTo(SizeLocal, 0.1);
+			SKAction scaleDown = SKAction.ScaleYTo(0.5f, SpeedLocal);
+			SKAction scaleDownWaveDown = SKAction.ScaleYTo(0.5f - 0.3f, 0.1);
+			SKAction scaleDownWaveUp = SKAction.ScaleYTo(0.5f, 0.1);
 			SKAction scaleSeq = SKAction.Sequence(scaleUp, scaleUpWaveUp, scaleUpWaveDown, scaleDown, scaleDownWaveDown, scaleDownWaveUp);
-			this.RunAction(SKAction.RepeatActionForever(scaleSeq));
-
-
+			RunAction(SKAction.RepeatActionForever(scaleSeq));
 		}
-		public void setUpdateSize(bool sizeUp)
+
+		// Update Size Method
+		public void SetUpdateSize(bool sizeUp)
 		{
-			this.RemoveAllActions();
+			RemoveAllActions();
 			SKAction scaleUp;
 			SKAction scaleDown;
-			this.RunAction(SKAction.ScaleYTo(1f, 0.2));
+
+			// One Time move to default size
+			RunAction(SKAction.ScaleYTo(1f, 0.2));
+
+			// Check Size higher or lower
 			if (sizeUp == true)
 			{
-				sizeLocal = sizeLocal + 0.2f;
-				scaleUp = SKAction.ScaleYTo(sizeLocal, speedLocal);
-				scaleDown = SKAction.ScaleYTo(1f, speedLocal);
+				SizeLocal = SizeLocal + 0.2f;
+				scaleUp = SKAction.ScaleYTo(SizeLocal, SpeedLocal);
+				scaleDown = SKAction.ScaleYTo(1f, SpeedLocal);
 			}
 			else
 			{
-				sizeLocal = sizeLocal - 0.2f;
-				if (sizeLocal < 0.1f)
+				SizeLocal = SizeLocal - 0.2f;
+				// Min Size
+				if (SizeLocal < 0.1f)
 				{
-					sizeLocal = 0.1f;
+					SizeLocal = 0.1f;
 				}
-				scaleUp = SKAction.ScaleYTo(sizeLocal, speedLocal);
-				scaleDown = SKAction.ScaleYTo(1f, speedLocal);
+				scaleUp = SKAction.ScaleYTo(SizeLocal, SpeedLocal);
+				scaleDown = SKAction.ScaleYTo(1f, SpeedLocal);
 			}
 			SKAction scaleSeq = SKAction.Sequence(scaleDown, scaleUp);
-			this.RunAction(SKAction.RepeatActionForever(scaleSeq));
+			RunAction(SKAction.RepeatActionForever(scaleSeq));
 		}
 	}
 }

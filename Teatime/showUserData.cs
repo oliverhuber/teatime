@@ -9,7 +9,6 @@ namespace Teatime
 	public partial class showUserData : UITableViewController
 	{
 		UITableView table;
-		UILabel myLabel;
 		public showUserData(IntPtr handle) : base(handle)
 		{
 		}
@@ -57,8 +56,8 @@ namespace Teatime
 			gradient.NeedsDisplayOnBoundsChange = true;
 			gradient.MasksToBounds = true;
 
-			UIColor startColor = UIColor.FromRGB((int)78, (int)191, (int)216);
-			UIColor endColor = UIColor.FromRGB((int)78, (int)91, (int)216);
+			UIColor startColor = UIColor.FromRGB(78, 191, 216);
+			UIColor endColor = UIColor.FromRGB(78, 91, 216);
 			gradient.Colors = new CGColor[] { startColor.CGColor, endColor.CGColor };
 			View.Layer.InsertSublayer(gradient, 0);
 
@@ -67,12 +66,8 @@ namespace Teatime
 
 			foreach (var s in DatabaseMgmt.Database.GetAllItems())
 			{
-				//tableItems[s.Id] = s.dateInserted.ToString();
-				dateList.Add(s.Username.ToString() + ":PT=" + s.PrototypeNr + ";" + s.dateInserted.ToString() + ";D1=" + s.Dim1.ToString() + ";D2=" + s.Dim2.ToString() + ";D3=" + s.Dim3.ToString() + "|" + s.Comment);
-				//Console.WriteLine("Username:" + s.Username + ", DateInserted:" + s.dateInserted + ", Dimension1:" + s.Dim1 + ", Dimension2:" + s.Dim2 + ", Dimension3:" + s.Dim3 + ", ProtypeNr:" + s.PrototypeNr + ", Comment:" + s.Comment);
-				//AppDelegate.Database.DeleteItem(s);
+				dateList.Add(s.Username.ToString() + ":PT=" + s.PrototypeNr + ";" + s.dateInserted + ";D1=" + s.Dim1 + ";D2=" + s.Dim2 + ";D3=" + s.Dim3 + "|" + s.Comment);
 			}
-			Console.WriteLine("End Output: --------------------------------");
 			table.Source = new TableSource(dateList);
 		}
 	}

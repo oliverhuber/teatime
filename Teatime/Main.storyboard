@@ -136,6 +136,7 @@
                                     <action selector="GotoNext_TouchUpInside:" destination="1063" id="1062" eventType="touchUpInside"/>
                                     <action selector="GotoNext4_TouchUpInside:" destination="1065" id="1064" eventType="touchUpInside"/>
                                     <segue id="1090" destination="1076" kind="show"/>
+                                    <action selector="GotoNext5_TouchUpInside:" destination="BV1-FR-VrT" id="1469" eventType="touchUpInside"/>
                                 </connections>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">

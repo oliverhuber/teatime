@@ -10,12 +10,12 @@ namespace Teatime
 		protected ArrayList tableItemsList;
 		protected string cellIdentifier = "TableCell";
 
-		public TableSource(string[] items)//, HomeScreen owner)
+		public TableSource(string[] items)
 		{
 			tableItems = items;
 		}
 
-		public TableSource(ArrayList items)//, HomeScreen owner)
+		public TableSource(ArrayList items)
 		{
 			tableItemsList = items;
 		}
@@ -43,7 +43,7 @@ namespace Teatime
 			var cell = tableView.DequeueReusableCell(cellIdentifier) as CustomCell;
 			if (cell == null)
 				cell = new CustomCell((NSString)cellIdentifier);
-				cell.UpdateCell("Log", tableItemsList[indexPath.Row].ToString());
+				cell.UpdateCell(tableItemsList[indexPath.Row].ToString());
 			return cell;
 		}
 	}

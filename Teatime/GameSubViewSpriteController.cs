@@ -5,29 +5,32 @@ namespace Teatime
 {
 	public partial class GameSubViewSpriteController : UIViewController
 	{
-		GameSceneSprite scene;
+		private GameSceneSprite scene;
+
 		public GameSubViewSpriteController(IntPtr handle) : base(handle)
 		{
-
 		}
+
 		public GameSubViewSpriteController()
 		{
-
 		}
+
 		public override bool PrefersStatusBarHidden()
 		{
 			return true;
 		}
+
 		public override void ViewDidLoad()
 		{
 			base.ViewDidLoad();
 
 			// Configure the view.
-			startPrototype();
+			StartPrototype();
 		}
-		public void startPrototype()
+
+		private void StartPrototype()
 		{
-			// Configure the view.
+			// Configure the view
 			var skView = (SKView)View;
 			skView.ShowsFPS = false;
 			skView.ShowsNodeCount = false;
@@ -43,7 +46,7 @@ namespace Teatime
 		partial void UnwindProtoSprite_TouchUpInside(UIButton sender)
 		{
 			// If back button is clicked save prototype
-			scene.saveProto2Input();
+			scene.SaveProto2Input();
 		}
 	}
 }

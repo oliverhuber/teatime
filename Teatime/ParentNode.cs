@@ -8,67 +8,66 @@ namespace Teatime
 	public class ParentNode : SKSpriteNode
 	{
 		// Random will be used for calculations
-		Random rnd = new Random();
+		private Random rnd = new Random();
 
 		// Current center of this node
-		public CGPoint centerOfNode
+		public CGPoint CenterOfNode
 		{
 			get;
 			set;
 		}
 
 		// Fixed center
-		public CGPoint centerOfNodeFixed
+		public CGPoint CenterOfNodeFixed
 		{
 			get;
 			set;
 		}
 
 		// Set up Parent Node
-		public ParentNode(String name)
+		public ParentNode(string name)
 		{
 			UIImage image = UIImage.FromBundle("spark");
-			this.Name = name;
-			this.ZPosition = 12;
-			this.Texture = SKTexture.FromImageNamed(("spark"));
-			this.Size = image.Size;
+			Name = name;
+			ZPosition = 12;
+			Texture = SKTexture.FromImageNamed(("spark"));
+			Size = image.Size;
 
 			// Create Physics Body 
-			this.PhysicsBody = SKPhysicsBody.Create(this.Texture, this.Size);
-			this.PhysicsBody.AffectedByGravity = false;
-			this.PhysicsBody.AllowsRotation = true;
-			this.PhysicsBody.CollisionBitMask = 0;
+			PhysicsBody = SKPhysicsBody.Create(Texture, Size);
+			PhysicsBody.AffectedByGravity = false;
+			PhysicsBody.AllowsRotation = true;
+			PhysicsBody.CollisionBitMask = 0;
 
 			// Calculate Damping
-			this.PhysicsBody.LinearDamping = 0.2f;
-			this.PhysicsBody.AngularDamping = (System.nfloat)(rnd.NextDouble() * (2 - 0.5) + 0.5);
-			this.PhysicsBody.Mass = 0.8f;
-
+			PhysicsBody.LinearDamping = 0.2f;
+			PhysicsBody.AngularDamping = (nfloat)(rnd.NextDouble() * (2 - 0.5) + 0.5);
+			PhysicsBody.Mass = 0.8f;
 
 		}
 
 		// Set new Mass for physics 
-		public void massOfBody(nfloat mass)
+		public void MassOfBody(nfloat mass)
 		{
-			this.PhysicsBody.Mass = mass;
+			PhysicsBody.Mass = mass;
 		}
 
 		// Set exactly the same animation of related spark node
-		public void moveAnimation(double speed, bool randomMove, SKAction sequence)
+		public void MoveAnimation(SKAction sequence)
 		{
 			// Remove All Actions from that node
-			this.RemoveAllActions();
-			this.RunAction(SKAction.RepeatActionForever(sequence));
+			RemoveAllActions();
+			RunAction(SKAction.RepeatActionForever(sequence));
 
 			// Set default texture
-			changeTexture();
+			ChangeTexture();
 		}
 
 		// Set Animation of current parent node
-		public void moveAnimation(int disturbFactor, int newX, int newX1, int newX2, int newX3, int newX4, int newY, int newY1, int newY2, int newY3, int newY4, double pointSpeed1, double pointSpeed2, double pointSpeed3, double pointSpeed4, double pointSpeed5, bool vibrate)
+		public void MoveAnimation(int disturbFactor, int newX, int newX1, int newX2, int newX3, int newX4, int newY, int newY1, int newY2, int newY3, int newY4, double pointSpeed1, double pointSpeed2, double pointSpeed3, double pointSpeed4, double pointSpeed5, bool vibrate)
 		{
 			// Remove All Actions from that node
-			this.RemoveAllActions();
+			RemoveAllActions();
 
 			// Set actions similar to related spark node's actions but add the disturb factor to the movement
 			SKAction action1 = SKAction.MoveTo(new CGPoint(newX + disturbFactor, newY + disturbFactor), pointSpeed1);
@@ -79,14 +78,14 @@ namespace Teatime
 			var sequence = SKAction.Sequence(action1, action2, action3, action4, action5);
 
 			// Repeat following the five routes
-			this.RunAction(SKAction.RepeatActionForever(sequence));
+			RunAction(SKAction.RepeatActionForever(sequence));
 
 			// Change texture
-			changeTexture(vibrate, pointSpeed1);
+			ChangeTexture(vibrate, pointSpeed1);
 		}
 
 		// Change Texture to disturbed texture
-		public void changeTexture(bool disturb, double PointSpeed1)
+		public void ChangeTexture(bool disturb, double pointSpeed1)
 		{
 			// Default texture
 			SKTexture sparkTexture3 = SKTexture.FromImageNamed("spark3");
@@ -98,41 +97,41 @@ namespace Teatime
 			if (disturb == true)
 			{
 				// Set disturbed texture
-				this.Texture = sparkTexture4;
+				Texture = sparkTexture4;
 
 				// Fade Actions on the node				
-				SKAction action1 = SKAction.FadeAlphaBy(-0.2f, 1);
-				SKAction action2 = SKAction.FadeAlphaBy(+0.2f, 1);
-				SKAction sequence = SKAction.Sequence(action1, action2);
+				// SKAction action1 = SKAction.FadeAlphaBy(-0.2f, 1);
+				// SKAction action2 = SKAction.FadeAlphaBy(+0.2f, 1);
+				// SKAction sequence = SKAction.Sequence(action1, action2);
 
 				// Generated random rotation factor
 				double rotateBy = rnd.NextDouble() * (2 - 1) + 1;
-				this.RunAction(SKAction.RepeatActionForever(SKAction.RotateByAngle(NMath.PI, rotateBy)));
+				RunAction(SKAction.RepeatActionForever(SKAction.RotateByAngle(NMath.PI, rotateBy)));
 
 				// Set X Scaling related to PointSpeed1
-				SKAction changeX1 = SKAction.ScaleXTo(1.1f, PointSpeed1);
-				SKAction changeX2 = SKAction.ScaleXTo(0.9f, PointSpeed1);
+				SKAction changeX1 = SKAction.ScaleXTo(1.1f, pointSpeed1);
+				SKAction changeX2 = SKAction.ScaleXTo(0.9f, pointSpeed1);
 				var changeSequenceX = SKAction.Sequence(changeX1, changeX2);
-				this.RunAction(SKAction.RepeatActionForever(changeSequenceX));
+				RunAction(SKAction.RepeatActionForever(changeSequenceX));
 
 				// Set Y Scaling related to PointSpeed1
-				SKAction changeY1 = SKAction.ScaleYTo(1.1f, PointSpeed1);
-				SKAction changeY2 = SKAction.ScaleYTo(0.9f, PointSpeed1);
+				SKAction changeY1 = SKAction.ScaleYTo(1.1f, pointSpeed1);
+				SKAction changeY2 = SKAction.ScaleYTo(0.9f, pointSpeed1);
 				var changeSequenceY = SKAction.Sequence(changeY1, changeY2);
-				this.RunAction(SKAction.RepeatActionForever(changeSequenceY));
+				RunAction(SKAction.RepeatActionForever(changeSequenceY));
 			}
 
 			// Set default texture
 			else
 			{
-				this.Texture = sparkTexture3;
+				Texture = sparkTexture3;
 			}
 		}
 
 		// Set default texture
-		public void changeTexture()
+		public void ChangeTexture()
 		{
-			this.Texture = SKTexture.FromImageNamed(("spark3"));
+			Texture = SKTexture.FromImageNamed(("spark3"));
 		}
 	}
 }

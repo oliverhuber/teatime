@@ -1,23 +1,13 @@
-﻿
-using System;
-using System.Drawing;
-using System.Linq;
-using CoreGraphics;
-using CoreImage;
-using Foundation;
+﻿using CoreGraphics;
 using SpriteKit;
-using UIKit;
 namespace Teatime
 {
 	public class FieldNode : SKSpriteNode
 	{
-		public CGPoint centerOfNode
+		public CGPoint CenterOfNode
 		{
 			get;
 			set;
-		}
-		public FieldNode()
-		{
 		}
 	}
 }

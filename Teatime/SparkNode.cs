@@ -8,59 +8,59 @@ namespace Teatime
 	public class SparkNode : SKSpriteNode
 	{
 		// Random will be used for calculations
-		Random rnd = new Random();
+		private Random rnd = new Random();
 
 		// Parent Node of this spark node instance
-		public ParentNode parentNode
+		public ParentNode ParentNode
 		{
 			get;
 			set;
 		}
 
 		// Current center of this node
-		public CGPoint centerOfNode
+		public CGPoint CenterOfNode
 		{
 			get;
 			set;
 		}
 
 		// Fixed center
-		public CGPoint centerOfNodeFixed
+		public CGPoint CenterOfNodeFixed
 		{
 			get;
 			set;
 		}
 
 		// Set up Spark Node
-		public SparkNode(String name)
+		public SparkNode(string name)
 		{
 			UIImage image = UIImage.FromBundle("spark3");
-			this.Name = name;
-			this.ZPosition = 12;
-			this.Texture = SKTexture.FromImageNamed(("spark3"));
-			this.Size = image.Size;
+			Name = name;
+			ZPosition = 12;
+			Texture = SKTexture.FromImageNamed(("spark3"));
+			Size = image.Size;
 
 			// Create Physics Body 
-			this.PhysicsBody = SKPhysicsBody.Create(this.Texture, this.Size);
-			this.PhysicsBody.AffectedByGravity = false;
-			this.PhysicsBody.AllowsRotation = true;
-			this.PhysicsBody.CollisionBitMask = 0;
+			PhysicsBody = SKPhysicsBody.Create(Texture, Size);
+			PhysicsBody.AffectedByGravity = false;
+			PhysicsBody.AllowsRotation = true;
+			PhysicsBody.CollisionBitMask = 0;
 
 			// Calculate Damping
-			this.PhysicsBody.LinearDamping = (System.nfloat)(rnd.NextDouble() * (0.5 - 0.2) + 0.2);
-			this.PhysicsBody.AngularDamping = (System.nfloat)(rnd.NextDouble() * (2 - 0.2) + 0.2);
-			this.PhysicsBody.Mass = 1.06f;
+			PhysicsBody.LinearDamping = (nfloat)(rnd.NextDouble() * (0.5 - 0.2) + 0.2);
+			PhysicsBody.AngularDamping = (nfloat)(rnd.NextDouble() * (2 - 0.2) + 0.2);
+			PhysicsBody.Mass = 1.06f;
 
 		}
 
 		// Set new Mass for physics 
-		public void massOfBody(nfloat mass)
+		public void MassOfBody(nfloat mass)
 		{
-			this.PhysicsBody.Mass = mass;
+			PhysicsBody.Mass = mass;
 		}
 
 		// Set Animation of current node
-		public void moveAnimation(double speed, bool randomMove, bool disturb, int disturbFactor, bool vibrate)
+		public void MoveAnimation(double speed, bool randomMove, bool disturb, int disturbFactor, bool vibrate)
 		{
 			double pointSpeed1;
 			double pointSpeed2;
@@ -75,23 +75,23 @@ namespace Teatime
 			SKAction action5;
 
 			// Remove all actions from that node
-			this.RemoveAllActions();
+			RemoveAllActions();
 
 			// Move of the node only 50px away from current center, direction is random
-			int newX = rnd.Next((int)this.centerOfNode.X - 50, (int)this.centerOfNode.X + 50);
-			int newY = rnd.Next((int)this.centerOfNode.Y - 50, (int)this.centerOfNode.Y + 50);
+			int newX = rnd.Next((int)CenterOfNode.X - 50, (int)CenterOfNode.X + 50);
+			int newY = rnd.Next((int)CenterOfNode.Y - 50, (int)CenterOfNode.Y + 50);
 
-			int newX1 = rnd.Next((int)this.centerOfNode.X - 50, (int)this.centerOfNode.X + 50);
-			int newY1 = rnd.Next((int)this.centerOfNode.Y - 50, (int)this.centerOfNode.Y + 50);
+			int newX1 = rnd.Next((int)CenterOfNode.X - 50, (int)CenterOfNode.X + 50);
+			int newY1 = rnd.Next((int)CenterOfNode.Y - 50, (int)CenterOfNode.Y + 50);
 
-			int newX2 = rnd.Next((int)this.centerOfNode.X - 50, (int)this.centerOfNode.X + 50);
-			int newY2 = rnd.Next((int)this.centerOfNode.Y - 50, (int)this.centerOfNode.Y + 50);
+			int newX2 = rnd.Next((int)CenterOfNode.X - 50, (int)CenterOfNode.X + 50);
+			int newY2 = rnd.Next((int)CenterOfNode.Y - 50, (int)CenterOfNode.Y + 50);
 
-			int newX3 = rnd.Next((int)this.centerOfNode.X - 50, (int)this.centerOfNode.X + 50);
-			int newY3 = rnd.Next((int)this.centerOfNode.Y - 50, (int)this.centerOfNode.Y + 50);
+			int newX3 = rnd.Next((int)CenterOfNode.X - 50, (int)CenterOfNode.X + 50);
+			int newY3 = rnd.Next((int)CenterOfNode.Y - 50, (int)CenterOfNode.Y + 50);
 
-			int newX4 = rnd.Next((int)this.centerOfNode.X - 50, (int)this.centerOfNode.X + 50);
-			int newY4 = rnd.Next((int)this.centerOfNode.Y - 50, (int)this.centerOfNode.Y + 50);
+			int newX4 = rnd.Next((int)CenterOfNode.X - 50, (int)CenterOfNode.X + 50);
+			int newY4 = rnd.Next((int)CenterOfNode.Y - 50, (int)CenterOfNode.Y + 50);
 
 			// Set min and max speed for all 5 points
 			double minSpeed = speed;
@@ -124,29 +124,29 @@ namespace Teatime
 			var sequence = SKAction.Sequence(action1, action2, action3, action4, action5);
 
 			// Repeat following the five routes
-			this.RunAction(SKAction.RepeatActionForever(sequence));
+			RunAction(SKAction.RepeatActionForever(sequence));
 
 			// If disturb is true update parent node's move animation with all parms, if false forward simply the SKActions
 			if (disturb)
 			{
-				if (parentNode != null)
+				if (ParentNode != null)
 				{
 					// Set parent nodes center
-					this.parentNode.centerOfNode = this.centerOfNode;
+					ParentNode.CenterOfNode = CenterOfNode;
 
 					// Update parent node's animation (with all parms)
-					parentNode.moveAnimation(disturbFactor, newX, newX1, newX2, newX3, newX4, newY, newY1, newY2, newY3, newY4, pointSpeed1, pointSpeed2, pointSpeed3, pointSpeed4, pointSpeed5, vibrate);
+					ParentNode.MoveAnimation(disturbFactor, newX, newX1, newX2, newX3, newX4, newY, newY1, newY2, newY3, newY4, pointSpeed1, pointSpeed2, pointSpeed3, pointSpeed4, pointSpeed5, vibrate);
 				}
 			}
 			else
 			{
-				if (parentNode != null)
+				if (ParentNode != null)
 				{
 					// Set parent nodes center
-					this.parentNode.centerOfNode = this.centerOfNode;
+					ParentNode.CenterOfNode = CenterOfNode;
 
 					// Update parent node's animation (with SKActions)
-					parentNode.moveAnimation(speed, randomMove, sequence);
+					ParentNode.MoveAnimation(sequence);
 				}
 			}
 		}

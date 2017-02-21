@@ -15,30 +15,30 @@ namespace Teatime
 		public int Proto2Dim3 { get; set; }
 
 		// Define Sprites and Labels 
-		SKSpriteNode infoSprite;
-		SKSpriteNode infoNode;
-		SKSpriteNode infoNode2;
-		SKSpriteNode infoNode3;
-		SKSpriteNode cancelSpark;
-		SKSpriteNode teatimeSprite;
-		SKSpriteNode container;
+		private SKSpriteNode infoSprite;
+		private SKSpriteNode infoNode;
+		private SKSpriteNode infoNode2;
+		private SKSpriteNode infoNode3;
+		private SKSpriteNode cancelSpark;
+		private SKSpriteNode teatimeSprite;
+		private SKSpriteNode container;
 
-		SKLabelNode infoLabel1;
-		SKLabelNode infoLabel2;
-		SKLabelNode infoLabel3;
-		SKLabelNode infoLabel4;
-		SKLabelNode infoLabel5;
-		SKLabelNode infoLabel6;
-		SKLabelNode infoLabel7;
-		SKLabelNode infoLabel8;
-		SKLabelNode infoLabel9;
+		private SKLabelNode infoLabel1;
+		private SKLabelNode infoLabel2;
+		private SKLabelNode infoLabel3;
+		private SKLabelNode infoLabel4;
+		private SKLabelNode infoLabel5;
+		private SKLabelNode infoLabel6;
+		private SKLabelNode infoLabel7;
+		private SKLabelNode infoLabel8;
+		private SKLabelNode infoLabel9;
 
-		SKEmitterNode particleEmitterNode;
+		private SKEmitterNode particleEmitterNode;
 
-		bool switchInfo;
-		bool firstTouch;
-		bool infoTouch;
-		int blurFactor;
+		private bool switchInfo;
+		private bool firstTouch;
+		private bool infoTouch;
+		private int blurFactor;
 
 		protected GameSceneSprite(IntPtr handle) : base(handle)
 		{
@@ -78,17 +78,16 @@ namespace Teatime
 			var gestureLongRecognizer = new UILongPressGestureRecognizer(PressHandler);
 			gestureLongRecognizer.MinimumPressDuration = 0.5;
 			gestureLongRecognizer.AllowableMovement = 20f;
-			this.View.AddGestureRecognizer(gestureLongRecognizer);
+			View.AddGestureRecognizer(gestureLongRecognizer);
 
 			// Start with the info text
-			setInfoText();
+			SetInfoText();
 
 			// Create the Emitter Nodes
-			createEmitterNode();
+			CreateEmitterNode();
 		}
 
-
-		public void setInfoText()
+		private void SetInfoText()
 		{
 			// Define and add Label 1
 			infoLabel1 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
@@ -119,7 +118,7 @@ namespace Teatime
 			{
 				Text = "Berühre den Bildschirm",
 				FontSize = 18,
-				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 10),
+				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 10)
 			};
 			infoLabel3.Alpha = 0.0f;
 			infoLabel3.ZPosition = 100;
@@ -131,7 +130,7 @@ namespace Teatime
 			{
 				Text = "und navigiere die Punkte",
 				FontSize = 18,
-				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 - 20),
+				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 - 20)
 			};
 			infoLabel4.Alpha = 0.0f;
 			infoLabel4.ZPosition = 100;
@@ -143,7 +142,7 @@ namespace Teatime
 			{
 				Text = "so dass diese schlussendlich",
 				FontSize = 18,
-				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 10),
+				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 10)
 			};
 			infoLabel5.Alpha = 0.0f;
 			infoLabel5.ZPosition = 100;
@@ -155,7 +154,7 @@ namespace Teatime
 			{
 				Text = "deiner aktuellen Gefühlslage entsprechen",
 				FontSize = 18,
-				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 - 20),
+				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 - 20)
 			};
 			infoLabel6.Alpha = 0.0f;
 			infoLabel6.Name = "infoLabel";
@@ -167,7 +166,7 @@ namespace Teatime
 			{
 				Text = "wenn du die Punkte lange drückst",
 				FontSize = 18,
-				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 10),
+				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 10)
 			};
 			infoLabel7.Alpha = 0.0f;
 			infoLabel7.ZPosition = 100;
@@ -179,7 +178,7 @@ namespace Teatime
 			{
 				Text = "kannst du diese verändern",
 				FontSize = 18,
-				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 - 20),
+				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 - 20)
 			};
 			infoLabel8.Alpha = 0.0f;
 			infoLabel8.Name = "infoLabel";
@@ -191,7 +190,7 @@ namespace Teatime
 			{
 				Text = "TEATIME",
 				FontSize = 18,
-				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 60),
+				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 60)
 			};
 			infoLabel9.Alpha = 0.0f;
 			infoLabel9.Name = "infoLabel";
@@ -199,21 +198,21 @@ namespace Teatime
 			AddChild(infoLabel9);
 
 			// Do Actions on the Label Nodes (wait, fade in, wait, fade out)
-			doActionSequenceOnNode(infoLabel1, 1, 1, 2, 1, 0.8f);
-			doActionSequenceOnNode(infoLabel2, 2, 1, 2, 1, 0.8f);
-			doActionSequenceOnNode(infoLabel3, 6, 1, 2, 1, 0.8f);
-			doActionSequenceOnNode(infoLabel4, 7, 1, 2, 1, 0.8f);
-			doActionSequenceOnNode(infoLabel5, 11, 1, 2, 1, 0.8f);
-			doActionSequenceOnNode(infoLabel6, 12, 1, 2, 1, 0.8f);
-			doActionSequenceOnNode(infoLabel7, 16, 1, 2, 1, 0.7f);
-			doActionSequenceOnNode(infoLabel8, 17, 1, 2, 1, 0.7f);
-			doActionSequenceOnNode(infoLabel9, 0, 1, 20, 1, 0.7f);
+			DoActionSequenceOnNode(infoLabel1, 1, 1, 2, 1, 0.8f);
+			DoActionSequenceOnNode(infoLabel2, 2, 1, 2, 1, 0.8f);
+			DoActionSequenceOnNode(infoLabel3, 6, 1, 2, 1, 0.8f);
+			DoActionSequenceOnNode(infoLabel4, 7, 1, 2, 1, 0.8f);
+			DoActionSequenceOnNode(infoLabel5, 11, 1, 2, 1, 0.8f);
+			DoActionSequenceOnNode(infoLabel6, 12, 1, 2, 1, 0.8f);
+			DoActionSequenceOnNode(infoLabel7, 16, 1, 2, 1, 0.7f);
+			DoActionSequenceOnNode(infoLabel8, 17, 1, 2, 1, 0.7f);
+			DoActionSequenceOnNode(infoLabel9, 0, 1, 20, 1, 0.7f);
 
 			// Define and add Info Box rect
 			infoNode = new SKSpriteNode();
 			infoNode.Size = new CGSize(Frame.Width, Frame.Height);
 			infoNode.Position = new CGPoint(Frame.Width / 2, Frame.Height / 2);
-			infoNode.Color = UIColor.FromHSB((nfloat)0, 0, 0.3f);
+			infoNode.Color = UIColor.FromHSB(0, 0, 0.3f);
 			infoNode.ZPosition = 99;
 			infoNode.Name = "infoNode";
 			infoNode.Alpha = 0.0f;
@@ -223,7 +222,7 @@ namespace Teatime
 			infoNode2 = new SKSpriteNode();
 			infoNode2.Size = new CGSize(Frame.Width - 60, 150);
 			infoNode2.Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 15);
-			infoNode2.Color = UIColor.FromHSB((nfloat)0, 0, 0.3f);
+			infoNode2.Color = UIColor.FromHSB(0, 0, 0.3f);
 			infoNode2.ZPosition = 98;
 			infoNode2.Name = "infoNode";
 			infoNode2.Alpha = 0.0f;
@@ -233,7 +232,7 @@ namespace Teatime
 			infoNode3 = new SKSpriteNode();
 			infoNode3.Size = new CGSize(Frame.Width - 40, 150);
 			infoNode3.Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 15);
-			infoNode3.Color = UIColor.FromHSB((nfloat)0, 0, 0.3f);
+			infoNode3.Color = UIColor.FromHSB(0, 0, 0.3f);
 			infoNode3.ZPosition = 98;
 			infoNode3.Name = "infoNode";
 			infoNode3.Alpha = 0.0f;
@@ -245,8 +244,8 @@ namespace Teatime
 			cancelSpark.ZPosition = 1000;
 			cancelSpark.Alpha = 0.0f;
 			cancelSpark.SetScale(0.6f);
-			cancelSpark.Color = UIColor.FromHSB((nfloat)0, 0, 0.0f);
-			cancelSpark.Position = new CGPoint((this.View.Frame.Width - (40)), (this.View.Frame.Height / 2 + (70)));
+			cancelSpark.Color = UIColor.FromHSB(0, 0, 0.0f);
+			cancelSpark.Position = new CGPoint((View.Frame.Width - (40)), (View.Frame.Height / 2 + (70)));
 			AddChild(cancelSpark);
 
 			// Define and add Teatime Icon for the Info Box
@@ -255,26 +254,26 @@ namespace Teatime
 			teatimeSprite.ZPosition = 1000;
 			teatimeSprite.Alpha = 0.0f;
 			teatimeSprite.SetScale(0.35f);
-			teatimeSprite.Color = UIColor.FromHSB((nfloat)0, 0, 0.0f);
-			teatimeSprite.Position = new CGPoint((0 + (40)), (this.View.Frame.Height / 2 + (70)));
+			teatimeSprite.Color = UIColor.FromHSB(0, 0, 0.0f);
+			teatimeSprite.Position = new CGPoint((0 + (40)), (View.Frame.Height / 2 + (70)));
 			AddChild(teatimeSprite);
 
 			// Actions and Sequence for Info Nodes
-			doActionSequenceOnNode(infoNode, 0, 1, 20, 1, 0.3f);
-			doActionSequenceOnNode(infoNode3, 0, 1, 20, 1, 0.3f);
-			doActionSequenceOnNode(cancelSpark, 0, 1, 20, 1, 0.3f);
-			doActionSequenceOnNode(teatimeSprite, 0, 1, 16, 1, 0.3f);
+			DoActionSequenceOnNode(infoNode, 0, 1, 20, 1, 0.3f);
+			DoActionSequenceOnNode(infoNode3, 0, 1, 20, 1, 0.3f);
+			DoActionSequenceOnNode(cancelSpark, 0, 1, 20, 1, 0.3f);
+			DoActionSequenceOnNode(teatimeSprite, 0, 1, 20, 1, 0.3f);
 		}
 
 		// Do SKActions in a sequence on the given Sprite Node (wait, fade in, wait, fade out)
-		public void doActionSequenceOnNode(SKNode node, double waitSec, double fadeInSec, double waitSecMiddle, double fadeOutSec, nfloat maxAlpha)
+		private void DoActionSequenceOnNode(SKNode node, double waitSec, double fadeInSec, double waitSecMiddle, double fadeOutSec, nfloat maxAlpha)
 		{
 			SKAction sequence = SKAction.Sequence(SKAction.WaitForDuration(waitSec), SKAction.FadeAlphaTo(maxAlpha, fadeInSec), SKAction.WaitForDuration(waitSecMiddle), SKAction.FadeOutWithDuration(fadeOutSec));
 			node.RunAction(sequence);
 		}
 
 		// Remove the Info Text (fade out)
-		public void releaseInfoText()
+		private void ReleaseInfoText()
 		{
 			SKAction actionOut = SKAction.FadeOutWithDuration(0.2);
 
@@ -309,12 +308,12 @@ namespace Teatime
 			teatimeSprite.RunAction(actionOut);
 		}
 
-		public void createEmitterNode()
+		private void CreateEmitterNode()
 		{
 			// Setup a intial Location
 			var location = new CGPoint();
-			location.X = (((this.View.Frame.Width / 2)));
-			location.Y = (((this.View.Frame.Height / 4)));
+			location.X = (((View.Frame.Width / 2)));
+			location.Y = (((View.Frame.Height / 4)));
 
 			// Define paricles and initial settings
 			particleEmitterNode = new SKEmitterNode();
@@ -339,17 +338,17 @@ namespace Teatime
 		}
 
 		// Update the particles speed and birthrate related to the location of touch
-		public void updateEmitter(nfloat coordX, nfloat coordY)
+		private void UpdateEmitter(nfloat coordX)
 		{
 			//particleEmitterNode.ParticleScale = 0.6f * ((1/Frame.Width)*coordX) +0.2f ;
-			particleEmitterNode.ParticleSpeedRange = 10f + (coordX / 5);
 			//particleEmitterNode.ParticleScaleRange = 0.3f*((1 / Frame.Width) * coordX*10) +0.2f;
+			particleEmitterNode.ParticleSpeedRange = 10f + (coordX / 5);
 			particleEmitterNode.ParticleScaleSpeed = -0.02f;
 			particleEmitterNode.ParticleBirthRate = 20f + (coordX / 5);
 		}
 
 		// Update blur factor and dimension 3
-		public void updateBlurNode(int blur)
+		private void UpdateBlurNode(int blur)
 		{
 			Proto2Dim3 = blur;
 			particleEmitterNode.ParticleScale = 0.6f * ((1 / Frame.Width) * blur * 20) + 0.2f;
@@ -357,7 +356,7 @@ namespace Teatime
 		}
 
 		// Update dimensions 1 and 2
-		public void setDimensions(nfloat coordX, nfloat coordY)
+		public void SetDimensions(nfloat coordX, nfloat coordY)
 		{
 			nfloat checkX = coordX;
 			nfloat checkY = coordY;
@@ -379,7 +378,7 @@ namespace Teatime
 			{
 				Proto2Dim1 = 4;
 			}
-			else 
+			else
 			{
 				Proto2Dim1 = 5;
 			}
@@ -403,15 +402,15 @@ namespace Teatime
 			// Called when a touch begins
 			foreach (var touch in touches)
 			{
-				UITouch touchc = touches.AnyObject as UITouch;
-				var locationc = ((UITouch)touchc).LocationInNode(this);
+				var touchc = touches.AnyObject as UITouch;
+				var locationc = touchc.LocationInNode(this);
 				var nodeAtLocation = GetNodeAtPoint(locationc);
 				infoTouch = false;
 
 				// Release the info text if cancel icon is clicked
 				if (nodeAtLocation.Name == "cancelSpark")
 				{
-					releaseInfoText();
+					ReleaseInfoText();
 				}
 				else
 				{
@@ -444,11 +443,11 @@ namespace Teatime
 						else
 						{
 							// Check click
-							nfloat checkX = ((UITouch)touchc).LocationInNode(this).X;
-							nfloat checkY = ((UITouch)touchc).LocationInNode(this).Y;
+							nfloat checkX = touchc.LocationInNode(this).X;
+							nfloat checkY = touchc.LocationInNode(this).Y;
 
 							particleEmitterNode.Position = locationc;
-							updateEmitter(checkX, checkY);
+							UpdateEmitter(checkX);
 
 							// If it is the first touch add the particles to the scene
 							if (firstTouch == false)
@@ -465,8 +464,8 @@ namespace Teatime
 		public override void TouchesMoved(NSSet touches, UIEvent evt)
 		{
 			base.TouchesMoved(touches, evt);
-			UITouch touch = touches.AnyObject as UITouch;
-			var locationc = ((UITouch)touch).LocationInNode(this);
+			var touch = touches.AnyObject as UITouch;
+			var locationc = touch.LocationInNode(this);
 
 			// Get the node at current touch location
 			var nodeAtLocation = GetNodeAtPoint(locationc);
@@ -474,18 +473,18 @@ namespace Teatime
 			// Release the info text if cancel icon is clicked
 			if (nodeAtLocation.Name == "cancelSpark")
 			{
-				releaseInfoText();
+				ReleaseInfoText();
 			}
 			else
 			{
 				// If the touched node is not on the Info Text or Icon update the Particles with location and set the updated values
 				if (touch != null && infoTouch == false && nodeAtLocation.Name != "infoNode" && nodeAtLocation.Name != "infoLabel")
 				{
-					nfloat offsetX = (nfloat)(touch.LocationInNode(this).X);
-					nfloat offsetY = (nfloat)(touch.LocationInNode(this).Y);
+					var offsetX = touch.LocationInNode(this).X;
+					var offsetY = touch.LocationInNode(this).Y;
 
 					// Updates the Particles
-					updateEmitter(offsetX, offsetY);
+					UpdateEmitter(offsetX);
 					particleEmitterNode.Position = locationc;
 				}
 			}
@@ -494,38 +493,38 @@ namespace Teatime
 		public override void TouchesEnded(NSSet touches, UIEvent evt)
 		{
 			base.TouchesEnded(touches, evt);
-			UITouch touch = touches.AnyObject as UITouch;
+			var touch = touches.AnyObject as UITouch;
 			if (touch != null)
 			{
 				// Check the location of touch and update the dimensions
-				var checkX = ((UITouch)touch).LocationInView(View).X;
-				var checkY = ((UITouch)touch).LocationInView(View).Y;
-				setDimensions(checkX, checkY);
+				var checkX = touch.LocationInView(View).X;
+				var checkY = touch.LocationInView(View).Y;
+				SetDimensions(checkX, checkY);
 			}
 		}
 
-		void PressHandler(UILongPressGestureRecognizer gestureRecognizer)
+		private void PressHandler(UILongPressGestureRecognizer gestureRecognizer)
 		{
 			var image = gestureRecognizer.View;
 			if (gestureRecognizer.State == UIGestureRecognizerState.Began)
 			{
-				var locationTouched = gestureRecognizer.LocationInView(this.View);
+				var locationTouched = gestureRecognizer.LocationInView(View);
 				var nodeAtLocation = GetNodeAtPoint(locationTouched);
 
 				// If no Info Text is visible update the nodes with a blur factor
-				if (locationTouched != null && nodeAtLocation.Name != "infoNode" && nodeAtLocation.Name != "infoLabel")
+				if (nodeAtLocation.Name != "infoNode" && nodeAtLocation.Name != "infoLabel")
 				{
 					nfloat coordX = locationTouched.X;
 					nfloat coordY = locationTouched.Y;
-					setDimensions(coordX, coordY);
+					SetDimensions(coordX, coordY);
 					if (blurFactor == 1)
 					{
 						blurFactor = 5;
-						updateBlurNode(blurFactor);
+						UpdateBlurNode(blurFactor);
 					}
 					else {
 						blurFactor = 1;
-						updateBlurNode(blurFactor);
+						UpdateBlurNode(blurFactor);
 					}
 					// Add vibration that user recognizes that the nodes are changing 
 					SystemSound.Vibrate.PlaySystemSound();
@@ -539,7 +538,7 @@ namespace Teatime
 		}
 
 		// Save Dimensions
-		public void saveProto2Input()
+		public void SaveProto2Input()
 		{
 			TeatimeItem item;
 			item = new TeatimeItem();
@@ -547,7 +546,7 @@ namespace Teatime
 			{
 				item.Username = DatabaseMgmt.inputName;
 			}
-			else 
+			else
 			{
 				item.Username = "Anonym";
 			}
