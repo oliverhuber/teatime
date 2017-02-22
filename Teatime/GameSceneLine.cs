@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading;
-
+using System.Timers;
 using CoreGraphics;
 using Foundation;
 using SpriteKit;
@@ -12,7 +12,7 @@ namespace Teatime
 	public class TimerState
 	{
 		public int Counter;
-		public Timer Tmr;
+		//public Timer Tmr;
 	}
 	public class GameSceneLine : SKScene
 	{       
@@ -32,13 +32,19 @@ namespace Teatime
 		private SKLabelNode myLabelSizePlus;
 		private SKLabelNode myLabelSizeMinus;
 
-		private bool upperSpeed;
-		private bool upperSize;
-		private bool lowerSpeed;
-		private bool lowerSize;
-
+		private bool nextTouch;
+		private bool waitWithInteraction;
 		private int lineCounter;
-		private bool firstTouch;
+		private int lineCounterUpdate;
+
+		private System.Timers.Timer aTimer;
+		private System.Timers.Timer bTimer;
+		private int aTimerCounter;
+		private int bTimerCounter;
+		private LineNode[] lineNodes = new LineNode[19];
+
+		private nfloat speedVal;
+		private nfloat sizeVal;
 
 		protected GameSceneLine(IntPtr handle) : base(handle)
 		{
@@ -52,8 +58,10 @@ namespace Teatime
 			Proto4Dim2 = 0;
 			Proto4Dim3 = 0;
 
-			firstTouch = false;
+			waitWithInteraction = true;
+			nextTouch = false;
 			lineCounter = 0;
+			lineCounterUpdate = 0;
 
 			// Define four labels and sprite nodes which act as buttons
 			// Left Upper Sprite and Label
@@ -135,17 +143,34 @@ namespace Teatime
 			// Set Background of Scene to black
 			BackgroundColor = UIColor.FromHSB(0, 0, 0);
 
-			// Timer
-			var s = new TimerState();
+			aTimer = new System.Timers.Timer();
+			aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+			aTimer.Interval = 140;
+			aTimer.Enabled = true;
 
-			// Create the delegate that invokes methods for the timer.
-			var timerDelegate = new TimerCallback(CheckStatus);
+			aTimerCounter = 0;
+			bTimerCounter = 0;
 
-			// Create a timer that waits 200ms , then invokes 100ms
-			var timerDelecate = new Timer(timerDelegate, s, 200, 100);
+			// Default Value
+			sizeVal = 2f;
+			speedVal = 0.8f;
+		
+		}
+		// Initial timer generates lines
+		private void OnTimedEvent(object source, ElapsedEventArgs e)
+		{
+			aTimerCounter++;
 
-			// Keep a handle to the timer, so it can be disposed
-			s.Tmr = timerDelecate;
+			// Generate new line
+			GenerateLine();
+
+		}
+		private void OnTimedEventUpdate(object source, ElapsedEventArgs e)
+		{
+			bTimerCounter++;
+
+			// Update Lines
+			UpdateLine();
 		}
 
 		private void GenerateLine()
@@ -156,91 +181,61 @@ namespace Teatime
 			var yourline = new LineNode("line");
 			double temp = 0.6 + ((double)1 / 5);
 			yourline.Position = new CGPoint(Frame.Width / 20 * lineCounter, Frame.Height / 2 + 20);
-			yourline.ZPosition = 5;
+			yourline.ZPosition = 12;
 			yourline.XScale = 1.5f;
+			yourline.ID = lineCounter;
 
 			// Call Move Method of LineNode
 			yourline.EnableMove(temp);
 			yourline.YScale = 1 + lineCounter / 20;
+			lineNodes[lineCounter] = yourline;
 			AddChild(yourline);
 
-		}
-
-		// Update Method for for the Lines (speed, size)
-		private void UpdateLines(bool upperSpeedTemp, bool upperSizeTemp, bool lowerSpeedTemp, bool lowerSizeTemp)
-		{
-
-			// Generate new Timer
-			var s = new TimerState();
-
-			// Create the delegate that invokes methods for the timer.
-			var timerDelegate = new TimerCallback(CheckStatusUpdate);
-
-			// Create a timer that waits 100ms, then invokes 100ms.
-			var timerDelecate = new Timer(timerDelegate, s, 100, 100);
-
-			// Keep a handle to the timer, so it can be disposed.
-			s.Tmr = timerDelecate;
-
-			// Update size and speed
-			upperSize = upperSizeTemp;
-			upperSpeed = upperSpeedTemp;
-			lowerSize = lowerSizeTemp;
-			lowerSpeed = lowerSpeedTemp;
-		}
-
-		// Initial timer generates lines
-		private void CheckStatus(object state)
-		{
-			var s = (TimerState)state;
-			s.Counter++;
-
-			// Generate new line
-			GenerateLine();
-			(s.Tmr).Change(100, 100);
-			// Console.WriteLine("{0} Checking Status {1}.", DateTime.Now.TimeOfDay, s.counter);
-
-			// Dispose timer
-			if (s.Counter == 19)
+			// Spot Generate Line Timer and Start Update Timer
+			if (lineCounter == 18)
 			{
-				s.Tmr.Dispose();
-				s.Tmr = null;
+				waitWithInteraction = true;
+				aTimer.Stop();
+				aTimer.Dispose();
+
+				// New Update timer
+				bTimer = new System.Timers.Timer();
+				bTimer.Elapsed += new ElapsedEventHandler(OnTimedEventUpdate);
+				bTimer.Interval = 140;
+				bTimer.Enabled = true;
+
+				Proto4Dim1 = (int) (speedVal * 10);
+				Proto4Dim2 = (int) (sizeVal * 10);
+				Proto4Dim3 = Proto4Dim1 - Proto4Dim2;
 			}
 		}
-
-		// Timer line checking method
-		private void CheckStatusUpdate(object state)
+		private void UpdateLine()
 		{
-			var s = (TimerState)state;
-			s.Counter++;
-			int a = 0;
+			lineCounterUpdate++;
+
+			if (lineCounterUpdate == 19)
+			{
+				Proto4Dim1 = (int) (speedVal * 10);
+				Proto4Dim2 = (int) (sizeVal * 10);
+				Proto4Dim3 = Proto4Dim1 - Proto4Dim2;
+			}
+
+			if (lineCounterUpdate >= 10000000)
+			{
+				lineCounterUpdate = 0;
+			}
 
 			// Do for all LineNodes
 			foreach (var lineNode in Children.OfType<LineNode>())
 			{
-				a++;
-				if (s.Counter == a)
+				if (lineCounterUpdate == lineNode.ID && lineCounterUpdate < 19)
 				{
 					// Update LindeNode
-					lineNode.SetUpdateSpeed(upperSpeed, upperSize, lowerSpeed, lowerSize);
-
-					// If last node update dimensions
-					if (a == 19)
-					{
-						Proto4Dim1 = Convert.ToInt32(lineNode.SpeedLocal * 10);
-						Proto4Dim2 = Convert.ToInt32(lineNode.SizeLocal * 10);
-						Proto4Dim3 = Proto4Dim1 - Proto4Dim2;
-					}
+					lineNode.SetExactUpdatedValues(speedVal, sizeVal);
 				}
 			}
-			// Dispose timer
-			if (s.Counter == 19)
-			{
-				s.Tmr.Dispose();
-				s.Tmr = null;
-			}
 		}
-
+			
 		public override void TouchesBegan(NSSet touches, UIEvent evt)
 		{
 			// Called when a touch begins
@@ -253,49 +248,77 @@ namespace Teatime
 				nfloat checkY = touchc.LocationInNode(this).Y;
 
 				// Get the first touch
-				if (firstTouch == false)
+				if (nextTouch == false)
 				{
-					firstTouch = true;
+					nextTouch = true;
 				}
 
-				// Update Lines depending on the location of click, animate button
-				if (checkY > (Frame.Height / 2))
+				// Wait with interaction until first cycle is done
+				if (waitWithInteraction)
 				{
-					if (checkX > (Frame.Width / 2))
+					
+					// Update Lines depending on the location of click, animate button
+					if (checkY > (Frame.Height / 2))
 					{
-						UpdateLines(true, false, false, false);
-						SKAction act1 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 1f), 1f, 0);
-						SKAction act2 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 0f), 0f, 1);
-						SKAction seq = SKAction.Sequence(act1, act2);
-						rightUpperSprite.RunAction(seq);
+						if (checkX > (Frame.Width / 2))
+						{
+							speedVal = speedVal - 0.1f;
+							SKAction act1 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 1f), 1f, 0);
+							SKAction act2 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 0f), 0f, 1);
+							SKAction seq = SKAction.Sequence(act1, act2);
+							rightUpperSprite.RunAction(seq);
+						}
+						else
+						{
+							sizeVal = sizeVal + 0.1f;
+							SKAction act1 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 1f), 1f, 0);
+							SKAction act2 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 0f), 0f, 1);
+							SKAction seq = SKAction.Sequence(act1, act2);
+							leftUpperSprite.RunAction(seq);
+						}
 					}
-					else 
+					else
 					{
-						UpdateLines(false, true, false, false);
-						SKAction act1 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 1f), 1f, 0);
-						SKAction act2 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 0f), 0f, 1);
-						SKAction seq = SKAction.Sequence(act1, act2);
-						leftUpperSprite.RunAction(seq);
+						if (checkX > (Frame.Width / 2))
+						{
+							speedVal = speedVal + 0.1f;
+							SKAction act1 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 1f), 1f, 0);
+							SKAction act2 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 0f), 0f, 1);
+							SKAction seq = SKAction.Sequence(act1, act2);
+							rightLowerSprite.RunAction(seq);
+						}
+						else
+						{
+							sizeVal = sizeVal - 0.1f;
+							SKAction act1 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 1f), 1f, 0);
+							SKAction act2 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 0f), 0f, 1);
+							SKAction seq = SKAction.Sequence(act1, act2);
+							leftLowerSprite.RunAction(seq);
+						}
 					}
-				}
-				else 
-				{
-					if (checkX > (Frame.Width / 2))
+					// Min Speed
+					if (speedVal < 0.1f)
 					{
-						UpdateLines(false, false, true, false);
-						SKAction act1 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 1f), 1f, 0);
-						SKAction act2 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 0f), 0f, 1);
-						SKAction seq = SKAction.Sequence(act1, act2);
-						rightLowerSprite.RunAction(seq);
+						speedVal = 0.1f;
 					}
-					else 
+					// Max Speed 
+					if (speedVal > 2.0f)
 					{
-						UpdateLines(false, false, false, true);
-						SKAction act1 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 1f), 1f, 0);
-						SKAction act2 = SKAction.ColorizeWithColor(UIColor.FromHSB(0, 0, 0f), 0f, 1);
-						SKAction seq = SKAction.Sequence(act1, act2);
-						leftLowerSprite.RunAction(seq);
+						speedVal = 2.0f;
 					}
+
+					// Max Size
+					if (sizeVal > 8.0f)
+					{
+						sizeVal = 8.0f;
+					}
+					// Min Size
+					if (sizeVal < 0.1f)
+					{
+						sizeVal = 0.1f;
+					}
+
+					lineCounterUpdate = 0;
 				}
 			}
 		}
