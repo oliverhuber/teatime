@@ -152,7 +152,7 @@ namespace Teatime
 			bTimerCounter = 0;
 
 			// Default Value
-			sizeVal = 2f;
+			sizeVal = 1.5f;
 			speedVal = 0.8f;
 		
 		}
@@ -179,15 +179,16 @@ namespace Teatime
 
 			// Create LineNodes
 			var yourline = new LineNode("line");
-			double temp = 0.6 + ((double)1 / 5);
 			yourline.Position = new CGPoint(Frame.Width / 20 * lineCounter, Frame.Height / 2 + 20);
 			yourline.ZPosition = 12;
-			yourline.XScale = 1.5f;
+			yourline.XScale = 1.3f;
 			yourline.ID = lineCounter;
 
 			// Call Move Method of LineNode
-			yourline.EnableMove(temp);
-			yourline.YScale = 1 + lineCounter / 20;
+			//yourline.EnableMove(temp);
+			yourline.SetExactUpdatedValues(speedVal, sizeVal);
+			yourline.YScale = 0.5f;
+			//yourline.YScale = 1 + lineCounter / 20;
 			lineNodes[lineCounter] = yourline;
 			AddChild(yourline);
 

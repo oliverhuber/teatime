@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Timers;
 using SpriteKit;
 using UIKit;
 namespace Teatime
@@ -67,6 +66,25 @@ namespace Teatime
 			Size = image.Size;
 			RndMove = false;
 		}
+
+		public void EnableMove(double speedSec)
+		{
+			// Set size and speed
+			SpeedLocal = speedSec;
+			SizeLocal = 2f;
+
+			// Define Line Node Movement
+			SKAction scaleUp = SKAction.ScaleYTo(SizeLocal, SpeedLocal);
+			SKAction scaleUpWaveUp = SKAction.ScaleYTo(SizeLocal + 0.3f, 0.1);
+			SKAction scaleUpWaveDown = SKAction.ScaleYTo(SizeLocal, 0.1);
+			SKAction scaleDown = SKAction.ScaleYTo(0.5f, SpeedLocal);
+			SKAction scaleDownWaveDown = SKAction.ScaleYTo(0.5f - 0.3f, 0.1);
+			SKAction scaleDownWaveUp = SKAction.ScaleYTo(0.5f, 0.1);
+			SKAction scaleSeq = SKAction.Sequence(scaleUp, scaleUpWaveUp, scaleUpWaveDown, scaleDown, scaleDownWaveDown, scaleDownWaveUp);
+
+			RunAction(SKAction.RepeatActionForever(scaleSeq));
+		}
+
 		public void SetUpdatedValues(bool speedUp, bool sizeUp, bool speedDown, bool sizeDown)
 		{
 			SpeedUp = speedUp;
@@ -74,6 +92,7 @@ namespace Teatime
 			SpeedDown = speedDown;
 			SizeDown = sizeDown;
 		}
+
 		public void SetExactUpdatedValues(nfloat speedLocal, nfloat sizeLocal)
 		{
 			SpeedLocal = speedLocal;
@@ -92,24 +111,6 @@ namespace Teatime
 			SKAction scaleDownWaveDown = SKAction.ScaleYTo(0.5f - 0.3f, 0.1);
 			SKAction scaleDownWaveUp = SKAction.ScaleYTo(0.5f, 0.1);
 			SKAction scaleSeq = SKAction.Sequence(scaleUp, scaleUpWaveUp, scaleUpWaveDown, scaleDown, scaleDownWaveDown, scaleDownWaveUp);
-			RunAction(SKAction.RepeatActionForever(scaleSeq));
-		}
-
-		public void EnableMove(double speedSec)
-		{
-			// Set size and speed
-			SpeedLocal = speedSec;
-			SizeLocal = 2f;
-
-			// Define Line Node Movement
-			SKAction scaleUp = SKAction.ScaleYTo(SizeLocal, SpeedLocal);
-			SKAction scaleUpWaveUp = SKAction.ScaleYTo(SizeLocal + 0.3f, 0.1);
-			SKAction scaleUpWaveDown = SKAction.ScaleYTo(SizeLocal, 0.1);
-			SKAction scaleDown = SKAction.ScaleYTo(0.5f, SpeedLocal);
-			SKAction scaleDownWaveDown = SKAction.ScaleYTo(0.5f - 0.3f, 0.1);
-			SKAction scaleDownWaveUp = SKAction.ScaleYTo(0.5f, 0.1);
-			SKAction scaleSeq = SKAction.Sequence(scaleUp, scaleUpWaveUp, scaleUpWaveDown, scaleDown, scaleDownWaveDown, scaleDownWaveUp);
-
 			RunAction(SKAction.RepeatActionForever(scaleSeq));
 		}
 	}
