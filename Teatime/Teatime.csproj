@@ -160,14 +160,9 @@
     <Folder Include="Assets.xcassets\background_info_p1.imageset\" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="GameScene.sks" />
     <BundleResource Include="Assets.xcassets\spark.imageset\spark.png" />
     <BundleResource Include="Resources\logoteatime.png" />
     <BundleResource Include="Resources\logoteatime_white.png" />
-    <BundleResource Include="GameSceneSprite.sks" />
-    <BundleResource Include="GameSceneScene.sks" />
-    <BundleResource Include="GameSceneLine.sks" />
-    <BundleResource Include="GameSceneDraw.sks" />
     <BundleResource Include="Resources\logoteatime_white_3_filled.png" />
     <BundleResource Include="Resources\logoteatime_white_2_128%402x.png" />
   </ItemGroup>
