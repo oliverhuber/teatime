@@ -146,7 +146,7 @@ namespace Teatime
 					ParentNode.CenterOfNode = CenterOfNode;
 
 					// Update parent node's animation (with SKActions)
-					ParentNode.MoveAnimation(sequence);
+					ParentNode.MoveAnimation(sequence, pointSpeed1);
 				}
 			}
 		}

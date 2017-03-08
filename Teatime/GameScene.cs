@@ -458,7 +458,7 @@ namespace Teatime
 				}
 			}
 			// Do first update of the all sparks, that they will have a base movement
-			UpdateSparks(1, true, false, 0, false);
+			UpdateSparks(3, true, true, 4, false);
 		}
 
 		// Calculate the different dimensions based on the location
@@ -677,8 +677,12 @@ namespace Teatime
 			var nodeAtLocation = GetNodeAtPoint(locationc);
 			if (touch != null)
 			{
+				if (nodeAtLocation.Name == "cancelSpark")
+				{
+					ReleaseInfoText();
+				}
 				// If Info Text Box is not visible, revert center for the spark nodes
-				if (nodeAtLocation.Name != "infoNode" && nodeAtLocation.Name != "infoLabel")
+				else if (nodeAtLocation.Name != "infoNode" && nodeAtLocation.Name != "infoLabel")
 				{
 					//Release the Changed center
 					RevertCenter();

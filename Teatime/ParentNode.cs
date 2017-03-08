@@ -53,7 +53,7 @@ namespace Teatime
 		}
 
 		// Set exactly the same animation of related spark node
-		public void MoveAnimation(SKAction sequence)
+		public void MoveAnimation(SKAction sequence, double pointSpeed1)
 		{
 			// Remove All Actions from that node
 			RemoveAllActions();
@@ -61,6 +61,18 @@ namespace Teatime
 
 			// Set default texture
 			ChangeTexture();
+			AddHeartbeat(pointSpeed1);
+		}
+
+		// Add Heartbeat Animation to parent node
+		private void AddHeartbeat(double tempWait)
+		{
+			double wait = tempWait - 1;
+			SKAction sleep = SKAction.WaitForDuration(wait);
+			SKAction sizeUp = SKAction.ScaleTo(1.2f,0.1f);
+			SKAction sizeDown = SKAction.ScaleTo(0.9f,0.1f);
+			var sequence = SKAction.Sequence(sleep, sizeUp, sizeDown);
+			RunAction(SKAction.RepeatActionForever(sequence));
 		}
 
 		// Set Animation of current parent node
@@ -82,6 +94,10 @@ namespace Teatime
 
 			// Change texture
 			ChangeTexture(vibrate, pointSpeed1);
+
+			// Add Heartbeat
+			AddHeartbeat(pointSpeed1);
+
 		}
 
 		// Change Texture to disturbed texture

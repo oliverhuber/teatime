@@ -268,7 +268,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="159" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" alpha="0.8">
-                                <rect key="frame" x="3" y="14" width="104" height="53"/>
+                                <rect key="frame" x="3" y="13" width="104" height="53"/>
                                 <connections>
                                     <segue id="180" destination="10" kind="unwind" unwindAction="UnwindToPrototypes:"/>
                                     <action selector="UnwindProto_TouchUpInside:" destination="7" id="182" eventType="touchUpInside"/>
@@ -325,7 +325,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="264" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" alpha="0.8">
-                                <rect key="frame" x="1" y="17" width="100" height="48"/>
+                                <rect key="frame" x="1" y="15" width="100" height="48"/>
                                 <connections>
                                     <action selector="UnwindProto_TouchUpInside:" destination="268" id="267" eventType="touchUpInside"/>
                                     <segue id="270" destination="243" kind="unwind" unwindAction="UnwindToPrototypes:"/>
@@ -436,7 +436,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1169" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" alpha="0.8">
-                                <rect key="frame" x="3" y="19" width="91" height="48"/>
+                                <rect key="frame" x="-4" y="17" width="91" height="48"/>
                                 <connections>
                                     <action selector="UnwindProto_TouchUpInside:" destination="1173" id="1172" eventType="touchUpInside"/>
                                     <segue id="1175" destination="1124" kind="unwind" unwindAction="UnwindToPrototypes:"/>
@@ -445,7 +445,7 @@
                                 <fontDescription key="fontDescription" name="AppleSDGothicNeo-UltraLight" family="Apple SD Gothic Neo" pointSize="17"/>
                                 <size key="titleShadowOffset" width="0" height="0"/>
                                 <state key="normal" title="&lt; back">
-                                    <color key="titleColor" colorSpace="calibratedWhite" white="0.666666666666667" alpha="1"/>
+                                    <color key="titleColor" colorSpace="calibratedWhite" white="1" alpha="1"/>
                                 </state>
                             </button>
                         </subviews>
@@ -564,5 +564,6 @@
         <image name="background_info_p1" width="640" height="1136"/>
         <image name="logoteatime_white_3_filled.png" width="1280" height="800"/>
         <image name="logoteatime_white_2_128.png" width="128" height="80"/>
+        <image name="background_p5" width="640" height="1136"/>
     </resources>
 </document>

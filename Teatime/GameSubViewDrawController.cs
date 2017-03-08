@@ -25,8 +25,7 @@ namespace Teatime
 
 			base.ViewDidLoad();
 			StartPrototype();
-
-
+			            
 		}
 
 		private void StartPrototype()
