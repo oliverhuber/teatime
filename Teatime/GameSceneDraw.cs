@@ -147,6 +147,7 @@ namespace Teatime
 			// Setup Scene for game mode 1 with baseline, initial 2 sprites
 			// First Point Node
 			firstPoint = new PointNode("sparkfilled");
+			firstPoint.Name = "FirstPoint";
 			firstPoint.Position = new CGPoint(0 - 6, Frame.Height / 2);
 			firstPoint.ZPosition = 1;
 			firstPoint.XScale = 0.1f;
@@ -158,6 +159,7 @@ namespace Teatime
 
 			// Last Point  Node
 			lastPoint = new PointNode("sparkfilled");
+			lastPoint.Name = "LastPoint"; 
 			lastPoint.Position = new CGPoint(Frame.Width + 6, Frame.Height / 2);
 			lastPoint.ZPosition = 1;
 			lastPoint.XScale = 0.1f;
@@ -1305,17 +1307,28 @@ namespace Teatime
 					if (spriteNode is PointNode)
 					{
 						catText = spriteNode.Category;
+						item.Comment = TimeCalculation(spriteNode.Position.X) + ";" + catText;
 						if (catText == "")
 						{
 							catText = "No Categorie";
+							item.Comment = TimeCalculation(spriteNode.Position.X) + ";" + catText;
+							item.Dim1 = (int)(Frame.Height / 2 - spriteNode.Position.Y);
+						}
+						else if (catText == "Schlaf")
+						{
+							item.Dim2 = (int)(Frame.Height / 2 - spriteNode.Position.Y);
+						}
+						else if (catText == "Privater Grund")
+						{
+							item.Dim3 = (int)(Frame.Height / 2 - spriteNode.Position.Y);
+						}
+						else {
+							item.Dim1 = (int)(Frame.Height / 2 - spriteNode.Position.Y);
 						}
 					}
-
-					item.Comment = TimeCalculation(spriteNode.Position.X) + ";" + catText;
-					item.Dim1 = (int)(Frame.Height / 2 - spriteNode.Position.Y);
 				}
 
-				if (spriteNode.Name != "navSprite" && spriteNode.Name != "arrowLeft" && spriteNode.Name != "arrowRight")
+				if (spriteNode.Name != "navSprite" && spriteNode.Name != "arrowLeft" && spriteNode.Name != "arrowRight" && spriteNode.Name != "FirstPoint" && spriteNode.Name != "LastPoint")
 				{
 					DatabaseMgmt.Database.SaveItem(item);
 				}
