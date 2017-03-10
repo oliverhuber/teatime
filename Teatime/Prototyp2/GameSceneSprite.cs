@@ -92,11 +92,25 @@ namespace Teatime
 
 		private void SetInfoText()
 		{
+
+			int tempFontSize = 18;
+			int tempInfoSize = 40;
+			int tempInfoPos = 40;
+
+
+			// Check which iOS device, change infobox text and size
+			if (UIScreen.MainScreen.Bounds.Width < 375)
+			{
+				tempFontSize = 16;
+				tempInfoSize = 20;
+				tempInfoPos = 30;
+			}
+
 			// Define and add Label 1
 			infoLabel1 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
 			{
-				Text = "Hier kannst du deine Stimmung erfassen",
-				FontSize = 18,
+				Text = "Hier kannst du deine Emotion erfassen",
+				FontSize = tempFontSize,
 				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 10)
 			};
 			infoLabel1.Alpha = 0.0f;
@@ -107,8 +121,8 @@ namespace Teatime
 			// Define and add Label 2
 			infoLabel2 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
 			{
-				Text = "",
-				FontSize = 18,
+				Text = "suche eine passende Farbe",
+				FontSize = tempFontSize,
 				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 - 20)
 			};
 			infoLabel2.Alpha = 0.0f;
@@ -120,7 +134,7 @@ namespace Teatime
 			infoLabel3 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
 			{
 				Text = "Berühre den Bildschirm",
-				FontSize = 18,
+				FontSize = tempFontSize,
 				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 10)
 			};
 			infoLabel3.Alpha = 0.0f;
@@ -132,7 +146,7 @@ namespace Teatime
 			infoLabel4 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
 			{
 				Text = "und navigiere die Punkte",
-				FontSize = 18,
+				FontSize = tempFontSize,
 				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 - 20)
 			};
 			infoLabel4.Alpha = 0.0f;
@@ -144,7 +158,7 @@ namespace Teatime
 			infoLabel5 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
 			{
 				Text = "so dass diese schlussendlich",
-				FontSize = 18,
+				FontSize = tempFontSize,
 				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 10)
 			};
 			infoLabel5.Alpha = 0.0f;
@@ -156,7 +170,7 @@ namespace Teatime
 			infoLabel6 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
 			{
 				Text = "deiner aktuellen Gefühlslage entsprechen",
-				FontSize = 18,
+				FontSize = tempFontSize,
 				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 - 20)
 			};
 			infoLabel6.Alpha = 0.0f;
@@ -168,7 +182,7 @@ namespace Teatime
 			infoLabel7 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
 			{
 				Text = "wenn du die Punkte lange drückst",
-				FontSize = 18,
+				FontSize = tempFontSize,
 				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 10)
 			};
 			infoLabel7.Alpha = 0.0f;
@@ -180,7 +194,7 @@ namespace Teatime
 			infoLabel8 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
 			{
 				Text = "kannst du diese verändern",
-				FontSize = 18,
+				FontSize = tempFontSize,
 				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 - 20)
 			};
 			infoLabel8.Alpha = 0.0f;
@@ -192,7 +206,7 @@ namespace Teatime
 			infoLabel9 = new SKLabelNode("AppleSDGothicNeo-Bold")
 			{
 				Text = "TEATIME",
-				FontSize = 18,
+				FontSize = tempFontSize,
 				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 60)
 			};
 			infoLabel9.Alpha = 0.0f;
@@ -223,8 +237,8 @@ namespace Teatime
 
 			// Define and add Info Box rect 2
 			infoNode2 = new SKSpriteNode();
-			infoNode2.Size = new CGSize(Frame.Width - 60, 150);
-			infoNode2.Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 15);
+			infoNode2.Size = new CGSize(Frame.Width - 60, 130);
+			infoNode2.Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 25);
 			infoNode2.Color = UIColor.FromHSB(0, 0, 0.3f);
 			infoNode2.ZPosition = 98;
 			infoNode2.Name = "infoNode";
@@ -233,8 +247,8 @@ namespace Teatime
 
 			// Define and add Info Box rect 3
 			infoNode3 = new SKSpriteNode();
-			infoNode3.Size = new CGSize(Frame.Width - 40, 150);
-			infoNode3.Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 15);
+			infoNode3.Size = new CGSize(Frame.Width - tempInfoSize, 130);
+			infoNode3.Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 25);
 			infoNode3.Color = UIColor.FromHSB(0, 0, 0.3f);
 			infoNode3.ZPosition = 98;
 			infoNode3.Name = "infoNode";
@@ -248,7 +262,7 @@ namespace Teatime
 			cancelSpark.Alpha = 0.0f;
 			cancelSpark.SetScale(0.6f);
 			cancelSpark.Color = UIColor.FromHSB(0, 0, 0.0f);
-			cancelSpark.Position = new CGPoint((View.Frame.Width - (40)), (View.Frame.Height / 2 + (70)));
+			cancelSpark.Position = new CGPoint((View.Frame.Width - (tempInfoPos)), (View.Frame.Height / 2 + (70)));
 			AddChild(cancelSpark);
 
 			// Define and add Teatime Icon for the Info Box
@@ -258,7 +272,7 @@ namespace Teatime
 			teatimeSprite.Alpha = 0.0f;
 			teatimeSprite.SetScale(0.35f);
 			teatimeSprite.Color = UIColor.FromHSB(0, 0, 0.0f);
-			teatimeSprite.Position = new CGPoint((0 + (40)), (View.Frame.Height / 2 + (70)));
+			teatimeSprite.Position = new CGPoint((0 + (tempInfoPos)), (View.Frame.Height / 2 + (70)));
 			AddChild(teatimeSprite);
 
 			// Actions and Sequence for Info Nodes

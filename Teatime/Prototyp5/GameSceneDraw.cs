@@ -51,6 +51,7 @@ namespace Teatime
 		private SKLabelNode mySave;
 
 		private SKSpriteNode categoryTempFilter;
+		private SKLabelNode categoryCurrent;
 		private SKLabelNode categoryText0;
 		private SKLabelNode categoryText1;
 		private SKLabelNode categoryText2;
@@ -201,15 +202,22 @@ namespace Teatime
 			);
 			*/
 
+			int tempPos = 0;
+
+			// Check which iOS device, change sleep nodes and arrows position
+			if (UIScreen.MainScreen.Bounds.Width < 375)
+			{
+				tempPos = 20;
+			}
 
 			// Set up game scene for game mode 2
 			// Night Nodes 
 			var locationLeft = new CGPoint();
-			locationLeft.X = (0 - View.Frame.Width / 4 - 25);
+			locationLeft.X = (0 - (View.Frame.Width / 4 ) - 25 + tempPos );
 			locationLeft.Y = (View.Frame.Height / 2);
 
 			var locationRight = new CGPoint();
-			locationRight.X = (View.Frame.Width + View.Frame.Width / 4 + 25);
+			locationRight.X = (View.Frame.Width + (View.Frame.Width / 4) + 25 - tempPos);
 			locationRight.Y = (View.Frame.Height / 2);
 
 			spriteLeft = new PointNode()
@@ -260,7 +268,7 @@ namespace Teatime
 			// Arrow Sprite Node
 			arrowLeftSprite = new PointNode("arrowcircle");
 			arrowLeftSprite.Name = "arrowLeft";
-			arrowLeftSprite.Position = new CGPoint(Frame.Width / 2 - 150, Frame.Height / 2);
+			arrowLeftSprite.Position = new CGPoint(0 + spriteLeft.Position.X + Frame.Width / 2 - 30, Frame.Height / 2);
 			arrowLeftSprite.ZPosition = 1;
 			arrowLeftSprite.XScale = 0.6f;
 			arrowLeftSprite.YScale = 0.6f;
@@ -273,7 +281,7 @@ namespace Teatime
 			// Arrow Sprite Node
 			arrowRightSprite = new PointNode("arrowcircle");
 			arrowRightSprite.Name = "arrowRight";
-			arrowRightSprite.Position = new CGPoint(Frame.Width / 2 + 150, Frame.Height / 2);
+			arrowRightSprite.Position = new CGPoint(spriteRight.Position.X - Frame.Width / 2 + 30, Frame.Height / 2);
 			arrowRightSprite.ZPosition = 1;
 			arrowRightSprite.ZRotation = -((nfloat)(Math.PI / 2));
 			arrowRightSprite.XScale = 0.6f;
@@ -306,11 +314,23 @@ namespace Teatime
 		}
 		private void SetInfoText()
 		{
+
+			int tempFontSize = 18;
+			int tempPosCorrection = 0;
+
+
+			// Check which iOS device, change infobox text and size
+			if (UIScreen.MainScreen.Bounds.Width < 375)
+			{
+				tempFontSize = 16;
+				tempPosCorrection = 20;
+			}
+
 			myLabel = new SKLabelNode("AppleSDGothicNeo-UltraLight")
 			{
 				Text = "Erfasse deine Aufsteh- ",
-				FontSize = 18,
-				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 200)
+				FontSize = tempFontSize,
+				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 200 - tempPosCorrection)
 			};
 			myLabel.Alpha = 0.0f;
 			myLabel.ZPosition = 1;
@@ -321,8 +341,8 @@ namespace Teatime
 			myLabel2 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
 			{
 				Text = "und Schlafenszeit.",
-				FontSize = 18,
-				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 170)
+				FontSize = tempFontSize,
+				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 170 - tempPosCorrection)
 			};
 			myLabel2.Alpha = 0.0f;
 			myLabel2.ZPosition = 1;
@@ -333,8 +353,8 @@ namespace Teatime
 			myLabel3 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
 			{
 				Text = "Bestätige mit next >",
-				FontSize = 18,
-				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 140)
+				FontSize = tempFontSize,
+				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 140 - tempPosCorrection)
 			};
 			myLabel3.Alpha = 0.0f;
 			myLabel3.ZPosition = 1;
@@ -345,6 +365,15 @@ namespace Teatime
 
 		private void SetUpCategoryView()
 		{
+
+			int tempPos = 0;
+
+			// Check which iOS device, change sleep nodes and arrows position
+			if (UIScreen.MainScreen.Bounds.Width < 375)
+			{
+				tempPos = 40;
+			}
+
 			SystemSound.Vibrate.PlaySystemSound();
 			gameMode = 2;
 			CheckSprites();
@@ -359,29 +388,44 @@ namespace Teatime
 			categoryTempFilter.Color = UIColor.FromHSB(0, 0, 0);
 			AddChild(categoryTempFilter);
 
+
+
+			categoryCurrent = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+			{
+				Text = "Aktuelle Kategorie:",
+				FontSize = 18,
+				Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 + 240 - tempPos)
+			};
+			categoryCurrent.HorizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left;
+			categoryCurrent.Alpha = 0f;
+			categoryCurrent.ZPosition = 101;
+			categoryCurrent.FontColor = UIColor.FromHSB(0, 0, 1f);
+			AddChild(categoryCurrent);
+
 			String currentCat = "";
 			if (currentPoint.Category != "")
 			{
-				currentCat = "Aktuelle Kategorie: " + currentPoint.Category;
+				categoryCurrent.Alpha = 0.9f;
+				currentCat = currentPoint.Category;
 			}
 
 			categoryText0 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
 			{
 				Text = currentCat,
 				FontSize = 18,
-				Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 + 240)
+				Position = new CGPoint(Frame.Width / 2 + 25, Frame.Height / 2 + 240 - tempPos)
 			};
 			categoryText0.HorizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left;
-			categoryText0.Alpha = 0.9f;
+			categoryText0.Alpha = 1f;
 			categoryText0.ZPosition = 101;
-			categoryText0.FontColor = UIColor.FromHSB(0, 0, 1f);
+			categoryText0.FontColor = currentPoint.Color;
 			AddChild(categoryText0);
 
 			categoryText1 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
 			{
 				Text = "Wähle eine Kategorie / Aktion",
 				FontSize = 18,
-				Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 + 200)
+				Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 + 200 - tempPos)
 			};
 			categoryText1.HorizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left;
 			categoryText1.Alpha = 0.9f;
@@ -394,7 +438,7 @@ namespace Teatime
 				Name = "Cat1",
 				Text = "> Kollegium",
 				FontSize = 18,
-				Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 + 160)
+				Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 + 160 - tempPos)
 			};
 			categoryText2.HorizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left;
 			categoryText2.Alpha = 0.9f;
@@ -407,7 +451,7 @@ namespace Teatime
 				Name = "Cat2",
 				Text = "> Einzelne Schüler",
 				FontSize = 18,
-				Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 + 130)
+				Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 + 130 - tempPos)
 			};
 			categoryText3.HorizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left;
 			categoryText3.Alpha = 0.9f;
@@ -420,7 +464,7 @@ namespace Teatime
 				Name = "Cat3",
 				Text = "> Schülergruppen",
 				FontSize = 18,
-				Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 + 100)
+				Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 + 100 - tempPos)
 			};
 			categoryText4.HorizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left;
 			categoryText4.Alpha = 0.9f;
@@ -433,7 +477,7 @@ namespace Teatime
 				Name = "Cat4",
 				Text = "> Eltern",
 				FontSize = 18,
-				Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 + 70)
+				Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 + 70 - tempPos)
 			};
 			categoryText5.HorizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left;
 			categoryText5.Alpha = 0.9f;
@@ -446,7 +490,7 @@ namespace Teatime
 				Name = "Cat5",
 				Text = "> Schlaf",
 				FontSize = 18,
-				Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 + 40)
+				Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 + 40 - tempPos)
 			};
 			categoryText6.HorizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left;
 			categoryText6.Alpha = 0.9f;
@@ -459,7 +503,7 @@ namespace Teatime
 				Name = "Cat6",
 				Text = "> Privater Grund",
 				FontSize = 18,
-				Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 + 10)
+				Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 + 10 - tempPos)
 			};
 			categoryText7.HorizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left;
 			categoryText7.Alpha = 0.9f;
@@ -472,7 +516,7 @@ namespace Teatime
 				Name = "CatRelLabel",
 				Text = "> Kategorie zurücksetzen",
 				FontSize = 18,
-				Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 - 110)
+				Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 - 110 - tempPos)
 			};
 			categoryTextRel.HorizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left;
 			categoryTextRel.Alpha = 0.9f;
@@ -485,7 +529,7 @@ namespace Teatime
 				Name = "DeleteLabel",
 				Text = "> Zeitpunkt löschen",
 				FontSize = 18,
-				Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 - 140)
+				Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 - 140 - tempPos)
 			};
 			categoryTextDel.HorizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left;
 			categoryTextDel.Alpha = 0.9f;
@@ -498,7 +542,7 @@ namespace Teatime
 				Name = "ExitLabel",
 				Text = "> Menu verlassen",
 				FontSize = 18,
-				Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 - 170)
+				Position = new CGPoint(Frame.Width / 2 - 120, Frame.Height / 2 - 170 - tempPos)
 			};
 			categoryTextExit.HorizontalAlignmentMode = SKLabelHorizontalAlignmentMode.Left;
 			categoryTextExit.Alpha = 0.9f;
@@ -507,7 +551,7 @@ namespace Teatime
 			AddChild(categoryTextExit);
 
 			inputUserText = new UITextField();
-			inputUserText.Frame = new CGRect(View.Bounds.Width / 2 - 127, View.Bounds.Height / 2 + 3, 225, 28);
+			inputUserText.Frame = new CGRect(View.Bounds.Width / 2 - 127, (View.Bounds.Height / 2) + 3 + tempPos, 225, 28);
 			inputUserText.BackgroundColor = UIColor.FromHSB(0, 0, 0.2f);
 			inputUserText.TextColor = UIColor.FromHSB(0.9f, 0.5f, 1.0f);
 			View.AddSubview(inputUserText);
@@ -644,6 +688,7 @@ namespace Teatime
 		private void RemoveCategoryView()
 		{
 			categoryTempFilter.RemoveFromParent();
+			categoryCurrent.RemoveFromParent();
 			categoryText0.RemoveFromParent();
 			categoryText1.RemoveFromParent();
 			categoryText2.RemoveFromParent();
