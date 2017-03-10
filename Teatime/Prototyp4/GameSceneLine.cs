@@ -12,8 +12,8 @@ namespace Teatime
 	public class TimerState
 	{
 		public int Counter;
-		//public Timer Tmr;
 	}
+
 	public class GameSceneLine : SKScene
 	{       
 		// Prototype Dimension Mapping 
@@ -48,7 +48,10 @@ namespace Teatime
 
 		protected GameSceneLine(IntPtr handle) : base(handle)
 		{
-			// Note: this .ctor should not contain any initialization logic.
+		}
+
+		public GameSceneLine()
+		{
 		}
 
 		public override void DidMoveToView(SKView view)

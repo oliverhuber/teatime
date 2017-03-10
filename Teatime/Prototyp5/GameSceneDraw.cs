@@ -70,7 +70,10 @@ namespace Teatime
 
 		protected GameSceneDraw(IntPtr handle) : base(handle)
 		{
-			// Note: this .ctor should not contain any initialization logic.
+		}
+
+		public GameSceneDraw()
+		{
 		}
 
 		public override void DidMoveToView(SKView view)
@@ -305,7 +308,7 @@ namespace Teatime
 		{
 			myLabel = new SKLabelNode("AppleSDGothicNeo-UltraLight")
 			{
-				Text = "Erfasse deine Schlaf- ",
+				Text = "Erfasse deine Aufsteh- ",
 				FontSize = 18,
 				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 200)
 			};
@@ -317,7 +320,7 @@ namespace Teatime
 
 			myLabel2 = new SKLabelNode("AppleSDGothicNeo-UltraLight")
 			{
-				Text = "und Wachphase.",
+				Text = "und Schlafenszeit.",
 				FontSize = 18,
 				Position = new CGPoint(Frame.Width / 2, Frame.Height / 2 + 170)
 			};
@@ -952,8 +955,8 @@ namespace Teatime
 					myLabel2.Alpha = 0f;
 					myLabel3.Alpha = 0f;
 
-					myLabel.Text = "Erfasse deine Schlaf-";
-					myLabel2.Text = "und Wachphase";
+					myLabel.Text = "Erfasse deine Aufsteh-";
+					myLabel2.Text = "und Schlafenszeit";
 					myLabel3.Text = "Bestätige mit next >";
 
 					myLabel.RunAction(SKAction.Sequence(SKAction.FadeInWithDuration(1), SKAction.WaitForDuration(2), SKAction.FadeOutWithDuration(1)));

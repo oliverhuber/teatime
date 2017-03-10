@@ -20,8 +20,9 @@ namespace Teatime
 		{
 
 			// Configure the view.
-			//	UIDevice.CurrentDevice.SetValueForKey(new NSNumber((int)PreferredInterfaceOrientationForPresentation()), new NSString("orientation"));
-			//	UIDevice.CurrentDevice.SetValueForKey(new NSNumber((int)PreferredInterfaceOrientationForPresentation()), new NSString("orientation"));
+
+			// Would force horizontal mode after loading
+			// UIDevice.CurrentDevice.SetValueForKey(new NSNumber((int)PreferredInterfaceOrientationForPresentation()), new NSString("orientation"));
 
 			base.ViewDidLoad();
 			StartPrototype();
@@ -38,7 +39,7 @@ namespace Teatime
 			skView.SizeToFit();
 
 			// Create and configure the scene.
-			scene = SKNode.FromFile<GameSceneDraw>("GameSceneDraw");
+			scene = new GameSceneDraw();
 			scene.ScaleMode = SKSceneScaleMode.ResizeFill;
 			scene.Size = View.Bounds.Size;
 			skView.PresentScene(scene);
@@ -59,7 +60,7 @@ namespace Teatime
 
 		public override bool ShouldAutorotate()
 		{
-			return ShouldAllowLandscape(); // implemet this method to return true only when u want it to
+			return ShouldAllowLandscape(); 
 		}
 
 		public override UIInterfaceOrientation PreferredInterfaceOrientationForPresentation()

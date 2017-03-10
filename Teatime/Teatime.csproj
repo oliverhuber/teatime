@@ -161,6 +161,13 @@
     <Folder Include="Assets.xcassets\transparent.imageset\" />
     <Folder Include="Assets.xcassets\background_info_p1.imageset\" />
     <Folder Include="Assets.xcassets\background_p5.imageset\" />
+    <Folder Include="Prototyp1\" />
+    <Folder Include="Prototyp2\" />
+    <Folder Include="Prototyp3\" />
+    <Folder Include="Prototyp4\" />
+    <Folder Include="Prototyp5\" />
+    <Folder Include="Database\" />
+    <Folder Include="ShowData\" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Assets.xcassets\spark.imageset\spark.png" />
@@ -185,51 +192,47 @@
     <Compile Include="GameViewController.designer.cs">
       <DependentUpon>GameViewController.cs</DependentUpon>
     </Compile>
-    <Compile Include="GameScene.cs" />
-    <Compile Include="SparkNode.cs" />
-    <Compile Include="ParentNode.cs" />
-    <Compile Include="GameSubViewController.cs" />
-    <Compile Include="GameSubViewController.designer.cs">
+    <Compile Include="Prototyp1\GameScene.cs" />
+    <Compile Include="Prototyp1\GameSubViewController.cs" />
+    <Compile Include="Prototyp1\GameSubViewController.designer.cs">
       <DependentUpon>GameSubViewController.cs</DependentUpon>
     </Compile>
-    <Compile Include="DatabaseMgmt.cs" />
-    <Compile Include="GameSceneSprite.cs" />
-    <Compile Include="GameSubViewSpriteController.cs" />
-    <Compile Include="GameSubViewSpriteController.designer.cs">
+    <Compile Include="Prototyp1\SparkNode.cs" />
+    <Compile Include="Prototyp1\ParentNode.cs" />
+    <Compile Include="Prototyp2\GameSubViewSpriteController.cs" />
+    <Compile Include="Prototyp2\GameSubViewSpriteController.designer.cs">
       <DependentUpon>GameSubViewSpriteController.cs</DependentUpon>
     </Compile>
-    <Compile Include="GameSubViewSceneController.cs" />
-    <Compile Include="GameSubViewSceneController.designer.cs">
+    <Compile Include="Prototyp2\GameSceneSprite.cs" />
+    <Compile Include="Prototyp3\GameSceneScene.cs" />
+    <Compile Include="Prototyp3\GameSubViewSceneController.cs" />
+    <Compile Include="Prototyp3\GameSubViewSceneController.designer.cs">
       <DependentUpon>GameSubViewSceneController.cs</DependentUpon>
     </Compile>
-    <Compile Include="GameSceneScene.cs" />
-    <Compile Include="FieldNode.cs" />
-    <Compile Include="GameSubViewLineController.cs" />
-    <Compile Include="GameSubViewLineController.designer.cs">
+    <Compile Include="Prototyp4\GameSceneLine.cs" />
+    <Compile Include="Prototyp4\GameSubViewLineController.cs" />
+    <Compile Include="Prototyp4\GameSubViewLineController.designer.cs">
       <DependentUpon>GameSubViewLineController.cs</DependentUpon>
     </Compile>
-    <Compile Include="GameSceneLine.cs" />
-    <Compile Include="LineNode.cs" />
-    <Compile Include="GameSubViewDrawController.cs" />
-    <Compile Include="GameSubViewDrawController.designer.cs">
+    <Compile Include="Prototyp5\GameSceneDraw.cs" />
+    <Compile Include="Prototyp5\GameSubViewDrawController.cs" />
+    <Compile Include="Prototyp5\GameSubViewDrawController.designer.cs">
       <DependentUpon>GameSubViewDrawController.cs</DependentUpon>
     </Compile>
-    <Compile Include="GameSceneDraw.cs" />
-    <Compile Include="LineNodeDraw.cs" />
-    <Compile Include="FileHelper.cs" />
-    <Compile Include="IFileHelper.cs" />
-    <Compile Include="TeatimeDatabase.cs" />
-    <Compile Include="TeatimeItem.cs" />
-    <Compile Include="showUserData.cs" />
-    <Compile Include="showUserData.designer.cs">
+    <Compile Include="Prototyp4\LineNode.cs" />
+    <Compile Include="Database\DatabaseMgmt.cs" />
+    <Compile Include="ShowData\CustomCell.cs" />
+    <Compile Include="ShowData\TableSouce.cs" />
+    <Compile Include="Database\TeatimeDatabase.cs" />
+    <Compile Include="Database\TeatimeItem.cs" />
+    <Compile Include="Database\FileHelper.cs" />
+    <Compile Include="Prototyp5\LineNodeDraw.cs" />
+    <Compile Include="Database\IFileHelper.cs" />
+    <Compile Include="Prototyp5\PointNode.cs" />
+    <Compile Include="Prototyp3\FieldNode.cs" />
+    <Compile Include="ShowData\showUserData.cs" />
+    <Compile Include="ShowData\showUserData.designer.cs">
       <DependentUpon>showUserData.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TableSouce.cs" />
-    <Compile Include="CustomCell.cs" />
-    <Compile Include="PointNode.cs" />
-    <Compile Include="RootViewController.cs" />
-    <Compile Include="RootViewController.designer.cs">
-      <DependentUpon>RootViewController.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

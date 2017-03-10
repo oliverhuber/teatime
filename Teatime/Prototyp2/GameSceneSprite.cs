@@ -42,7 +42,10 @@ namespace Teatime
 
 		protected GameSceneSprite(IntPtr handle) : base(handle)
 		{
-			// Note: this .ctor should not contain any initialization logic.
+		}
+
+		public GameSceneSprite()
+		{
 		}
 
 		public override void DidMoveToView(SKView view)

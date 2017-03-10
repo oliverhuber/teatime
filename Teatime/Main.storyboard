@@ -292,7 +292,7 @@
         </scene>
         <scene sceneID="92">
             <objects>
-                <navigationController id="93" sceneMemberID="viewController" title="Teatime" modalTransitionStyle="crossDissolve" modalPresentationStyle="overFullScreen" navigationBarHidden="YES" customClass="RootViewController">
+                <navigationController id="93" sceneMemberID="viewController" title="Teatime" modalTransitionStyle="crossDissolve" modalPresentationStyle="overFullScreen" navigationBarHidden="YES">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="95">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -466,24 +466,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="12" id="1185" rowHeight="44">
-                                <rect key="frame" x="0.0" y="94" width="600" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1185" id="1186">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="12" id="1266" rowHeight="44" focusStyle="custom">
-                                <rect key="frame" x="0.0" y="138" width="600" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1266" id="1267">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
+                        <prototypes/>
                         <connections>
                             <outlet property="dataSource" destination="1181" id="1183"/>
                             <outlet property="delegate" destination="1181" id="1184"/>

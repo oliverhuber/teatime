@@ -37,7 +37,7 @@ namespace Teatime
 			skView.IgnoresSiblingOrder = true;
 
 			// Create and configure the scene.
-			scene = SKNode.FromFile<GameSceneSprite>("GameSceneSprite");
+			scene = new GameSceneSprite();
 			scene.ScaleMode = SKSceneScaleMode.ResizeFill;
 
 			// Present the scene.

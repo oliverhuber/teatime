@@ -36,7 +36,7 @@ namespace Teatime
 			skView.SizeToFit();
 
 			// Create and configure the scene
-			scene = SKNode.FromFile<GameScene>("GameScene");
+			scene = new GameScene();
 			scene.ScaleMode = SKSceneScaleMode.ResizeFill;
 			scene.Size = View.Bounds.Size;
 			skView.PresentScene(scene);

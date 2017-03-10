@@ -1,18 +1,17 @@
 using System;
 using SpriteKit;
 using UIKit;
-
 namespace Teatime
 {
-	public partial class GameSubViewLineController : UIViewController
-	{
-		private GameSceneLine scene;
+    public partial class GameSubViewSceneController : UIViewController
+    {
+		private GameSceneScene scene;
 
-		public GameSubViewLineController(IntPtr handle) : base(handle)
-		{
-		}
+		public GameSubViewSceneController (IntPtr handle) : base (handle)
+        {
+        }
 
-		public GameSubViewLineController()
+		public GameSubViewSceneController()
 		{
 		}
 
@@ -20,7 +19,7 @@ namespace Teatime
 		{
 			base.ViewDidLoad();
 
-			// Configure the view
+			// Configure the view.
 			StartPrototype();
 		}
 
@@ -34,17 +33,18 @@ namespace Teatime
 			skView.SizeToFit();
 
 			// Create and configure the scene
-			scene = SKNode.FromFile<GameSceneLine>("GameSceneLine");
+			scene = new GameSceneScene();
 			scene.ScaleMode = SKSceneScaleMode.ResizeFill;
 			scene.Size = View.Bounds.Size;
 			skView.PresentScene(scene);
 		}
 
-		partial void UnwindProto5_TouchUpInside(UIButton sender)
+		partial void UnwindProto4_TouchUpInside(UIButton sender)
 		{
 			// If back button is clicked save prototype
-			scene.SaveProto4Input();
+			scene.SaveProto3Input();
 		}
+
 
 		public override bool ShouldAutorotate()
 		{
@@ -66,4 +66,5 @@ namespace Teatime
 			return true;
 		}
 	}
+
 }
