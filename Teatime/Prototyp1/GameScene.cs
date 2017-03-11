@@ -68,7 +68,7 @@ namespace Teatime
 			backgroundSprite.ScaleTo(Frame.Size);
 			backgroundSprite.Position = new CGPoint(Frame.Width / 2, Frame.Height / 2);
 			backgroundSprite.ZPosition = 0;
-			backgroundSprite.Alpha = 0.3f;
+			backgroundSprite.Alpha = 0.1f;
 			AddChild(backgroundSprite);
 
 			// Add Gravity Field
@@ -98,12 +98,12 @@ namespace Teatime
 			navSprite.Alpha = 0.0000001f;
 			navSprite.ZPosition = 10;
 			navSprite.Color = UIColor.FromHSB(0, 1, 0.0f);
-			navSprite.Size = new CGSize(140, 70);
-			navSprite.Position = new CGPoint((View.Frame.Width - (70)), (View.Frame.Height - (35)));
+			navSprite.Size = new CGSize(100, 70);
+			navSprite.Position = new CGPoint((View.Frame.Width - (50)), (View.Frame.Height - (35)));
 			AddChild(navSprite);
 
 			// Container field to fill different background (Info Mode)
-			container = new SKSpriteNode("background_info_p1");
+			container = new SKSpriteNode("background_newcolor");
 			container.Size = new CGSize(Frame.Width, Frame.Height);
 			container.Position = new CGPoint(Frame.Width / 2, Frame.Height / 2);
 			container.ZPosition = 0;
@@ -112,6 +112,7 @@ namespace Teatime
 
 			// Sprite Node with the info icon
 			infoSprite = new SKSpriteNode("info");
+			infoSprite.Name = "navSprite";
 			infoSprite.Position = new CGPoint(Frame.Width - 40, Frame.Height - 40);
 			infoSprite.ZPosition = 10;
 			infoSprite.XScale = 0.6f;
@@ -335,7 +336,7 @@ namespace Teatime
 		}
 
 		// Update Center, calculate new Alpha Value and Mass for All Spark and related Parent Nodes depending on the location of touch
-		private void UpdateCenter(nfloat offsetX, nfloat offsetY)
+		private void UpdateCenter(nfloat offsetX)
 		{
 			CGPoint center = globalCenter;
 
@@ -351,36 +352,29 @@ namespace Teatime
 				spark.ParentNode.RemoveAllActions();
 
 				// Set the new Alpha Value
-				spark.Alpha = ((1 / (Frame.Width) * (offsetX)) / 10f * 4f) + 0.1f;
-				spark.ParentNode.Alpha = spark.Alpha;
+				// spark.Alpha = ((1 / (Frame.Width) * (offsetX)) / 10f * 4f) + 0.1f;
+				// spark.ParentNode.Alpha = spark.Alpha;
 
 				// Depending on the location of touch set the MassOfBody (Whole view is divided in 5 different parts)
-				if ((offsetY < 5 * (Frame.Height / 5) && offsetY >= 4 * (Frame.Height / 5)))
+				if ((offsetX < 4 * (Frame.Width / 4) && offsetX >= 3 * (Frame.Width / 4)))
 				{
 					spark.MassOfBody(1);
 					spark.ParentNode.MassOfBody(1);
 				}
-				else if ((offsetY < 4 * (Frame.Height / 5) && offsetY >= 3 * (Frame.Height / 5)))
+				else if ((offsetX < 3 * (Frame.Width / 4) && offsetX >= 2 * (Frame.Width / 4)))
 				{
 					spark.MassOfBody(0.8f);
 					spark.ParentNode.MassOfBody(0.8f);
-
 				}
-				else if ((offsetY < 3 * (Frame.Height / 5) && offsetY >= 2 * (Frame.Height / 5)))
+				else if ((offsetX < 2 * (Frame.Width / 4) && offsetX >= 1 * (Frame.Width / 4)))
 				{
 					spark.MassOfBody(0.6f);
 					spark.ParentNode.MassOfBody(0.6f);
 				}
-				else if ((offsetY < 2 * (Frame.Height / 5) && offsetY >= 1 * (Frame.Height / 5)))
+				else if ((offsetX < 1 * (Frame.Width / 4) && offsetX >= 0 * (Frame.Width / 4)))
 				{
 					spark.MassOfBody(0.4f);
 					spark.ParentNode.MassOfBody(0.4f);
-				}
-				else if ((offsetY < 1 * (Frame.Height / 5) && offsetY >= 0 * (Frame.Height / 5)))
-				{
-					spark.MassOfBody(0.2f);
-					spark.ParentNode.MassOfBody(0.2f);
-
 				}
 			}
 		}
@@ -484,51 +478,68 @@ namespace Teatime
 			double speed;
 			nfloat checkX = coordX;
 			nfloat checkY = coordY;
-			if (checkY >= 4 * (Frame.Height / 5))
+			if (checkY >= 7 * (Frame.Height / 8))
+			{
+				Proto1Dim1 = 1;
+			}
+			else if (checkY < 7 * (Frame.Height / 8) && checkY >= 6 * (Frame.Height / 8))
+			{
+				Proto1Dim1 = 2;
+			}
+			else if (checkY < 6 * (Frame.Height / 8) && checkY >= 5 * (Frame.Height / 8))
+			{
+				Proto1Dim1 = 3;
+			}
+			else if (checkY < 5 * (Frame.Height / 8) && checkY >= 4 * (Frame.Height / 8))
+			{
+				Proto1Dim1 = 4;
+			}
+			else if (checkY < 4 * (Frame.Height / 8) && checkY >= 3 * (Frame.Height / 8))
+			{
+				Proto1Dim1 = 5;
+			}
+			else if (checkY < 3 * (Frame.Height / 8) && checkY >= 2 * (Frame.Height / 8))
+			{
+				Proto1Dim1 = 6;
+			}
+			else if (checkY < 2 * (Frame.Height / 8) && checkY >= 1 * (Frame.Height / 8))
+			{
+				Proto1Dim1 = 7;
+			}
+			else 
+			{
+				Proto1Dim1 = 8;
+			}
+
+			// Depending on the location of touch set the MassOfBody (Whole view is divided in 5 different parts)
+			if ((checkX < 4 * (Frame.Width / 4) && checkX >= 3 * (Frame.Width / 4)))
 			{
 				speed = 4;
-				Proto1Dim1 = 1;
+				Proto1Dim2 = 4;
+				Proto1Dim3 = 4;
 				UpdateSparks(speed, false, false, 0, false);
+
 			}
-			else if (checkY < 4 * (Frame.Height / 5) && checkY >= 3 * (Frame.Height / 5))
-			{
-				speed = 3.5;
-				Proto1Dim1 = 2;
-				UpdateSparks(speed, true, true, 2, false);
-			}
-			else if (checkY < 3 * (Frame.Height / 5) && checkY >= 2 * (Frame.Height / 5))
+			else if ((checkX < 3 * (Frame.Width / 4) && checkX >= 2 * (Frame.Width / 4)))
 			{
 				speed = 3;
-				Proto1Dim1 = 3;
-				UpdateSparks(speed, true, true, 4, false);
-			}
-			else if (checkY < 2 * (Frame.Height / 5) && checkY >= 1 * (Frame.Height / 5))
-			{
-				speed = 2.5;
-				Proto1Dim1 = 4;
-				UpdateSparks(speed, true, true, 4, true);
-			}
-			else {
-				speed = 2;
-				Proto1Dim1 = 5;
-				UpdateSparks(speed, true, true, 6, true);
-
-			}
-
-			if (checkX >= 2 * (Frame.Width / 3))
-			{
 				Proto1Dim2 = 3;
 				Proto1Dim3 = 3;
+				UpdateSparks(speed, false, true, 2, false);
 			}
-			else if (checkX < 2 * (Frame.Width / 3) && checkX >= 1 * (Frame.Width / 3))
+			else if ((checkX < 2 * (Frame.Width / 4) && checkX >= 1 * (Frame.Width / 4)))
 			{
+				speed = 2;
 				Proto1Dim2 = 2;
 				Proto1Dim3 = 2;
+				UpdateSparks(speed, true, true, 4, true);
 			}
-			else
+			else if ((checkX < 1 * (Frame.Width / 4) && checkX >= 0 * (Frame.Width / 4)))
 			{
+				speed = 1;
 				Proto1Dim2 = 1;
 				Proto1Dim3 = 1;
+				UpdateSparks(speed, true, true, 6, true);
 			}
 		}
 
@@ -584,31 +595,6 @@ namespace Teatime
 								infoSprite.RunAction((seqTextureInfoNormal));
 							}
 						}
-
-						// if next is clicked, change background color mode
-						else if ((nodeAtLocation is SKLabelNode && nodeAtLocation.Name == "next") || nodeAtLocation.Name == "navSprite")
-						{
-							changeColor++;
-							if (changeColor % 3 == 0)
-							{
-								// Background Calculating (Default Mode)
-								BackgroundColor = UIColor.FromHSB((checkY / Frame.Height), 0.5f, (((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
-							}
-							else if (changeColor % 3 == 1)
-							{
-								// Background Calculating
-								BackgroundColor = UIColor.FromHSB((checkY / Frame.Height), 1f, (((checkX / Frame.Width) / 2) * 1 + ((0.3333333f))));
-							}
-							else if (changeColor % 3 == 2)
-							{
-								// Background Calculating
-								BackgroundColor = UIColor.FromHSB(0, 0, (((checkX / Frame.Width) / 2) * 1 + ((0.3333333f))));
-							}
-							else {
-								// Background Calculating
-								BackgroundColor = UIColor.FromHSB((checkY / Frame.Height), 0.5f, (((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
-							}
-						}
 					}
 				}
 			}
@@ -647,41 +633,23 @@ namespace Teatime
 					var checkX_Location = touch.LocationInNode(this).X;
 					var checkY_Location = touch.LocationInNode(this).Y;
 
-					float checkX = offsetX;
-					float checkY = offsetY;
-
 					fieldNode.Position = new CGPoint(checkX_Location, checkY_Location);
 
-					if (changeColor % 3 == 0)
+			
+					var manipulate = (checkY_Location / (Frame.Height + 100)) + 0.15f;
+					if (manipulate > 1)
 					{
-						var manipulate = (checkY_Location / Frame.Height) + 0.18f;
-						if (manipulate > 1)
-						{
-							manipulate = manipulate - 1;
-						}
+						manipulate = manipulate - 1;
+					}
 
-						// Background Calculating
-						BackgroundColor = UIColor.FromHSB(manipulate, 0.5f, 0.8f);
-					}
-					else if (changeColor % 3 == 1)
-					{
-						// Background Calculating
-						BackgroundColor = UIColor.FromHSB((checkY / Frame.Height), 1f, (((checkX / Frame.Width) / 2) * 1 + ((0.3333333f))));
-					}
-					else if (changeColor % 3 == 2)
-					{
-						// Background Calculating
-						BackgroundColor = UIColor.FromHSB(0, 0, (((checkX / Frame.Width) / 2) * 1 + ((0.3333333f))));
-					}
-					else {
-						// Background Calculating
-						BackgroundColor = UIColor.FromHSB((checkY / Frame.Height), 0.5f,(((checkX / Frame.Width) / 3) * 2 + ((0.3333333f))));
-					}
+					// Background Calculating
+					BackgroundColor = UIColor.FromHSB(manipulate, 0.35f, 0.7f);
+				
 
 					// Check to which part the finger is moved to and update the sparks
 					globalCenter = new CGPoint(checkX_Location, checkY_Location);
 					SetDimensions(offsetX, offsetY);
-					UpdateCenter(offsetX, offsetY);
+					UpdateCenter(offsetX);
 				}
 			}
 		}

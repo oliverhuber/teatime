@@ -142,6 +142,8 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\120 - iPhone Teatime Final.png" />
     <ImageAsset Include="Assets.xcassets\background_p5.imageset\Contents.json" />
     <ImageAsset Include="Assets.xcassets\background_p5.imageset\background_p5_rg_2.png" />
+    <ImageAsset Include="Assets.xcassets\background_newcolor.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\background_newcolor.imageset\background_proto1_colorchanged.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -168,6 +170,7 @@
     <Folder Include="Prototyp5\" />
     <Folder Include="Database\" />
     <Folder Include="ShowData\" />
+    <Folder Include="Assets.xcassets\background_newcolor.imageset\" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Assets.xcassets\spark.imageset\spark.png" />
