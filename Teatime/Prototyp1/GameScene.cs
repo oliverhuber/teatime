@@ -363,18 +363,18 @@ namespace Teatime
 				}
 				else if ((offsetX < 3 * (Frame.Width / 4) && offsetX >= 2 * (Frame.Width / 4)))
 				{
-					spark.MassOfBody(0.8f);
-					spark.ParentNode.MassOfBody(0.8f);
+					spark.MassOfBody(0.75f);
+					spark.ParentNode.MassOfBody(0.75f);
 				}
 				else if ((offsetX < 2 * (Frame.Width / 4) && offsetX >= 1 * (Frame.Width / 4)))
 				{
-					spark.MassOfBody(0.6f);
-					spark.ParentNode.MassOfBody(0.6f);
+					spark.MassOfBody(0.5f);
+					spark.ParentNode.MassOfBody(0.5f);
 				}
 				else if ((offsetX < 1 * (Frame.Width / 4) && offsetX >= 0 * (Frame.Width / 4)))
 				{
-					spark.MassOfBody(0.4f);
-					spark.ParentNode.MassOfBody(0.4f);
+					spark.MassOfBody(0.25f);
+					spark.ParentNode.MassOfBody(0.25f);
 				}
 			}
 		}
@@ -645,11 +645,10 @@ namespace Teatime
 					// Background Calculating
 					BackgroundColor = UIColor.FromHSB(manipulate, 0.35f, 0.7f);
 				
-
 					// Check to which part the finger is moved to and update the sparks
 					globalCenter = new CGPoint(checkX_Location, checkY_Location);
-					SetDimensions(offsetX, offsetY);
 					UpdateCenter(offsetX);
+					// SetDimensions(offsetX, offsetY);
 				}
 			}
 		}
@@ -666,7 +665,7 @@ namespace Teatime
 					ReleaseInfoText();
 				}
 				// If Info Text Box is not visible, revert center for the spark nodes
-				else if (nodeAtLocation.Name != "infoNode" && nodeAtLocation.Name != "infoLabel")
+				else if (nodeAtLocation.Name != "infoNode" && nodeAtLocation.Name != "info" && nodeAtLocation.Name != "navSprite" && nodeAtLocation.Name != "infoLabel")
 				{
 					//Release the Changed center
 					RevertCenter();
