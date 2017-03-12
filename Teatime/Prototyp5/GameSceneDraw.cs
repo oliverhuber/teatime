@@ -11,6 +11,7 @@ namespace Teatime
 
 	public class GameSceneDraw : SKScene
 	{
+		public GameSubViewDrawController SuperViewController { get; set; }
 		// Prototype Dimension Mapping 
 		public int Proto5Dim1 { get; set; }
 		public int Proto5Dim2 { get; set; }
@@ -42,6 +43,7 @@ namespace Teatime
 		private SKLabelNode myLabelPos;
 		private SKLabelNode myLabelNeg;
 		private SKSpriteNode navSprite;
+		private SKSpriteNode navSprite2;
 
 		private SKShapeNode currentLine;
 		private SKShapeNode nextLine;
@@ -49,6 +51,7 @@ namespace Teatime
 		private PointNode spriteLeft;
 		private PointNode spriteRight;
 		private SKLabelNode mySave;
+		private SKLabelNode myBack;
 
 		private SKSpriteNode categoryTempFilter;
 		private SKLabelNode categoryCurrent;
@@ -100,6 +103,18 @@ namespace Teatime
 			mySave.ZPosition = 2;
 			AddChild(mySave);
 
+			myBack = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+			{
+				Name = "back",
+				Text = "< back",
+				FontSize = 18,
+				Position = new CGPoint(0 + 42, (Frame.Height - 48))
+			};
+			myBack.FontColor = UIColor.White;
+			myBack.Alpha = 0.8f;
+			myBack.ZPosition = 2;
+			AddChild(myBack);
+
 			// Navigation Sprite behind next label
 			navSprite = new SKSpriteNode();
 			navSprite.Name = "navSprite";
@@ -109,6 +124,16 @@ namespace Teatime
 			navSprite.Size = new CGSize(140, 70);
 			navSprite.Position = new CGPoint((View.Frame.Width - (70)), (View.Frame.Height - (35)));
 			AddChild(navSprite);
+
+			// Navigation Sprite behind next label
+			navSprite2 = new SKSpriteNode();
+			navSprite2.Name = "navSprite2";
+			navSprite2.Alpha = 0.0000001f;
+			navSprite2.ZPosition = 10;
+			navSprite2.Color = UIColor.FromHSB(0, 1, 0.0f);
+			navSprite2.Size = new CGSize(140, 70);
+			navSprite2.Position = new CGPoint((0 + (70)), (View.Frame.Height - (35)));
+			AddChild(navSprite2);
 
 			// Add the top label
 			myLabelPos = new SKLabelNode("AppleSDGothicNeo-UltraLight")
@@ -402,7 +427,7 @@ namespace Teatime
 			categoryCurrent.FontColor = UIColor.FromHSB(0, 0, 1f);
 			AddChild(categoryCurrent);
 
-			String currentCat = "";
+			string currentCat = "";
 			if (currentPoint.Category != "")
 			{
 				categoryCurrent.Alpha = 0.9f;
@@ -594,7 +619,7 @@ namespace Teatime
 				{
 					spriteNode.Alpha = 0.0f;
 				}
-				else if (spriteNode.Name != "arrowLeft" || spriteNode.Name != "arrowRight" && spriteNode.Name != "Left" && spriteNode.Name != "Right" && spriteNode.Name != "navSprite")
+				else if (spriteNode.Name != "arrowLeft" || spriteNode.Name != "arrowRight" && spriteNode.Name != "Left" && spriteNode.Name != "Right" && spriteNode.Name != "navSprite" && spriteNode.Name != "navSprite2")
 				{
 					spriteNode.Alpha = 0.2f;
 				}
@@ -620,13 +645,13 @@ namespace Teatime
 				{
 					var location = gestureRecognizer.LocationInView(View);
 					var convertLocation = new CGPoint(location.X, View.Frame.Height - location.Y);
-					if (currentPoint != null && currentPoint.Frame.Contains(convertLocation) && currentPoint.Name != "Left" && currentPoint.Name != "Right" && currentPoint.Name != "navSprite" && currentPoint.Name != "arrowLeft" && currentPoint.Name != "arrowRight")
+					if (currentPoint != null && currentPoint.Frame.Contains(convertLocation) && currentPoint.Name != "Left" && currentPoint.Name != "Right" && currentPoint.Name != "navSprite" && currentPoint.Name != "navSprite2" && currentPoint.Name != "arrowLeft" && currentPoint.Name != "arrowRight")
 					{
 						SetUpCategoryView();
 					}
 
 
-					if (currentPoint != null && currentPoint.Frame.Contains(convertLocation) && currentPoint.Name != "Left" && currentPoint.Name != "Right" && currentPoint.Name != "navSprite" && currentPoint.Name != "arrowLeft" && currentPoint.Name != "arrowRight")
+					if (currentPoint != null && currentPoint.Frame.Contains(convertLocation) && currentPoint.Name != "Left" && currentPoint.Name != "Right" && currentPoint.Name != "navSprite" && currentPoint.Name != "navSprite2" && currentPoint.Name != "arrowLeft" && currentPoint.Name != "arrowRight")
 					{
 						timeLabel.Text = "";
 
@@ -650,7 +675,7 @@ namespace Teatime
 
 			foreach (var spriteNode in Children.OfType<PointNode>())
 			{
-				if (spriteNode.Name != "Left" && spriteNode.Name != "Right" && spriteNode.Name != "navSprite" && spriteNode.Name != "arrowLeft" && spriteNode.Name != "arrowRight")
+				if (spriteNode.Name != "Left" && spriteNode.Name != "Right" && spriteNode.Name != "navSprite" && spriteNode.Name != "navSprite2" && spriteNode.Name != "arrowLeft" && spriteNode.Name != "arrowRight")
 				{
 					diffXLast = currentPoint.Position.X - spriteNode.Position.X;
 					diffXNext = spriteNode.Position.X - currentPoint.Position.X;
@@ -709,7 +734,7 @@ namespace Teatime
 				{
 					spriteNode.Alpha = 0.0f;
 				}
-				else if (spriteNode.Name != "Left" && spriteNode.Name != "Right" && spriteNode.Name != "navSprite")
+				else if (spriteNode.Name != "Left" && spriteNode.Name != "Right" && spriteNode.Name != "navSprite" && spriteNode.Name != "navSprite2")
 				{
 					spriteNode.Alpha = 1f;
 				}
@@ -723,6 +748,13 @@ namespace Teatime
 					lineNode.Alpha = 0.5f;
 				}
 			}
+
+			// Set sleep mesure sprites as inactive
+			spriteLeft.Alpha = 0.8f;
+			spriteLeft.Color = UIColor.FromHSB(0, 0, 0.8f);
+			spriteRight.Alpha = 0.8f;
+			spriteRight.Color = UIColor.FromHSB(0, 0, 0.8f);
+
 			gameMode = 1;
 		}
 
@@ -775,7 +807,7 @@ namespace Teatime
 			}
 			if (roundUp == true)
 			{
-				finalHour = (int)Int32.Parse(splitHour[0]) + 1;
+				finalHour = int.Parse(splitHour[0]) + 1;
 				splitHour[0] = finalHour.ToString();
 			}
 
@@ -938,6 +970,12 @@ namespace Teatime
 				{
 					gameMode = 1;
 
+					// Background Animation
+					backgroundSprite.RunAction(SKAction.Sequence(SKAction.ColorizeWithColor(UIColor.Purple,0.1f, 0.00),SKAction.ColorizeWithColor(UIColor.Purple, 0.0f, 0.3)));
+					mySave.RunAction(SKAction.Sequence(SKAction.ColorizeWithColor(UIColor.Purple, 1f, 0.00), SKAction.ColorizeWithColor(UIColor.Purple, 0.0f, 0.3)));
+					mySave.RunAction(SKAction.Sequence(SKAction.FadeOutWithDuration(0.00), SKAction.FadeAlphaTo(0.8f, 0.3)));
+					mySave.Text = "finish >";
+
 					myLabel.RemoveAllActions();
 					myLabel2.RemoveAllActions();
 					myLabel3.RemoveAllActions();
@@ -971,7 +1009,7 @@ namespace Teatime
 						{
 							spriteNode.Alpha = 0.0f;
 						}
-						else if (spriteNode.Name != "Left" && spriteNode.Name != "Right" && spriteNode.Name != "navSprite")
+						else if (spriteNode.Name != "Left" && spriteNode.Name != "Right" && spriteNode.Name != "navSprite" && spriteNode.Name != "navSprite2")
 						{
 							spriteNode.Alpha = 1f;
 						}
@@ -987,10 +1025,33 @@ namespace Teatime
 					}
 				}
 
-				// Move to game mode 0 from game mode 1
+				// Exit Prototype (Backwards Exit)
+				else if (((nodeAtPoint is SKLabelNode && nodeAtPoint.Name == "back") || nodeAtPoint.Name == "navSprite2") && gameMode == 0)
+				{
+					SaveProto5Input();
+					SuperViewController.DismissViewController(true, null);
+
+				}
+				// Exit Prototype (Finished)
 				else if (((nodeAtPoint is SKLabelNode && nodeAtPoint.Name == "next") || nodeAtPoint.Name == "navSprite") && gameMode == 1)
 				{
+					SaveProto5Input();
+					SuperViewController.DismissViewController(true, null);
+
+				}
+
+				// Move to game mode 1 from game mode 0
+				else if (((nodeAtPoint is SKLabelNode && nodeAtPoint.Name == "back") || nodeAtPoint.Name == "navSprite2") && gameMode == 1)
+				{
 					gameMode = 0;
+
+					mySave.Text = "next >";
+
+					// Background Animation
+					backgroundSprite.RunAction(SKAction.Sequence(SKAction.ColorizeWithColor(UIColor.Purple, 0.1f, 0.00), SKAction.ColorizeWithColor(UIColor.Purple, 0.0f, 0.3)));
+					myBack.RunAction(SKAction.Sequence(SKAction.ColorizeWithColor(UIColor.Purple, 1f, 0.00), SKAction.ColorizeWithColor(UIColor.Purple, 0.0f, 0.3)));
+
+					mySave.Text = "next >";
 
 					myLabel.RemoveAllActions();
 					myLabel2.RemoveAllActions();
@@ -1027,7 +1088,7 @@ namespace Teatime
 						{
 							spriteNode.Alpha = 0.8f;
 						}
-						else if (spriteNode.Name != "Left" && spriteNode.Name != "Right" && spriteNode.Name != "navSprite")
+						else if (spriteNode.Name != "Left" && spriteNode.Name != "Right" && spriteNode.Name != "navSprite" && spriteNode.Name != "navSprite2")
 						{
 							spriteNode.Alpha = 0.2f;
 						}
@@ -1051,7 +1112,7 @@ namespace Teatime
 					foreach (var spriteNode in Children.OfType<PointNode>())
 					{
 						// if it is not the navigation sprite
-						if (spriteNode.Name != "Left" && spriteNode.Name != "Right" && spriteNode.Name != "navSprite" && spriteNode.Name != "arrowLeft" && spriteNode.Name != "arrowRight")
+						if (spriteNode.Name != "Left" && spriteNode.Name != "Right" && spriteNode.Name != "navSprite" && spriteNode.Name != "navSprite2" && spriteNode.Name != "arrowLeft" && spriteNode.Name != "arrowRight")
 						{
 							// Check if one of them contains the touch location
 							if (spriteNode.Frame.Contains(((UITouch)touch).LocationInNode(this)) || ((spriteNode.Position.X == checkX) && spriteNode.Position.X > 0))
@@ -1291,11 +1352,11 @@ namespace Teatime
 
 				// Scale down dragged sprite point after release the drag
 				SKAction actMoveBack = SKAction.ScaleTo(0.4f, 0.4f, 0.2);
-				if (gameMode == 1 && (spriteNodeChecked.Name != "Left" && spriteNodeChecked.Name != "Right" && spriteNodeChecked.Name != "navSprite" && spriteNodeChecked.Name != "arrowLeft" && spriteNodeChecked.Name != "arrowRight"))
+				if (gameMode == 1 && (spriteNodeChecked.Name != "Left" && spriteNodeChecked.Name != "Right" && spriteNodeChecked.Name != "navSprite" && spriteNodeChecked.Name != "navSprite2" && spriteNodeChecked.Name != "arrowLeft" && spriteNodeChecked.Name != "arrowRight"))
 				{
 					foreach (var spriteNode in Children.OfType<PointNode>())
 					{
-						if (spriteNode.Name != "Left" && spriteNode.Name != "Right" && spriteNode.Name != "navSprite" && spriteNode.Name != "arrowLeft" && spriteNode.Name != "arrowRight")
+						if (currentPoint != null && spriteNode.Name != "Left" && spriteNode.Name != "Right" && spriteNode.Name != "navSprite" && spriteNode.Name != "navSprite2" && spriteNode.Name != "arrowLeft" && spriteNode.Name != "arrowRight")
 						{
 							currentPoint.RunAction(SKAction.RepeatAction(actMoveBack, 1));
 						}
@@ -1336,15 +1397,15 @@ namespace Teatime
 				{
 					nfloat offsetX = spriteLeft.Position.X - (0 - Frame.Width / 2) - 10;
 					item.Comment = TimeCalculation(offsetX) + ";" + "Aufgestanden";
-					item.Dim1 = 1;
+					item.Dim2 = 1;
 				}
 				else if (spriteNode.Name == "Right")
 				{
 					nfloat offsetX = spriteRight.Position.X - (Frame.Width - Frame.Width / 2) + 10;
-					item.Comment = TimeCalculation(offsetX) + ";" + "Eingeschlafen"; ;
-					item.Dim1 = 1;
+					item.Comment = TimeCalculation(offsetX) + ";" + "Eingeschlafen"; 
+					item.Dim2 = 1;
 				}
-				else if (spriteNode.Name == "navSprite" || spriteNode.Name == "arrowLeft" || spriteNode.Name == "arrowRight")
+				else if (spriteNode.Name == "navSprite" || spriteNode.Name == "navSprite2" || spriteNode.Name == "arrowLeft" || spriteNode.Name == "arrowRight")
 				{
 					// Ignore
 				}
@@ -1360,23 +1421,23 @@ namespace Teatime
 						{
 							catText = "No Categorie";
 							item.Comment = TimeCalculation(spriteNode.Position.X) + ";" + catText;
-							item.Dim1 = (int)(Frame.Height / 2 - spriteNode.Position.Y);
+							item.Dim1 = (int) ((100 /  (Frame.Height / 2)) * ((- Frame.Height / 2) + spriteNode.Position.Y));
 						}
 						else if (catText == "Schlaf")
 						{
-							item.Dim2 = (int)(Frame.Height / 2 - spriteNode.Position.Y);
+							item.Dim2 = (int)((100 / (Frame.Height / 2)) * ((-Frame.Height / 2) + spriteNode.Position.Y));
 						}
 						else if (catText == "Privater Grund")
 						{
-							item.Dim3 = (int)(Frame.Height / 2 - spriteNode.Position.Y);
+							item.Dim3 = (int)((100 / (Frame.Height / 2)) * ((-Frame.Height / 2) + spriteNode.Position.Y));
 						}
 						else {
-							item.Dim1 = (int)(Frame.Height / 2 - spriteNode.Position.Y);
+							item.Dim1 = (int)((100 / (Frame.Height / 2)) * ((-Frame.Height / 2) + spriteNode.Position.Y));
 						}
 					}
 				}
 
-				if (spriteNode.Name != "navSprite" && spriteNode.Name != "arrowLeft" && spriteNode.Name != "arrowRight" && spriteNode.Name != "FirstPoint" && spriteNode.Name != "LastPoint")
+				if (spriteNode.Name != "navSprite" && spriteNode.Name != "navSprite2" && spriteNode.Name != "arrowLeft" && spriteNode.Name != "arrowRight" && spriteNode.Name != "FirstPoint" && spriteNode.Name != "LastPoint")
 				{
 					DatabaseMgmt.Database.SaveItem(item);
 				}

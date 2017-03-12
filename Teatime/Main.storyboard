@@ -164,7 +164,7 @@
                                 <connections>
                                     <action selector="GotoNext_TouchUpInside:" destination="1109" id="1108" eventType="touchUpInside"/>
                                     <action selector="GotoNext4_TouchUpInside:" destination="1111" id="1110" eventType="touchUpInside"/>
-                                    <segue id="1167" destination="1121" kind="show"/>
+                                    <segue id="1167" destination="1121" kind="presentation" modalTransitionStyle="crossDissolve"/>
                                     <action selector="GotoNext6_TouchUpInside:" destination="BV1-FR-VrT" id="1352" eventType="touchUpInside"/>
                                 </connections>
                                 <userDefinedRuntimeAttributes>
@@ -436,7 +436,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="1169" translatesAutoresizingMaskIntoConstraints="NO" fixedFrame="YES" alpha="0.8">
-                                <rect key="frame" x="-4" y="17" width="91" height="48"/>
+                                <rect key="frame" x="-17" y="18" width="20" height="48"/>
                                 <connections>
                                     <action selector="UnwindProto_TouchUpInside:" destination="1173" id="1172" eventType="touchUpInside"/>
                                     <segue id="1175" destination="1124" kind="unwind" unwindAction="UnwindToPrototypes:"/>
@@ -548,5 +548,6 @@
         <image name="logoteatime_white_3_filled.png" width="1280" height="800"/>
         <image name="logoteatime_white_2_128.png" width="128" height="80"/>
         <image name="background_p5" width="640" height="1136"/>
+        <image name="background_newcolor" width="640" height="1136"/>
     </resources>
 </document>
