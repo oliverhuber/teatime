@@ -39,7 +39,7 @@ namespace Teatime
 		private SKLabelNode myLabel2;
 		private SKLabelNode myLabel3;
 		private SKLabelNode timeLabel;
-
+		private SKLabelNode infoLabel;
 		private SKLabelNode myLabelPos;
 		private SKLabelNode myLabelNeg;
 		private SKSpriteNode navSprite;
@@ -114,6 +114,17 @@ namespace Teatime
 			myBack.Alpha = 0.8f;
 			myBack.ZPosition = 2;
 			AddChild(myBack);
+
+			infoLabel = new SKLabelNode("AppleSDGothicNeo-UltraLight")
+			{
+				Text = " Schlaf 1/2 ",
+				FontSize = 16,
+				Position = new CGPoint(Frame.Width/2, (Frame.Height - 48))
+			};
+			infoLabel.Alpha = 0.3f;
+			infoLabel.ZPosition = 1;
+			infoLabel.FontColor = UIColor.FromHSB(0, 0, 0);
+			AddChild(infoLabel);
 
 			// Navigation Sprite behind next label
 			navSprite = new SKSpriteNode();
@@ -199,7 +210,7 @@ namespace Teatime
 			AddChild(lastPoint);
 
 
-			// Create Path for the line, between both sprites
+			// Bezier Test - Create Path for the line, between both sprites
 			/*var path = new CGPath();
 			path.AddLines(new CGPoint[]{
 				new CGPoint (lastPoint.Position.X, lastPoint.Position.Y),
@@ -970,7 +981,9 @@ namespace Teatime
 				{
 					gameMode = 1;
 
-					// Background Animation
+					// Background & Change Mode Animation
+					infoLabel.RunAction(SKAction.Sequence(SKAction.FadeOutWithDuration(0.00), SKAction.FadeAlphaTo(0.3f, 0.3)));
+					infoLabel.Text = "Stimmung (2/2)";
 					backgroundSprite.RunAction(SKAction.Sequence(SKAction.ColorizeWithColor(UIColor.Purple,0.1f, 0.00),SKAction.ColorizeWithColor(UIColor.Purple, 0.0f, 0.3)));
 					mySave.RunAction(SKAction.Sequence(SKAction.ColorizeWithColor(UIColor.Purple, 1f, 0.00), SKAction.ColorizeWithColor(UIColor.Purple, 0.0f, 0.3)));
 					mySave.RunAction(SKAction.Sequence(SKAction.FadeOutWithDuration(0.00), SKAction.FadeAlphaTo(0.8f, 0.3)));
@@ -1045,12 +1058,11 @@ namespace Teatime
 				{
 					gameMode = 0;
 
-					mySave.Text = "next >";
-
-					// Background Animation
+					// Background & Change Mode Animation
+					infoLabel.RunAction(SKAction.Sequence(SKAction.FadeOutWithDuration(0.00), SKAction.FadeAlphaTo(0.3f, 0.3)));
+					infoLabel.Text = "Schlaf (1/2)";
 					backgroundSprite.RunAction(SKAction.Sequence(SKAction.ColorizeWithColor(UIColor.Purple, 0.1f, 0.00), SKAction.ColorizeWithColor(UIColor.Purple, 0.0f, 0.3)));
 					myBack.RunAction(SKAction.Sequence(SKAction.ColorizeWithColor(UIColor.Purple, 1f, 0.00), SKAction.ColorizeWithColor(UIColor.Purple, 0.0f, 0.3)));
-
 					mySave.Text = "next >";
 
 					myLabel.RemoveAllActions();
