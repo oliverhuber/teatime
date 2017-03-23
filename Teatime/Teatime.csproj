@@ -229,13 +229,12 @@
     <Compile Include="Database\TeatimeDatabase.cs" />
     <Compile Include="Database\TeatimeItem.cs" />
     <Compile Include="Database\FileHelper.cs" />
-    <Compile Include="Prototyp5\LineNodeDraw.cs" />
     <Compile Include="Database\IFileHelper.cs" />
     <Compile Include="Prototyp5\PointNode.cs" />
     <Compile Include="Prototyp3\FieldNode.cs" />
-    <Compile Include="ShowData\showUserData.cs" />
-    <Compile Include="ShowData\showUserData.designer.cs">
-      <DependentUpon>showUserData.cs</DependentUpon>
+    <Compile Include="ShowData\ShowUserData.cs" />
+    <Compile Include="ShowData\ShowUserData.designer.cs">
+      <DependentUpon>ShowUserData.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

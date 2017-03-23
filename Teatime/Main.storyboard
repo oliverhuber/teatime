@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="NO" initialViewController="93">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="NO" initialViewController="BV1-FR-VrT">
     <dependencies>
         <development version="7000" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
@@ -8,7 +8,7 @@
         <!--Game View Controller-->
         <scene sceneID="tXr-a1-R10">
             <objects>
-                <viewController id="BV1-FR-VrT" customClass="GameViewController" sceneMemberID="viewController" storyboardIdentifier="GameViewController">
+                <viewController id="BV1-FR-VrT" customClass="GameViewController" sceneMemberID="viewController" storyboardIdentifier="GameViewController" modalTransitionStyle="crossDissolve">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="maK-i9-Uhn"/>
                         <viewControllerLayoutGuide type="bottom" id="khH-OB-KpY"/>
@@ -27,7 +27,7 @@
                                     <color key="titleColor" colorSpace="calibratedRGB" red="0.18823529411764706" green="0.69803921568627447" blue="0.81176470588235294" alpha="1"/>
                                 </state>
                                 <connections>
-                                    <segue id="67" destination="7" kind="show" identifier="viewSegue"/>
+                                    <segue id="67" destination="7" kind="presentation" identifier="viewSegue" modalTransitionStyle="crossDissolve"/>
                                     <action selector="GotoNext_TouchUpInside:" destination="BV1-FR-VrT" id="72" eventType="touchUpInside"/>
                                 </connections>
                                 <userDefinedRuntimeAttributes>
@@ -68,7 +68,7 @@
                                 </state>
                                 <connections>
                                     <action selector="GotoNext_TouchUpInside:" destination="228" id="227" eventType="touchUpInside"/>
-                                    <segue id="262" destination="240" kind="show"/>
+                                    <segue id="262" destination="240" kind="presentation" modalTransitionStyle="crossDissolve"/>
                                     <action selector="GotoNext2_TouchUpInside:" destination="BV1-FR-VrT" id="277" eventType="touchUpInside"/>
                                 </connections>
                                 <userDefinedRuntimeAttributes>
@@ -107,7 +107,7 @@
                                 <connections>
                                     <action selector="GotoNext_TouchUpInside:" destination="890" id="889" eventType="touchUpInside"/>
                                     <action selector="GotoNext4_TouchUpInside:" destination="BV1-FR-VrT" id="893" eventType="touchUpInside"/>
-                                    <segue id="1036" destination="875" kind="show"/>
+                                    <segue id="1036" destination="875" kind="presentation" modalTransitionStyle="crossDissolve"/>
                                 </connections>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
@@ -135,7 +135,7 @@
                                 <connections>
                                     <action selector="GotoNext_TouchUpInside:" destination="1063" id="1062" eventType="touchUpInside"/>
                                     <action selector="GotoNext4_TouchUpInside:" destination="1065" id="1064" eventType="touchUpInside"/>
-                                    <segue id="1090" destination="1076" kind="show"/>
+                                    <segue id="1090" destination="1076" kind="presentation" modalTransitionStyle="crossDissolve"/>
                                     <action selector="GotoNext5_TouchUpInside:" destination="BV1-FR-VrT" id="1469" eventType="touchUpInside"/>
                                 </connections>
                                 <userDefinedRuntimeAttributes>
@@ -193,7 +193,7 @@
                                 <connections>
                                     <action selector="GotoNext_TouchUpInside:" destination="1191" id="1190" eventType="touchUpInside"/>
                                     <action selector="GotoNext4_TouchUpInside:" destination="1193" id="1192" eventType="touchUpInside"/>
-                                    <segue id="1213" destination="1181" kind="show"/>
+                                    <segue id="1545" destination="1181" kind="presentation"/>
                                 </connections>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute keyPath="layer.cornerRadius" type="number">
@@ -252,7 +252,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-327" y="89"/>
+            <point key="canvasLocation" x="-1230" y="77"/>
         </scene>
         <!--Game Sub View Controller-->
         <scene sceneID="6">
@@ -288,29 +288,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="10" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="416" y="113"/>
-        </scene>
-        <scene sceneID="92">
-            <objects>
-                <navigationController id="93" sceneMemberID="viewController" title="Teatime" modalTransitionStyle="crossDissolve" modalPresentationStyle="overFullScreen" navigationBarHidden="YES">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="95">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue id="115" destination="BV1-FR-VrT" kind="relationship" relationship="rootViewController"/>
-                    </connections>
-                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="125">
-                        <rect key="frame" x="0.0" y="556" width="600" height="44"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    </toolbar>
-                    <nil key="simulatedTopBarMetrics"/>
-                    <nil key="simulatedStatusBarMetrics"/>
-                    <nil key="simulatedBottomBarMetrics"/>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="96" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1081" y="9"/>
+            <point key="canvasLocation" x="1001" y="-320"/>
         </scene>
         <scene sceneID="239">
             <objects>
@@ -346,7 +324,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="242" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="243" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="301" y="-625"/>
+            <point key="canvasLocation" x="287" y="-326"/>
         </scene>
         <scene sceneID="874">
             <objects>
@@ -383,7 +361,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="877" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="878" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-469" y="838"/>
+            <point key="canvasLocation" x="-463" y="436"/>
         </scene>
         <scene sceneID="1075">
             <objects>
@@ -421,7 +399,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1078" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="1079" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="200" y="841"/>
+            <point key="canvasLocation" x="279" y="436"/>
         </scene>
         <scene sceneID="1120">
             <objects>
@@ -457,11 +435,11 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1123" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="1124" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="892" y="838"/>
+            <point key="canvasLocation" x="1012" y="441"/>
         </scene>
         <scene sceneID="1180">
             <objects>
-                <tableViewController id="1181" sceneMemberID="viewController" customClass="showUserData" storyboardIdentifier="showUserData" hidesBottomBarWhenPushed="YES">
+                <tableViewController id="1181" sceneMemberID="viewController" customClass="ShowUserData" storyboardIdentifier="ShowUserData" hidesBottomBarWhenPushed="YES">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="20" sectionHeaderHeight="50" sectionFooterHeight="40" id="1182" showsSelectionImmediatelyOnTouchBegin="NO" canCancelContentTouches="NO" bouncesZoom="NO" showsVerticalScrollIndicator="NO">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -524,7 +502,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1187" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="1188" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-469" y="-605"/>
+            <point key="canvasLocation" x="-462" y="-328"/>
         </scene>
     </scenes>
     <resources>

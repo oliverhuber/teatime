@@ -40,8 +40,6 @@ namespace Teatime
 		private bool switchInfo;
 		private bool infoTouch;
 
-		private int changeColor;
-
 		protected GameScene(IntPtr handle) : base(handle)
 		{
 		}
@@ -123,9 +121,6 @@ namespace Teatime
 
 			// Start with the info text
 			SetInfoText();
-
-			// Set Color Flag
-			changeColor = 0;
 
 			// Generate Sparks
 			GenerateSparks();
@@ -626,7 +621,6 @@ namespace Teatime
 					// Get the latest X and Y coordinates
 					// 0 of X i on top
 					float offsetX = (float)(touch.LocationInView(View).X);
-					float offsetY = (float)(touch.LocationInView(View).Y);
 
 					// other coordinate system
 					// 0 of Y is bottom
@@ -648,7 +642,6 @@ namespace Teatime
 					// Check to which part the finger is moved to and update the sparks
 					globalCenter = new CGPoint(checkX_Location, checkY_Location);
 					UpdateCenter(offsetX);
-					// SetDimensions(offsetX, offsetY);
 				}
 			}
 		}

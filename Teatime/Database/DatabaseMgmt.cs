@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿
 namespace Teatime
 {
 	public static class DatabaseMgmt
@@ -16,6 +15,6 @@ namespace Teatime
 				return database;
 			}
 		}
-		public static String inputName;
+		public static string inputName;
 	}
 }

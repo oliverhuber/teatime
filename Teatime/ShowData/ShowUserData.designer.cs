@@ -11,8 +11,8 @@ using UIKit;
 
 namespace Teatime
 {
-    [Register ("showUserData")]
-    partial class showUserData
+    [Register ("ShowUserData")]
+    partial class ShowUserData
     {
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]

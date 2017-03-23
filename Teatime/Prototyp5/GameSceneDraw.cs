@@ -33,7 +33,7 @@ namespace Teatime
 		private PointNode arrowLeftSprite;
 		private PointNode arrowRightSprite;
 
-		private LineNodeDraw baseLine;
+		private SKShapeNode baseLine;
 
 		private SKLabelNode myLabel;
 		private SKLabelNode myLabel2;
@@ -48,8 +48,8 @@ namespace Teatime
 		private SKShapeNode currentLine;
 		private SKShapeNode nextLine;
 
-		private PointNode spriteLeft;
-		private PointNode spriteRight;
+		private SKSpriteNode spriteLeft;
+		private SKSpriteNode spriteRight;
 		private SKLabelNode mySave;
 		private SKLabelNode myBack;
 
@@ -256,7 +256,7 @@ namespace Teatime
 			locationRight.X = (View.Frame.Width + (View.Frame.Width / 4) + 25 - tempPos);
 			locationRight.Y = (View.Frame.Height / 2);
 
-			spriteLeft = new PointNode()
+			spriteLeft = new SKSpriteNode()
 			{
 				Position = locationLeft,
 				Name = "Left",
@@ -267,7 +267,7 @@ namespace Teatime
 
 			};
 
-			spriteRight = new PointNode()
+			spriteRight = new SKSpriteNode()
 			{
 				Position = locationRight,
 				Name = "Right",
@@ -293,7 +293,7 @@ namespace Teatime
 				new CGPoint (firstPoint.Position.X, firstPoint.Position.Y)
 			});
 			pathBase.CloseSubpath();
-			baseLine = new LineNodeDraw();
+			baseLine = new SKShapeNode();
 			baseLine.Name = "baseline";
 			baseLine.Path = pathBase;
 			baseLine.StrokeColor = UIColor.FromHSB(0, 0, 0);
@@ -667,7 +667,7 @@ namespace Teatime
 						timeLabel.Text = "";
 
 						SKAction actMove = SKAction.ScaleTo(1f, 1f, 0.2);
-						SKAction actMoveBack = SKAction.ScaleTo(0.4f, 0.4f, 0.2);
+						SKAction actMoveBack = SKAction.ScaleTo(0.5f, 0.5f, 0.2);
 						SKAction seq = SKAction.Sequence(actMove, actMoveBack);
 
 						currentPoint.RunAction(SKAction.RepeatAction(seq, 2));
@@ -1181,8 +1181,8 @@ namespace Teatime
 						currentPoint.Position = new CGPoint(checkX, checkY);
 						currentPoint.Category = "";
 						currentPoint.ZPosition = 1;
-						currentPoint.XScale = 0.4f;
-						currentPoint.YScale = 0.4f;
+						currentPoint.XScale = 0.7f;
+						currentPoint.YScale = 0.7f;
 						currentPoint.ColorBlendFactor = 1f;
 						currentPoint.Alpha = 1f;
 						currentPoint.Color = UIColor.FromHSB(0, 0, 0.2f);
@@ -1363,7 +1363,7 @@ namespace Teatime
 				var spriteNodeChecked = nodeAtPoint;
 
 				// Scale down dragged sprite point after release the drag
-				SKAction actMoveBack = SKAction.ScaleTo(0.4f, 0.4f, 0.2);
+				SKAction actMoveBack = SKAction.ScaleTo(0.5f, 0.5f, 0.2);
 				if (gameMode == 1 && (spriteNodeChecked.Name != "Left" && spriteNodeChecked.Name != "Right" && spriteNodeChecked.Name != "navSprite" && spriteNodeChecked.Name != "navSprite2" && spriteNodeChecked.Name != "arrowLeft" && spriteNodeChecked.Name != "arrowRight"))
 				{
 					foreach (var spriteNode in Children.OfType<PointNode>())

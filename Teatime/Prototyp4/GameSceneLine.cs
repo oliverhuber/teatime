@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Threading;
 using System.Timers;
 using CoreGraphics;
 using Foundation;
@@ -9,13 +8,8 @@ using UIKit;
 
 namespace Teatime
 {
-	public class TimerState
-	{
-		public int Counter;
-	}
-
 	public class GameSceneLine : SKScene
-	{       
+	{
 		// Prototype Dimension Mapping 
 		public int Proto4Dim1 { get; set; }
 		public int Proto4Dim2 { get; set; }
@@ -37,8 +31,8 @@ namespace Teatime
 		private int lineCounter;
 		private int lineCounterUpdate;
 
-		private System.Timers.Timer aTimer;
-		private System.Timers.Timer bTimer;
+		private Timer aTimer;
+		private Timer bTimer;
 		private int aTimerCounter;
 		private int bTimerCounter;
 		private LineNode[] lineNodes = new LineNode[19];
@@ -71,7 +65,7 @@ namespace Teatime
 			leftUpperSprite = new SKSpriteNode();
 			leftUpperSprite.Color = UIColor.FromHSB(0, 0, 0.0f);
 			leftUpperSprite.Size = new CGSize(Frame.Width / 2, Frame.Height / 2);
-			leftUpperSprite.Position = new CGPoint(Frame.Width/4,(Frame.Height/4)*3);
+			leftUpperSprite.Position = new CGPoint(Frame.Width / 4, (Frame.Height / 4) * 3);
 			leftUpperSprite.ZPosition = 3;
 			AddChild(leftUpperSprite);
 
@@ -146,8 +140,8 @@ namespace Teatime
 			// Set Background of Scene to black
 			BackgroundColor = UIColor.FromHSB(0, 0, 0);
 
-			aTimer = new System.Timers.Timer();
-			aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+			aTimer = new Timer();
+			aTimer.Elapsed += OnTimedEvent;
 			aTimer.Interval = 140;
 			aTimer.Enabled = true;
 
@@ -157,7 +151,7 @@ namespace Teatime
 			// Default Value
 			sizeVal = 1.5f;
 			speedVal = 0.8f;
-		
+
 		}
 		// Initial timer generates lines
 		private void OnTimedEvent(object source, ElapsedEventArgs e)
@@ -203,13 +197,13 @@ namespace Teatime
 				aTimer.Dispose();
 
 				// New Update timer
-				bTimer = new System.Timers.Timer();
+				bTimer = new Timer();
 				bTimer.Elapsed += new ElapsedEventHandler(OnTimedEventUpdate);
 				bTimer.Interval = 140;
 				bTimer.Enabled = true;
 
-				Proto4Dim1 = (int) (speedVal * 10);
-				Proto4Dim2 = (int) (sizeVal * 10);
+				Proto4Dim1 = (int)(speedVal * 10);
+				Proto4Dim2 = (int)(sizeVal * 10);
 				Proto4Dim3 = Proto4Dim1 - Proto4Dim2;
 			}
 		}
@@ -219,8 +213,8 @@ namespace Teatime
 
 			if (lineCounterUpdate == 19)
 			{
-				Proto4Dim1 = (int) (speedVal * 10);
-				Proto4Dim2 = (int) (sizeVal * 10);
+				Proto4Dim1 = (int)(speedVal * 10);
+				Proto4Dim2 = (int)(sizeVal * 10);
 				Proto4Dim3 = Proto4Dim1 - Proto4Dim2;
 			}
 
@@ -239,7 +233,7 @@ namespace Teatime
 				}
 			}
 		}
-			
+
 		public override void TouchesBegan(NSSet touches, UIEvent evt)
 		{
 			// Called when a touch begins
@@ -260,7 +254,7 @@ namespace Teatime
 				// Wait with interaction until first cycle is done
 				if (waitWithInteraction)
 				{
-					
+
 					// Update Lines depending on the location of click, animate button
 					if (checkY > (Frame.Height / 2))
 					{

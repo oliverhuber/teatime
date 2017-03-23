@@ -357,8 +357,6 @@ namespace Teatime
 		// Update the particles speed and birthrate related to the location of touch
 		private void UpdateEmitter(nfloat coordX)
 		{
-			//particleEmitterNode.ParticleScale = 0.6f * ((1/Frame.Width)*coordX) +0.2f ;
-			//particleEmitterNode.ParticleScaleRange = 0.3f*((1 / Frame.Width) * coordX*10) +0.2f;
 			particleEmitterNode.ParticleSpeedRange = 10f + (coordX / 5);
 			particleEmitterNode.ParticleScaleSpeed = -0.02f;
 			particleEmitterNode.ParticleBirthRate = 20f + (coordX / 5);
