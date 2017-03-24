@@ -48,8 +48,8 @@ namespace Teatime
 		private SKShapeNode currentLine;
 		private SKShapeNode nextLine;
 
-		private SKSpriteNode spriteLeft;
-		private SKSpriteNode spriteRight;
+		private PointNode spriteLeft;
+		private PointNode spriteRight;
 		private SKLabelNode mySave;
 		private SKLabelNode myBack;
 
@@ -256,7 +256,7 @@ namespace Teatime
 			locationRight.X = (View.Frame.Width + (View.Frame.Width / 4) + 25 - tempPos);
 			locationRight.Y = (View.Frame.Height / 2);
 
-			spriteLeft = new SKSpriteNode()
+			spriteLeft = new PointNode()
 			{
 				Position = locationLeft,
 				Name = "Left",
@@ -267,7 +267,7 @@ namespace Teatime
 
 			};
 
-			spriteRight = new SKSpriteNode()
+			spriteRight = new PointNode()
 			{
 				Position = locationRight,
 				Name = "Right",
